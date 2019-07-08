@@ -10,6 +10,7 @@ public class Test04 {
     long l = 1L; // switch 조건으로 사용할 수 없다.
     float f = 1.0f;// switch 조건으로 사용할 수 없다.
     double d = 1.0;// switch 조건으로 사용할 수 없다.
+    String str ="ok";//switch 조건으로 OK!
     
     switch (b) {
       case 1:

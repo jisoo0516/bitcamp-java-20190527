@@ -45,6 +45,7 @@ public class Test03 {
     //short s3 = s1 + s2; // 위와 같다. 계산하기 전에 int 임시 메모리에 값이 저장된다.
     int x2 = s1 + s2; // OK!
     
+    char cc = 'A'; //'문자'의 의미? 해당 문자의 유니코드 값을 리턴하라!
     char c1 = 20;
     char c2 = 30;
     //char c3 = c1 + c2; // 컴파일 오류!
