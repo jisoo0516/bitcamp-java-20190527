@@ -9,18 +9,22 @@ public class App3 {
 
   public static void main(String[] args) {
     scan = new Scanner(System.in);
+    
+    Board[] boards = new Board[100];
 
-    int[] no = new int[100];
-    String[] contents = new String[100];
-    Date[] reportingDate = new Date[100];
-    int[] hits = new int[100];
-
+  
     int i = 0;
-    for (; i < no.length; i++) {
-      no[i] = getIntValue("번호?");
-      contents[i]  = getStringValue("내용?");
-      reportingDate[i]  = getDateValue("작성일?");
-      hits[i]  = getIntValue("조회수?");
+    for (; i < boards.length; i++) {
+      
+      Board board = new Board();
+      
+      board.no = getIntValue("번호?");
+      board.contents  = getStringValue("내용?");
+      board.reportingDate  = getDateValue("작성일?");
+      board.hits  = getIntValue("조회수?");
+      
+      boards[i] = board;
+
 
      System.out.println("계속 입력하시겠습니까?(Y/n)");
 
@@ -33,7 +37,9 @@ public class App3 {
     System.out.println();
     
     for(int i2 = 0; i2<=i; i2++) {
-      System.out.printf("%s, %s, %s, %s\n" , no[i2], contents[i2],reportingDate[i2],hits[i2]  );
+      
+      Board board = boards[i2];
+      System.out.printf("%s, %s, %s, %s\n" , board.no, board.contents,board.reportingDate,board.hits );
     }
     
   }
