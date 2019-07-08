@@ -1,14 +1,16 @@
-package com.eomcs.lms;
+package com.eomcs.lms.handler;
 
 import java.sql.Date;
 import java.util.Scanner;
+import com.eomcs.lms.domain.Member;
+import com.eomcs.lms.util.Input;
 
 public class MemberHandler {
-  static Member[] members = new Member[100];
-  static int memberssize = 0;
-  static Scanner keyScan;
+  private static Member[] members = new Member[100];
+  private static int memberssize = 0;
+  public static Scanner keyScan;
   
-  static void addMember() {
+  public static void addMember() {
 
     Member member = new Member();
 
@@ -24,7 +26,7 @@ public class MemberHandler {
     System.out.println("저장하였습니다.");
   }
   
-  static void listMember() {
+  public static void listMember() {
     for (int i = 0; i < memberssize; i++) {
       Member member = members[i];
       System.out.printf("%s, %s, %s , %s\n", member.name, member.email, member.password,
