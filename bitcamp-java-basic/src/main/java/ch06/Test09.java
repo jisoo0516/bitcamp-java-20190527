@@ -14,9 +14,9 @@ public class Test09 {
     System.out.println(value);
   }
   
-  static void m1(int value) {
-    value = 200;
-    System.out.printf("m1(): %d\n", value);
+  static void m1(int value11) {
+    value11 = 200;
+    System.out.printf("m1(): %d\n", value11);
   }
 }
 

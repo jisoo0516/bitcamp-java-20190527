@@ -9,23 +9,21 @@ public class App2 {
   public static void main(String[] args) {
     scan = new Scanner(System.in);
 
-    Member[] members = new Member[100];
-    
-    
-    
+    Member [] members = new Member[100];
 
-    int i =0;
-    for( ; i<members.length; i++) {
-      
-      Member member = new Member();
     
-      member.no = getIntValue("번호?");
-      member.name = getStringValue("이름?");
-      member.email = getStringValue("메일?");
-      member.password = getIntValue("암호?");
-      member.picture = getStringValue("사진?");
-      member.phoneNum = getIntValue("폰번호?");
-      member.joinDate = getDateValue("가입일?");
+    int i = 0;
+    
+    for( ; i<members.length; i++) {
+    Member member = new Member();
+    
+    member.no = getIntValue("번호?");
+    member.name = getStringValue("이름?");
+    member.email = getStringValue("메일?");
+    member.password = getIntValue("암호?");
+    member.picture = getStringValue("사진?");
+    member.phoneNum = getIntValue("폰번호?");
+    member.joinDate = getDateValue("가입일?");
     
     members[i] = member;
     
@@ -41,9 +39,9 @@ public class App2 {
     
 
     for (int i2 = 0;  i2 <=i;  i2++) {
-      
-      Member member = members[i2];
-      System.out.printf("%s, %s, %s , %s\n",  member.name, member.email, member.password,member.joinDate);
+      Member member = new Member();
+      member = members[i2];
+      System.out.printf("%s, %s, %s , %s\n",  member.name,  member.email,  member.password, member.joinDate);
    
     }
  }

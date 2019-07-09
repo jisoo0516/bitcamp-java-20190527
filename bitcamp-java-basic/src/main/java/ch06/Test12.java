@@ -14,16 +14,17 @@ public class Test12 {
     result2 = sum1(result2, 5);
     System.out.println(result2);
     
-    System.out.println(sum2(5));
+    System.out.println(sum2(19000));
     // 위의 알고리즘(결과를 내는 방식)은 다음 수학 공식과 같다.
     // sum(n) = n + sum(n-1)
   }
+  
   
   static int sum1(int a, int b) {
     return a + b;
   }
   
-  static long sum2(long n) {
+  static int sum2(int n) {
     if (n == 1)
       return n;
     
