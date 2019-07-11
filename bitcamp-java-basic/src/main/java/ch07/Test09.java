@@ -59,7 +59,7 @@ public class Test09 {
       float aver;
     }
     
-    // 익명 클래스(anonymouse class)
+    // 익명 클래스(anonymouse class) -> Test09&1.class
     // => 클래스 이름이 없는 중첩 클래스이다.
     // => 딱 한 개의 인스턴스를 생성할 때 사용한다.
     // => 클래스를 정의할 때 수퍼 클래스나 인터페이스를 지정해야 한다.

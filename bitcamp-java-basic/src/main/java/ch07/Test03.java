@@ -10,7 +10,7 @@ public class Test03 {
   //      }
   // - 새데이터타입의이름 : 대문자로 시작하고, 단어의 시작도 대문자로 작성한다. 보통 명사형으로 짓는다.
   //
-  static class Score {
+  static class Score { //중첩 클래스
     String name;  // 설계 도면이기 때문에 변수가 존재하는 상태가 아니다.
     int kor;
     int eng;

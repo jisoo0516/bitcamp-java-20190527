@@ -56,6 +56,10 @@ public class Test12 {
     Monitor10 obj1 = new Monitor10();
     //obj1.Monitor10(); // 컴파일 오류!
     
+    
+    
+    
+    //생성자 -> 인스턴스를 제대로 쓸 수 있게 유효한 값으로 초기화하는 것 
   }
 }
 

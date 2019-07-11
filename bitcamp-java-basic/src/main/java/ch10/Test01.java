@@ -1,7 +1,7 @@
 // 클래스 필드와 인스턴스 필드 
 package ch10;
 
-class My1 {
+class My1 { //패키지 멤버 클래스
   // 인스턴스에 상관없이 공유하는 값이라면 스태틱 필드로 선언하라!
   static int a;
   
@@ -9,7 +9,7 @@ class My1 {
   int b;
 }
 
-public class Test01 {
+public class Test01 { //패키지 멤버 클래스
   public static void main(String[] args) {
     My1 obj1 = new My1();
     My1 obj2 = new My1();
