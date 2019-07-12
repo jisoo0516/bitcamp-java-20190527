@@ -9,7 +9,7 @@ public class Test08 {
     System.out.println(b1 == b2);
     
     // StringBuffer의 equals()는 값을 비교하는 것이 아니라 인스턴스가 같은지 비교한다.
-    // 즉 == 연산자와 똑 같다.
+    // 즉 == 연산자와 똑같다.
     System.out.println(b1.equals(b2)); 
     
     // 어떤 클래스에 equals()가 있나요?

@@ -10,6 +10,9 @@ public class Test03 {
                              // 이미 상수풀에 있다면 기존의 객체를 리턴한다.
     String s3 = "Hello"; // 위에서 이미 만든 인스턴스 주소를 리턴한다.
     
+  
+    
+    
     if (s1 == s2)
       System.out.println("s1 == s2");
     else
@@ -27,7 +30,7 @@ public class Test03 {
     else
       System.out.println("s2 != sx");
     
-    
+   
   }
 }
 
