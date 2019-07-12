@@ -5,9 +5,9 @@ import com.eomcs.lms.util.Input;
 
 public class LessonHandler {
 
-  private LessonList lessonList  = new LessonList();
+  private LessonList lessonList = new LessonList();
   private Input input;
-
+  
   public LessonHandler(Input input) {
     this.input = input;
   }
@@ -25,19 +25,17 @@ public class LessonHandler {
     lesson.setTotalHours(input.getIntValue("총수업시간?"));
     lesson.setDayHours(input.getIntValue("일수업시간?"));
 
-    // LessonHandler에서 직접 데이터를 보관하지 않고
-    // LessonList에게 전달한다.
+    // 수업 데이터를 저장하고 있는 인스턴스의 주소를 레퍼런스 배열에 저장한다.
     lessonList.add(lesson);
     System.out.println("저장하였습니다.");
 
   }
-
   public void listLesson() {
     Lesson[] lessons = lessonList.toArray();
     for (Lesson lesson : lessons) {
       // 그 인스턴스 주소로 찾아가서 인스턴스의 각 변수 값을 꺼내 출력한다.
-      System.out.printf("%s, %s, %s ~ %s, %s\n", lesson.getNo(), lesson.getTitle(),
-          lesson.getStartDate(), lesson.getEndDate(), lesson.getTotalHours());
+      System.out.printf("%s, %s, %s ~ %s, %s\n", lesson.getNo(), lesson.getTitle(), lesson.getStartDate(),
+          lesson.getEndDate(), lesson.getTotalHours());
 
     }
   }

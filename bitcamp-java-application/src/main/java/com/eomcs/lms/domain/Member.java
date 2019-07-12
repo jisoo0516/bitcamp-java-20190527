@@ -53,5 +53,7 @@ public class Member {
   public void setJoinDate(Date joinDate) {
     this.joinDate = joinDate;
   }
+  
+  
 
 }

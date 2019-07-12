@@ -1,6 +1,5 @@
 package com.eomcs.lms.handler;
 
-import com.eomcs.lms.domain.Board;
 import com.eomcs.lms.domain.Lesson;
 
 public class LessonList {
@@ -9,24 +8,29 @@ public class LessonList {
   private Lesson[] list;
   private int size = 0;
   
+  
   public LessonList() {
     this(DEFAULT_CAPACITY);
   }
+  
   public LessonList(int initialCapacity) {
     if(initialCapacity < 50 || initialCapacity > 10000)
       list = new Lesson[DEFAULT_CAPACITY];
-    else
+    else 
       list = new Lesson[initialCapacity];
-    list = new Lesson[initialCapacity];
+    
   }
   public void add(Lesson lesson) {
     this.list[this.size++] = lesson;
+    
   }
+  
   public Lesson[] toArray() {
     Lesson[] arr = new Lesson[this.size];
-    for(int i = 0 ; i< this.size; i++) {
+    for(int i = 0 ; i<this.size; i++) {
       arr[i] = this.list[i];
     }
     return arr;
   }
+
 }

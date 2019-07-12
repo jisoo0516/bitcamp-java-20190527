@@ -13,7 +13,7 @@ public class Test01 {
     
     String s2 = new String("Hello");
     
-    if (s1 == s2)
+    if (s1 == s2) //인스턴스 비교!
       System.out.println("같다");
     else
       System.out.println("다르다");
