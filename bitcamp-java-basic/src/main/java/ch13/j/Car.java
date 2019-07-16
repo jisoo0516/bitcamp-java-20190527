@@ -30,3 +30,5 @@ public abstract class Car {
     System.out.println("멈춘다");
   }
 }
+
+//추상클래스의 반댓말 => 콘크리트 클래스
