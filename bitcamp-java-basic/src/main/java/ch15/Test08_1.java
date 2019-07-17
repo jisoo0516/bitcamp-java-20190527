@@ -60,7 +60,7 @@ public class Test08_1 {
     // => 그래서 s1과 s2 모두 HashSet에 보관된 것이다.
     // 
     // 해결책?
-    // => Student 클래스에서 hashCoe()를 오버라이딩 하여
+    // => Student 클래스에서 hashCode()를 오버라이딩 하여
     //    같은 데이터에 대해 같은 해시코드를 리턴하도록 만들어야 한다.
     
   }

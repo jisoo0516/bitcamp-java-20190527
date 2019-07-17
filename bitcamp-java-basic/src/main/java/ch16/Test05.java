@@ -18,6 +18,7 @@ public class Test05 {
     String[] strs2 = create2(temp);
     System.out.println(strs2.length);
     System.out.println(temp == strs2);
+  
     
     // 생성할 배열의 타입 정보를 넘긴다.
     String[] strs3 = create3(String.class);
