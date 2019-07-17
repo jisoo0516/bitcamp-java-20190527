@@ -20,7 +20,9 @@ public class Test04 {
     
     // Object에서 상속 받은 equals()는 인스턴스가 같은지 비교한다.
     // 만약 그 내용물이 같은지 비교하고 싶다면 equals()를 재정의 하라!
-    System.out.println(obj1.equals(obj2));
+    System.out.println(obj1.equals(obj2)); //false
+    
+    //String 클래스의 equals가 아니라 Object의 equals이므로 인스턴스의 값이 아니라 주소를 비교!!
 
   }
 
