@@ -105,7 +105,7 @@ public class LessonHandler {
     
     lesson.setDayHours(input.getIntValue("일수업시간(" + lesson.getDayHours() + ")? "));
     
-    System.out.println("");
+    System.out.println("데이터를 수정하였습니다.");
 
 
   }

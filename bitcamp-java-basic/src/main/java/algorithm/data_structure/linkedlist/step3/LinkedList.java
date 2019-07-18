@@ -1,5 +1,5 @@
 // 제네릭 적용하기
-package algorithm.data_structure.linkedlist3;
+package algorithm.data_structure.linkedlist.step3;
 
 // LinkedList에 보관되는 값의 타입을 E 라고 가정한다.
 // => E 타입이라고 가정하고 코드를 작성한다.
