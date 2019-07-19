@@ -1,8 +1,8 @@
-package algorithm.data_structure.linkedlist2.step1;
+package com.eomcs.util;
 
 public class LinkedListTest {
   public static void main(String[] args) {
-    LinkedList list = new LinkedList();
+    LinkedList<String> list = new LinkedList<>();
     list.add("aaa");
     list.add("bbb");
     list.add("ccc");
@@ -13,7 +13,6 @@ public class LinkedListTest {
     
     list.set(2, "xxx"); // "ccc" -> "xxx"로 변경
     
-    list.get(2);
     list.remove(3); // "ddd" 삭제
     list.remove(0); // "aaa" 삭제
     list.remove(4); // "ggg" 삭제
@@ -28,8 +27,8 @@ public class LinkedListTest {
     
     //list.clear();
     
-    Object[] arr = list.toArray();
-    for (Object obj : arr) {
+    String[] arr = list.toArray(new String[] {});
+    for (String obj : arr) {
       System.out.println(obj);
     }
   }
