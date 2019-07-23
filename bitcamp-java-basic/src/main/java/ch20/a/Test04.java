@@ -49,16 +49,17 @@ public class Test04 {
           return false;
         return true;
       }
+      
     }
-    
+  
     Student s1 = new Student("aaa", 20);
     Student s2 = new Student("bbb", 30);
     Student s3 = new Student("ccc", 40);
     
     Student s4 = new Student("bbb", 30);
     
-    System.out.println(s2 == s4);
-    System.out.println(s2.equals(s4));
+    System.out.println(s2 == s4); 
+    System.out.println(s2.equals(s4)); 
     System.out.println(s2.hashCode() == s4.hashCode());
     
     ArrayList<Student> list = new ArrayList<>();

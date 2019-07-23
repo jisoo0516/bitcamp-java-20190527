@@ -72,10 +72,13 @@ public class Test11 {
     map.put(k2, new Student("임꺽정", 30));
     map.put(k3, new Student("윤봉길", 20));
     
+    
     System.out.println(map.get(k1));
     System.out.println(map.get(k2));
     System.out.println(map.get(k3));
 
+    System.out.println("------------------------------");
+    
     Key k4 = new Key(100, 2);
     System.out.println(map.get(k4));
 

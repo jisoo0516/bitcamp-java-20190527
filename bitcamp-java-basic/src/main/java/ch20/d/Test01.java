@@ -42,7 +42,7 @@ public class Test01 {
     map.put("ccc", new Student("유관순", 16));
     
     // 같은 key로 값을 저장하면 기존의 값을 덮어 쓴다.
-    map.put("ccc", new Student("안중근", 25));
+    map.put(new String("ccc"), new Student("안중근", 25));
     
     // 맵에서 값 꺼내기
     // => 저장할 때 사용한 키를 가지고 꺼낸다.
@@ -58,7 +58,7 @@ public class Test01 {
     System.out.println(key1.hashCode() == key2.hashCode()); // 해시 값은 같다.
     System.out.println(key1.equals(key2)); // 리턴 값이 true이다.
     // 결론: key1과 key2는 서로 다른 인스턴스이지만, hashCode()의 리턴 값이 같고,
-    //      equals()의 리턴 값이 trud이므로 두 인스턴스는 같은 key로 간주한다.
+    //      equals()의 리턴 값이 true이므로 두 인스턴스는 같은 key로 간주한다.
     // 따라서 key1으로 저장된 값을 key2로 꺼낼 수 있다.
     System.out.println(map.get(key2));
     
