@@ -23,7 +23,7 @@ public class Test04 {
     //
     try {
       // try 블록에 예외가 발생할 수 있는 코드를 둔다.
-      // 만약 에외가 발생한다면 예외 정보가 들어 있는 객체를 catch 블록으로 던진다.
+      // 만약 예외가 발생한다면 예외 정보가 들어 있는 객체를 catch 블록으로 던진다.
       System.out.println(list.get(3));
       
     } catch (Exception e) {
