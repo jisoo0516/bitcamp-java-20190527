@@ -1,8 +1,6 @@
 // 신규 프로젝트를 위해 새로 추가한 인터페이스 구현
 package ch18.g3;
 
-import ch18.g2.Printer;
-
 public class WaterMarkPrinter implements Printer2 {
   // Printer 인터페이스에 선언된 규칙을 구현한다.
   @Override
