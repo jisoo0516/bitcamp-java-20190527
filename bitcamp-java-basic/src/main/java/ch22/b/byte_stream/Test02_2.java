@@ -1,5 +1,5 @@
 // 바이너리 데이터 입출력 - FileInputStream : 배열로 읽기
-package ch22.b;
+package ch22.b.byte_stream;
 
 import java.io.FileInputStream;
 
@@ -36,6 +36,7 @@ public class Test02_2 {
     
     System.out.println("출력 완료!");
   }
+  
 }
 
 
