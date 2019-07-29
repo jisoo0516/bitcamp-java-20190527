@@ -5,12 +5,12 @@ import java.io.FileWriter;
 
 public class Test01_1 {
 
-  public static void main(String[] args) {
+  public static void main(String[] args)throws Exception {
     
     // FileWriter
     // => 문자 단위로 데이터를 출력하는 일을 한다.
     //
-    try (FileWriter out = new FileWriter("data.txt")) {
+     FileWriter out = new FileWriter("data.txt");
       
       // write(문자코드)
       // => JVM에서 문자를 다루기 위해 사용하느 UTF-16 코드를 
@@ -45,9 +45,8 @@ public class Test01_1 {
       // => 무슨 OS를 사용하든지 출력할 때는 가능한 국제 표준인 UTF-8을 사용하라.
       // 
       
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+      out.close();
+   
     
     System.out.println("출력 완료!");
   }
