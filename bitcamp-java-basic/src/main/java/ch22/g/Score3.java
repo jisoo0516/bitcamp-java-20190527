@@ -2,16 +2,16 @@ package ch22.g;
 
 import java.io.Serializable;
 
-// sum과 aver 필드는 getter 메서드만 둔다. 
+// sum과 aver 필드는 getter 메서드만 둔다.
 // setter를 제거한다.
 public class Score3 implements Serializable {
   private static final long serialVersionUID = 1L;
-  
+
   private String name;
   private int kor;
   private int eng;
   private int math;
-  
+
   // serialize 대상에서 제외할 필드는 transient로 선언한다.
   transient private int sum;
   transient private float aver;
@@ -65,7 +65,7 @@ public class Score3 implements Serializable {
     compute();
   }
 
-  // sum과 aver 필드처럼 내부 필드 값을 가지고 계산한 결과를 
+  // sum과 aver 필드처럼 내부 필드 값을 가지고 계산한 결과를
   // 저장하는 경우 외부에서 직접 필드의 값을 설정하지 못하게 해야 한다.
   // 즉 setter를 만들지 말라!
   public int getSum() {
@@ -81,7 +81,5 @@ public class Score3 implements Serializable {
     this.aver = this.sum / 3f;
   }
 }
-
-
 
 

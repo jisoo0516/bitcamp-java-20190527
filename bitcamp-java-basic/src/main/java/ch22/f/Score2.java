@@ -32,14 +32,13 @@ public class Score2 implements Serializable {
     compute();
   }
 
-  // Test2_1을 실행하여 Score2 값을 출력한 후 toString() 메서드를 다시 생성하라.
+ 
   @Override
   public String toString() {
     return "Score2 [name=" + name + ", tel=" + tel + ", kor=" + kor + ", eng=" + eng + ", math="
         + math + ", sum=" + sum + ", aver=" + aver + "]";
   }
 
-  //Test2_1을 실행하여 Score2 값을 출력한 후 tel 필드의 getter/setter를 추가하라. 
   public String getTel() {
     return tel;
   }
