@@ -1,14 +1,14 @@
-package design_pattern.observer.after;
+package design_pattern.observer.after3;
 
 import java.util.HashSet;
 
 public class Car {
   
   // 옵저버 목록을 저장할 집합객체 준비
-  // => 같은 옵저버가 중복 등록되지 않도록 한다.(HashSet)
+  // => 같은 옵저버가 중복 등록되지 않도록 한다.
   // => 등록 순서에 따라 통지할 필요는 없다.
   //
-  HashSet<CarObserver> observers = new HashSet<>(); 
+  HashSet<CarObserver> observers = new HashSet<>();
   
   // 옵저버를 관리하는 메서드 추가
   public void addObserver(CarObserver observer) {
@@ -49,9 +49,3 @@ public class Car {
     notifyObserversOnStopped();
   }
 }
-
-
-
-
-
-

@@ -1,5 +1,4 @@
-// v1 : 옵저버 등록 전 - 기본 기능만 사용
-package design_pattern.observer.after;
+package design_pattern.observer.before.v1;
 
 public class Test01 {
 
@@ -11,8 +10,6 @@ public class Test01 {
     car.run();
     
     car.stop();
-    
-   
   }
 
 }
