@@ -10,7 +10,6 @@ public class LessonServlet implements Servlet {
 
 
   LessonSerialDao lessonDao;
-  
   ObjectInputStream in;
   ObjectOutputStream out;
 
