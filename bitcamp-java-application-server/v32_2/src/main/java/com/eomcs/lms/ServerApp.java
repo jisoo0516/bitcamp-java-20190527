@@ -20,7 +20,7 @@ public class ServerApp {
       System.out.println("서버 시작!");
 
       // => 클라이언트의 연결 요청이 들어올 때까지 기다리다가
-      // 요청이 들어오는 즉시 승일을 한 후, 연결 정보를 리턴한다.
+      // 요청이 들어오는 즉시 승인을 한 후, 연결 정보를 리턴한다.
       try (Socket clientSocket = serverSocket.accept();) {
         System.out.println("클라이언트와 연결되었음");
 
