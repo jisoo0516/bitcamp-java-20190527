@@ -104,6 +104,9 @@ public class ServerTest2 {
         error();
       }
 
+    } catch (RequestException e) {
+      System.out.printf("오류: %s\n", in.readUTF());
+
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -187,7 +190,7 @@ public class ServerTest2 {
     return true;
   }
 
-  private static boolean add(Lesson obj) throws IOException {
+  private static boolean add(Lesson obj) throws IOException, RequestException {
     out.writeUTF("/lesson/add");
     out.writeObject(obj);
     out.flush();

@@ -1,4 +1,4 @@
-// v32_10 : 파일 저장기능 추가
+// v32_9 : 회원/수업/게시물 요청을 처리하는 클래스를 패키지로 분류한다.
 package com.eomcs.lms;
 
 import java.io.ObjectInputStream;
@@ -29,45 +29,56 @@ public class ServerApp {
 
         System.out.println("클라이언트와 연결되었음.");
 
+        // 다른 메서드가 사용할 수 있도록 입출력 스트림을 스태틱 변수에 저장한다.
+        ServerApp.in = in;
+        ServerApp.out = out;
+
         BoardServlet boardServlet = new BoardServlet(in, out);
         MemberServlet memberServlet = new MemberServlet(in, out);
         LessonServlet lessonServlet = new LessonServlet(in, out);
 
 
-
-        while (true) {
+        loop: while (true) {
           // 클라이언트가 보낸 명령을 읽는다.
           String command = in.readUTF();
           System.out.println(command + " 요청 처리중...");
 
           if (command.startsWith("/board/")) {
             boardServlet.service(command);
-
-          } else if (command.startsWith("/member/")) {
-            memberServlet.service(command);
-
-          } else if (command.startsWith("/lesson/")) {
-            lessonServlet.service(command);
-
-          } else if (command.equals("quit")) {
-            out.writeUTF("ok");
             out.flush();
-            break;
-            
-          } else {
-            out.writeUTF("fail");
-            out.writeUTF("지원하지 않는 명령입니다.");
+            continue;
+          }
+
+
+          if (command.startsWith("/member/")) {
+            memberServlet.service(command);
+            out.flush();
+            continue;
+          }
+
+          if (command.startsWith("/lesson/")) {
+            lessonServlet.service(command);
+            out.flush();
+            continue;
+          }
+
+          // 명령어에 따라 처리한다.
+          switch (command) {
+
+            case "quit":
+              out.writeUTF("ok");
+              break loop;
+            default:
+              out.writeUTF("fail");
+              out.writeUTF("지원하지 않는 명령입니다.");
           }
           out.flush();
-          System.out.println("클라이언트에게 응답 완료!");
 
-        }
-        
-        // 클라이언트와 연결을 끊기 전에 작업 내용을 파일에 저장한다.
-        boardServlet.saveData();
-        lessonServlet.saveData();
-        memberServlet.saveData();
+        } // loop:
+        System.out.println("클라이언트에게 응답 완료!");
+        out.flush();
       }
+
       System.out.println("클라이언트와 연결을 끊었음.");
 
     } catch (Exception e) {
