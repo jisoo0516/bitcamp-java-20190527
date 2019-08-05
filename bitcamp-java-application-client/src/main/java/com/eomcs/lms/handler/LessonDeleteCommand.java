@@ -1,0 +1,34 @@
+package com.eomcs.lms.handler;
+
+import com.eomcs.lms.dao.LessonDao;
+import com.eomcs.util.Input;
+
+public class LessonDeleteCommand implements Command {
+
+  private LessonDao lessonDao;
+  private Input input;
+
+  public LessonDeleteCommand(Input input, LessonDao lessonDao) {
+    this.input = input;
+    this.lessonDao = lessonDao;
+  }
+
+  @Override
+  public void execute() {
+    int no = input.getIntValue("번호?");
+
+    try {
+      lessonDao.delete(no);
+      System.out.println("데이터를 삭제하였습니다");
+
+
+      System.out.println("해당 수업을 찾을 수 없습니다.");
+    } catch (Exception e) {
+      System.out.println("데이터 삭제 실패");
+      System.out.println(e.getMessage());
+    }
+  }
+
+}
+
+
