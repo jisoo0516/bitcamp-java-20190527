@@ -3,15 +3,13 @@ package com.eomcs.lms.dao;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
-import com.eomcs.lms.domain.Member;
+import com.eomcs.lms.domain.Board;
 
-public class MemberSerialDao extends AbstractDataSerializer<Member, Integer> {
-  
-  
-  
-  
-  public MemberSerialDao(String file) throws Exception {
+public class BoardSerialDao extends AbstractDataSerializer<Board, Integer> {
+
+  public BoardSerialDao(String file) throws Exception {
     super(file);
+
     try {
       loadData();
       System.out.println("게시물 데이터 데이터 로딩 완료");
@@ -41,8 +39,8 @@ public class MemberSerialDao extends AbstractDataSerializer<Member, Integer> {
   @Override
   public int indexOf(Integer key) {
     int i = 0;
-    for (Member m : list) {
-      if (m.getNo() == key) {
+    for (Board b : list) {
+      if (b.getNo() == key) {
         return i;
       }
       i++;
@@ -50,27 +48,27 @@ public class MemberSerialDao extends AbstractDataSerializer<Member, Integer> {
     return -1;
   }
 
-  public int insert(Member member) throws Exception {
-    list.add(member);
+  public int insert(Board board) throws Exception {
+    list.add(board);
     return 1;
   }
 
-  public List<Member> findAll() throws Exception {
+  public List<Board> findAll() throws Exception {
     return list;
   }
 
-  public Member findBy(int no) throws Exception {
+  public Board findBy(int no) throws Exception {
     int index = indexOf(no);
     if (index == -1)
       return null;
     return list.get(index);
   }
 
-  public int update(Member member) throws Exception {
-    int index = indexOf(member.getNo());
+  public int update(Board board) throws Exception {
+    int index = indexOf(board.getNo());
     if (index == -1)
       return 0;
-    list.set(index, member);
+    list.set(index, board);
     return 1;
 
   }
@@ -79,11 +77,10 @@ public class MemberSerialDao extends AbstractDataSerializer<Member, Integer> {
     int index = indexOf(no);
     if (index == -1)
       return 0;
-    
+
     list.remove(index);
     return 1;
   }
 
  
 }
-

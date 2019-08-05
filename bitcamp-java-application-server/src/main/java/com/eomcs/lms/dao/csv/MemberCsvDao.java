@@ -1,23 +1,24 @@
-package com.eomcs.lms.dao;
+package com.eomcs.lms.dao.csv;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.Date;
 import java.util.List;
 import com.eomcs.lms.domain.Member;
 
-public class MemberSerialDao extends AbstractDataSerializer<Member, Integer> {
+public class MemberCsvDao extends AbstractCsvDataSerializer<Member, Integer> {
   
   
   
   
-  public MemberSerialDao(String file) throws Exception {
+  public MemberCsvDao(String file)  {
     super(file);
     try {
       loadData();
-      System.out.println("게시물 데이터 데이터 로딩 완료");
+      System.out.println("회원 데이터 로딩 완료");
 
-    } catch (IOException e) {
-      System.out.println("게시물 데이터 데이터 로딩 중 오류 발생");
+    } catch (Exception e) {
+      System.out.println("회원 데이터 로딩 중 오류 발생");
     }
   }
 
@@ -26,7 +27,7 @@ public class MemberSerialDao extends AbstractDataSerializer<Member, Integer> {
   public void saveData() {
     try {
       super.saveData();
-      System.out.println("게시물 데이터 저장 완료!");
+      System.out.println("회원 데이터 저장 완료!");
 
     } catch (FileNotFoundException e) {
       System.out.println("파일을 생성할 수 없습니다!");
@@ -36,6 +37,34 @@ public class MemberSerialDao extends AbstractDataSerializer<Member, Integer> {
       e.printStackTrace();
     }
 
+  }
+  @Override
+  protected Member createObject(String[] values) {
+    // CSV형식 : 번호,이름,이메일,암호,전화,사진,등록일
+    
+    Member member= new Member();
+    member.setNo(Integer.parseInt(values[0]));
+    member.setName(values[1]);
+    member.setEmail(values[2]);
+    member.setPassword(Integer.parseInt(values[3]));
+    member.setPhoneNum(values[4]);
+    member.setPicture(values[5]);
+    member.setJoinDate(Date.valueOf(values[6]));
+    
+    return member;
+  }
+  
+  @Override
+  protected String createCSV(Member obj) {
+    return String.format("%d,%s,%s,%s,%s,%s,%s", 
+        obj.getNo(),
+        obj.getName(),
+        obj.getEmail(),
+        obj.getPassword(),
+        obj.getPhoneNum(),
+        obj.getPicture(),
+        obj.getJoinDate());
+  
   }
   
   @Override
@@ -66,16 +95,19 @@ public class MemberSerialDao extends AbstractDataSerializer<Member, Integer> {
     return list.get(index);
   }
 
-  public int update(Member member) throws Exception {
+  public int modify(Member member) throws Exception {
     int index = indexOf(member.getNo());
     if (index == -1)
       return 0;
+    
+    
+    
     list.set(index, member);
     return 1;
 
   }
 
-  public int delete(int no) throws Exception {
+  public int remove(int no) throws Exception {
     int index = indexOf(no);
     if (index == -1)
       return 0;
