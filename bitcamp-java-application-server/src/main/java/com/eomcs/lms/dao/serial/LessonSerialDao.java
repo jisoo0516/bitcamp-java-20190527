@@ -1,23 +1,24 @@
-package com.eomcs.lms.dao;
+package com.eomcs.lms.dao.serial;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
-import com.eomcs.lms.domain.Member;
+import com.eomcs.lms.dao.LessonDao;
+import com.eomcs.lms.domain.Lesson;
 
-public class MemberSerialDao extends AbstractDataSerializer<Member, Integer> {
-  
-  
-  
-  
-  public MemberSerialDao(String file) throws Exception {
+
+public class LessonSerialDao extends AbstractDataSerializer<Lesson, Integer> implements LessonDao {
+
+
+
+  public LessonSerialDao(String file) throws Exception {
     super(file);
     try {
       loadData();
-      System.out.println("게시물 데이터 데이터 로딩 완료");
+      System.out.println("수업 데이터  로딩 완료");
 
     } catch (IOException e) {
-      System.out.println("게시물 데이터 데이터 로딩 중 오류 발생");
+      System.out.println("수업 데이터 로딩 중 오류 발생");
     }
   }
 
@@ -26,7 +27,7 @@ public class MemberSerialDao extends AbstractDataSerializer<Member, Integer> {
   public void saveData() {
     try {
       super.saveData();
-      System.out.println("게시물 데이터 저장 완료!");
+      System.out.println("수업데이터 저장 완료!");
 
     } catch (FileNotFoundException e) {
       System.out.println("파일을 생성할 수 없습니다!");
@@ -37,12 +38,12 @@ public class MemberSerialDao extends AbstractDataSerializer<Member, Integer> {
     }
 
   }
-  
+
   @Override
   public int indexOf(Integer key) {
     int i = 0;
-    for (Member m : list) {
-      if (m.getNo() == key) {
+    for (Lesson l : list) {
+      if (l.getNo() == key) {
         return i;
       }
       i++;
@@ -50,40 +51,44 @@ public class MemberSerialDao extends AbstractDataSerializer<Member, Integer> {
     return -1;
   }
 
-  public int insert(Member member) throws Exception {
-    list.add(member);
+  @Override
+  public int insert(Lesson lesson) throws Exception {
+    list.add(lesson);
     return 1;
   }
 
-  public List<Member> findAll() throws Exception {
+  @Override
+  public List<Lesson> findAll() throws Exception {
     return list;
   }
 
-  public Member findBy(int no) throws Exception {
+  @Override
+  public Lesson findBy(int no) throws Exception {
     int index = indexOf(no);
     if (index == -1)
       return null;
     return list.get(index);
   }
 
-  public int update(Member member) throws Exception {
-    int index = indexOf(member.getNo());
+  @Override
+  public int update(Lesson lesson) throws Exception {
+    int index = indexOf(lesson.getNo());
     if (index == -1)
       return 0;
-    list.set(index, member);
+    list.set(index, lesson);
     return 1;
 
   }
 
+  @Override
   public int delete(int no) throws Exception {
     int index = indexOf(no);
     if (index == -1)
       return 0;
-    
+
     list.remove(index);
     return 1;
   }
 
- 
-}
 
+}

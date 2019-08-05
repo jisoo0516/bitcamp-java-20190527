@@ -1,16 +1,17 @@
-package com.eomcs.lms.dao;
+package com.eomcs.lms.dao.serial;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import com.eomcs.lms.dao.LessonDao;
 import com.eomcs.lms.domain.Lesson;
 
 
-public class LessonSerialDao extends  AbstractDataSerializer<Lesson, Integer> {
-  
-  
-  
- public LessonSerialDao(String file) throws Exception {
+public class LessonSerialDao extends AbstractDataSerializer<Lesson, Integer> implements LessonDao {
+
+
+
+  public LessonSerialDao(String file) throws Exception {
     super(file);
     try {
       loadData();
@@ -37,7 +38,7 @@ public class LessonSerialDao extends  AbstractDataSerializer<Lesson, Integer> {
     }
 
   }
-  
+
   @Override
   public int indexOf(Integer key) {
     int i = 0;
@@ -50,39 +51,44 @@ public class LessonSerialDao extends  AbstractDataSerializer<Lesson, Integer> {
     return -1;
   }
 
-public int insert(Lesson lesson) throws Exception {
-  list.add(lesson);
-  return 1;
-}
+  @Override
+  public int insert(Lesson lesson) throws Exception {
+    list.add(lesson);
+    return 1;
+  }
 
-public List<Lesson> findAll() throws Exception {
-  return list;
-}
+  @Override
+  public List<Lesson> findAll() throws Exception {
+    return list;
+  }
 
-public Lesson findBy(int no) throws Exception {
-  int index = indexOf(no);
-  if (index == -1)
-    return null;
-  return list.get(index);
-}
+  @Override
+  public Lesson findBy(int no) throws Exception {
+    int index = indexOf(no);
+    if (index == -1)
+      return null;
+    return list.get(index);
+  }
 
-public int update(Lesson lesson) throws Exception {
-  int index = indexOf(lesson.getNo());
-  if (index == -1)
-    return 0;
-  list.set(index, lesson);
-  return 1;
+  @Override
+  public int update(Lesson lesson) throws Exception {
+    int index = indexOf(lesson.getNo());
+    if (index == -1)
+      return 0;
+    list.set(index, lesson);
+    return 1;
 
-}
+  }
 
-public int delete(int no) throws Exception {
-  int index = indexOf(no);
-  if (index == -1)
-    return 0;
-  
-  list.remove(index);
-  return 1;
-}
+  @Override
+  public int delete(int no) throws Exception {
+    int index = indexOf(no);
+    if (index == -1)
+      return 0;
+
+    list.remove(index);
+    return 1;
+  }
 
 
 }

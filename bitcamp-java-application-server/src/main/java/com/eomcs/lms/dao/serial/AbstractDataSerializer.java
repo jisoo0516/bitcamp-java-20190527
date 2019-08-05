@@ -1,4 +1,4 @@
-package com.eomcs.lms.dao;
+package com.eomcs.lms.dao.serial;
 
 import java.io.File;
 import java.io.FileInputStream;
