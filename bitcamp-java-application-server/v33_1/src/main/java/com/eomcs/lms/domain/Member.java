@@ -5,7 +5,8 @@ import java.sql.Date;
 
 public class Member implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+ private static final long serialVersionUID = 1L;
+  
   private int no;
   private String name;
   private String email;
@@ -14,6 +15,15 @@ public class Member implements Serializable {
   private String phoneNum;
   private Date joinDate;
   
+  
+  
+  
+  
+  @Override
+  public String toString() {
+    return "Member [no=" + no + ", name=" + name + ", email=" + email + ", password=" + password
+        + ", picture=" + picture + ", phoneNum=" + phoneNum + ", joinDate=" + joinDate + "]";
+  }
   public int getNo() {
     return no;
   }
