@@ -11,14 +11,12 @@ public class MemberServlet implements Servlet {
 // 회원 데이터 관리 DAO를 교체하기 쉽도록 인터페이스의 레퍼런스로 선언한다.
   MemberDao memberDao;
 
-  ObjectInputStream in;
-  ObjectOutputStream out;
+  
   
   
  
-  public MemberServlet(MemberDao memberDao, ObjectInputStream in, ObjectOutputStream out) throws Exception{
-    this.in = in;
-    this.out = out;
+  public MemberServlet(MemberDao memberDao) {
+   
     
     
     // 서블릿이 사용할 DAO를 직접 만들지 않고 외부에서 주입 받아 사용한다.
@@ -31,22 +29,22 @@ public class MemberServlet implements Servlet {
   }
   
   @Override
-  public void service(String command) throws Exception {
+  public void service(String command,ObjectInputStream in, ObjectOutputStream out) throws Exception {
   switch (command) {
     case "/member/add":
-      addMember();
+      addMember(in,out);
       break;
     case "/member/list":
-      listMember();
+      listMember(in,out);
       break;
     case "/member/delete":
-      deleteMember();
+      deleteMember(in,out);
       break;
     case "/member/detail":
-      detailMember();
+      detailMember(in,out);
       break;
     case "/member/update":
-      updateMember();
+      updateMember(in,out);
       break;
     default:
       out.writeUTF("fail");
@@ -55,7 +53,7 @@ public class MemberServlet implements Servlet {
 }
   
   
-  private void updateMember() throws Exception {
+  private void updateMember(ObjectInputStream in, ObjectOutputStream out) throws Exception {
     Member member = (Member) in.readObject();
     
     // 변경일은 서버 쪽에서 설정해야 한다.
@@ -63,19 +61,19 @@ public class MemberServlet implements Servlet {
 
 
     if (memberDao.update(member) == 0) {
-      fail("해당 번호의 게시물이 없습니다");
+      fail("해당 번호의 게시물이 없습니다", out);
       return;
     }
     out.writeUTF("ok");
 
   }
 
-  private  void detailMember() throws Exception {
+  private  void detailMember(ObjectInputStream in, ObjectOutputStream out) throws Exception {
     int no = in.readInt();
 
     Member member = memberDao.findBy(no);
     if (member == null) {
-      fail("해당 번호의 게시물이 없습니다.");
+      fail("해당 번호의 게시물이 없습니다.", out);
       return;
     }
     out.writeUTF("ok");
@@ -83,12 +81,12 @@ public class MemberServlet implements Servlet {
   }
 
 
-  private  void deleteMember() throws Exception {
+  private  void deleteMember(ObjectInputStream in, ObjectOutputStream out) throws Exception {
     int no = in.readInt();
 
 
     if (memberDao.delete(no) == 0) {
-      fail("해당 번호의 게시물이 없습니다.");
+      fail("해당 번호의 게시물이 없습니다.", out);
       return;
     }
 
@@ -98,19 +96,19 @@ public class MemberServlet implements Servlet {
 
 
 
-  private  void addMember() throws Exception {
+  private  void addMember(ObjectInputStream in, ObjectOutputStream out) throws Exception {
     Member member = (Member) in.readObject();
     
     // 등록일은 서버 쪽에서 설정해야 한다.
     member.setJoinDate(new Date(System.currentTimeMillis()));
     if(memberDao.insert(member) ==0) {
-      fail("해당 번호의 게시물이 없습니다.");
+      fail("해당 번호의 게시물이 없습니다.", out);
       return;
     }
      out.writeUTF("ok");
    }
 
-  private  void listMember() throws Exception {
+  private  void listMember(ObjectInputStream in, ObjectOutputStream out) throws Exception {
     out.writeUTF("ok");
     out.reset(); // 기존에 serialize 했던 객체의 상태를 무시하고 다시 serialize 한다.
     out.writeObject(memberDao.findAll());
@@ -119,7 +117,7 @@ public class MemberServlet implements Servlet {
 
   
   
-  private  void fail(String cause) throws Exception {
+  private  void fail(String cause, ObjectOutputStream out) throws Exception {
     out.writeUTF("fail");
     out.writeUTF(cause);
   }

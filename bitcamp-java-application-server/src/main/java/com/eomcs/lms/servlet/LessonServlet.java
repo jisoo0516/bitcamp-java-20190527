@@ -10,13 +10,10 @@ public class LessonServlet implements Servlet {
 // 수업 데이터 관리 DAO를 교체하기 쉽도록 인터페이스의 레퍼런스로 선언한다.
   LessonDao lessonDao;
   
-  ObjectInputStream in;
-  ObjectOutputStream out;
+ 
 
-
-  public LessonServlet(LessonDao lessonDao,ObjectInputStream in, ObjectOutputStream out) throws Exception {
-    this.in = in;
-    this.out = out;
+  public LessonServlet(LessonDao lessonDao)  {
+   
     
     // 서블릿이 사용할 DAO를 직접 만들지 않고 외부에서 주입 받아 사용한다.
     // 이렇게 의존하는 객체를 외부에서 주입받아 사용하는 방법을
@@ -32,12 +29,12 @@ public class LessonServlet implements Servlet {
 
   
 
-  private void updateLesson() throws Exception {
+  private void updateLesson(ObjectInputStream in, ObjectOutputStream out) throws Exception {
     Lesson lesson = (Lesson) in.readObject();
 
 
     if (lessonDao.update(lesson) == 0) {
-      fail("해당 번호의 게시물이 없습니다");
+      fail("해당 번호의 게시물이 없습니다",out);
       return;
     }
     out.writeUTF("ok");
@@ -47,24 +44,24 @@ public class LessonServlet implements Servlet {
     
 
 
-  private void detailLesson() throws Exception {
+  private void detailLesson(ObjectInputStream in, ObjectOutputStream out) throws Exception {
     int no = in.readInt();
 
     Lesson lesson = lessonDao.findBy(no);
     if (lesson == null) {
-      fail("해당 번호의 게시물이 없습니다.");
+      fail("해당 번호의 게시물이 없습니다.", out);
       return;
     }
     out.writeUTF("ok");
     out.writeObject(lesson);
   }
 
-  private void deleteLesson() throws Exception {
+  private void deleteLesson(ObjectInputStream in, ObjectOutputStream out) throws Exception {
     int no = in.readInt();
 
 
     if (lessonDao.delete(no) == 0) {
-      fail("해당 번호의 게시물이 없습니다.");
+      fail("해당 번호의 게시물이 없습니다.", out);
       return;
     }
 
@@ -75,22 +72,22 @@ public class LessonServlet implements Servlet {
 
 
   @Override
-  public void service(String command) throws Exception {
+  public void service(String command,ObjectInputStream in, ObjectOutputStream out) throws Exception {
     switch (command) {
       case "/lesson/add":
-        addLesson();
+        addLesson(in,out);
         break;
       case "/lesson/list":
-        listLesson();
+        listLesson(in,out);
         break;
       case "/lesson/delete":
-        deleteLesson();
+        deleteLesson(in,out);
         break;
       case "/lesson/detail":
-        detailLesson();
+        detailLesson(in,out);
         break;
       case "/lesson/update":
-        updateLesson();
+        updateLesson(in,out);
         break;
 
       default:
@@ -99,17 +96,17 @@ public class LessonServlet implements Servlet {
     }
   }
 
-  private void listLesson() throws Exception {
+  private void listLesson(ObjectInputStream in, ObjectOutputStream out) throws Exception {
     out.writeUTF("ok");
     out.reset(); // 기존에 serialize 했던 객체의 상태를 무시하고 다시 serialize 한다.
     out.writeObject(lessonDao.findAll());
   }
 
 
-  private void addLesson() throws Exception {
+  private void addLesson(ObjectInputStream in, ObjectOutputStream out) throws Exception {
     Lesson lesson = (Lesson) in.readObject();
     if(lessonDao.insert(lesson) ==0) {
-      fail("해당 번호의 게시물이 없습니다.");
+      fail("해당 번호의 게시물이 없습니다.", out);
       return;
     }
      out.writeUTF("ok");
@@ -120,7 +117,7 @@ public class LessonServlet implements Servlet {
 
   
 
-  private void fail(String cause) throws Exception {
+  private void fail(String cause, ObjectOutputStream out) throws Exception {
     out.writeUTF("fail");
     out.writeUTF(cause);
   }
