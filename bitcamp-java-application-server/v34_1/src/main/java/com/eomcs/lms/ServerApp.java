@@ -1,19 +1,13 @@
-// v34_2: RequestHandler를 ServerApp의 중첩 클래스로 정의한다.
+// v34_1: 클라이언트 요청을 처리하는 부분을 별도의 스레드(실)로 분리하여 실행한다.
 package com.eomcs.lms;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
 import com.eomcs.lms.context.ServletContextListener;
-import com.eomcs.lms.servlet.Servlet;
 
 public class ServerApp {
-  
-  public static boolean isStopping = false;
 
   ArrayList<ServletContextListener> listeners = new ArrayList<>();
   int port;
@@ -53,7 +47,7 @@ public class ServerApp {
         // requestHandler.start();
 
         // 위의 두 문장을 다음 한 문장으로 처리한다.
-        new RequestHandler(socket).start();
+        new RequestHandler(socket, servletContext).start();
         // 스레드를 분리하여 실행시키면 main thread는 즉시 다음 명령을 실행한다.
 
         // 클라이언트 중에 하나가 서버 종료를 설정했다면, 현재 접속한 클라이언트 요청까지만 처리하고
@@ -63,7 +57,7 @@ public class ServerApp {
         /// JVM이 완전히 종료되지 않는다.
         // 그러니 분리된 스레드가 실행하는 도중에 main() 호출이 종료되어
         // 해당 스레드의 작업이 중간에 방해받을 것이라는 걱정은 하지 말라!
-        if (isStopping)
+        if (RequestHandler.isStopping)
           break;
 
       } // while
@@ -85,73 +79,6 @@ public class ServerApp {
 
   public void addServletContextListener(ServletContextListener listener) {
     listeners.add(listener);
-  }
-
-
-  private Servlet findServlet(String command) {
-    Set<String> keys = servletContext.keySet();
-
-    // 명령어에 포함된 키를 찾아서, 해당 키로 저장된 서블릿을 꺼낸다.
-    // => 명령(/board/list) : 키(/board/)
-    for (String key : keys) {
-      if (command.startsWith(key)) {
-        return (Servlet) servletContext.get(key);
-      }
-    }
-    // => 명령(/files/list) : 키(?)
-    return null;
-  }
-
-  private class RequestHandler extends Thread {
-
-    Socket socket;
-    
-    public RequestHandler(Socket socket) {
-      this.socket = socket;
-    }
-
-    
-
-
-    @Override
-    public void run() {
-      // 여기에서 클라이언트의 요청을 처리한다.
-      // main thread와는 분리된 실행 흐름(thread)이기 때문에
-      // 여기에서 실행이 지체되더라도 main thread의 흐름에는 영향을 끼치지 않는다.
-
-      try (Socket clientSocket = this.socket;
-          ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());
-          ObjectOutputStream out = new ObjectOutputStream(clientSocket.getOutputStream())) {
-
-        System.out.println("클라이언트와 연결되었음.");
-
-        // 클라이언트가 보낸 명령을 읽는다.
-        String command = in.readUTF();
-        System.out.println(command + "요청 처리중...");
-
-        Servlet servlet = null;
-
-        if (command.equals("serverstop")) {
-          isStopping = true;
-          return;
-
-        } else if ((servlet = findServlet(command)) != null) {
-          servlet.service(command, in, out);
-
-        } else {
-          out.writeUTF("fail");
-          out.writeUTF("지원하지 않는 명령입니다.");
-        }
-
-        out.flush();
-        System.out.println("클라이언트에게 응답 완료!");
-
-
-      } catch (Exception e) {
-        System.out.println("클라이언트와의 통신 오류! - " + e.getMessage());
-      }
-      System.out.println("클라이언트와 연결을 끊었음.");
-    }
   }
 
   public static void main(String[] args) {
