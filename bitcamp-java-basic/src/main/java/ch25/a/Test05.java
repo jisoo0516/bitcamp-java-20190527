@@ -10,13 +10,7 @@ public class Test05 {
     // DriverManager.getConnetion()
     // => org.mariadb.jdbc.Driver.connect()
     //  
-    try (Connection con = DriverManager.getConnection(
-        "jdbc:mariadb://localhost/bitcampdb?user=bitcamp&password=1111")) {
-      System.out.println("DBMS에 연결됨!");
-      
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+   
   }
 
 }
