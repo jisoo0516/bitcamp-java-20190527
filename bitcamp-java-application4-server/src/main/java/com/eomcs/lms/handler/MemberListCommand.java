@@ -21,8 +21,8 @@ public class MemberListCommand implements Command {
     try {
       List<Member> members = memberDao.findAll();
       for (Member member : members) {
-        out.printf("%s,%s,%s,%s,%s\n", member.getName(), member.getEmail(), member.getPhoneNum(),
-            member.getPicture(), member.getJoinDate());
+        out.printf("%s,%s,%s,%s,%s\n", member.getNo(), member.getName(), member.getEmail(), member.getPhoneNum(),
+            member.getJoinDate());
 
       }
 
