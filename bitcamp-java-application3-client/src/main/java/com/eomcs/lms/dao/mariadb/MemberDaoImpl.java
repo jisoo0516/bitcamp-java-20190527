@@ -16,7 +16,6 @@ public class MemberDaoImpl implements MemberDao {
     this.con = con;
   }
 
-
   @Override
   public int insert(Member member) throws Exception {
     try (Statement stmt = con.createStatement()) {

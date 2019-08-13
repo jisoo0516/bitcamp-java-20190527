@@ -10,16 +10,18 @@ import com.eomcs.lms.domain.Board;
 
 public class BoardDaoImpl implements BoardDao {
 
-
   Connection con;
-
+  
   public BoardDaoImpl(Connection con) {
     this.con = con;
   }
 
+
+
   @Override
   public int insert(Board board) throws Exception {
-    try (Statement stmt = con.createStatement()) {
+    try (
+        Statement stmt = con.createStatement()) {
 
       return stmt
           .executeUpdate("insert into lms_board(conts)" + " values('" + board.getContents() + "')");
@@ -28,7 +30,9 @@ public class BoardDaoImpl implements BoardDao {
 
   @Override
   public List<Board> findAll() throws Exception {
-    try (Statement stmt = con.createStatement();
+    try (
+
+        Statement stmt = con.createStatement();
         ResultSet rs = stmt.executeQuery("select * from lms_board order by board_id desc")) {
 
       ArrayList<Board> list = new ArrayList<>();
@@ -50,7 +54,9 @@ public class BoardDaoImpl implements BoardDao {
 
   @Override
   public Board findBy(int no) throws Exception {
-    try (Statement stmt = con.createStatement();
+    try (
+
+        Statement stmt = con.createStatement();
         ResultSet rs = stmt.executeQuery("select * from lms_board where board_id = " + no)) {
 
       if (rs.next()) {
@@ -73,8 +79,7 @@ public class BoardDaoImpl implements BoardDao {
 
   @Override
   public int update(Board board) throws Exception {
-    try (
-        Statement stmt = con.createStatement()) {
+    try (Statement stmt = con.createStatement()) {
 
       return stmt.executeUpdate("update lms_board set" + " conts='" + board.getContents()
           + "' where board_id=" + board.getNo());

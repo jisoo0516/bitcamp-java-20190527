@@ -5,16 +5,13 @@ import java.io.PrintStream;
 import java.util.List;
 import com.eomcs.lms.dao.MemberDao;
 import com.eomcs.lms.domain.Member;
-import com.eomcs.util.Input;
 
 public class MemberListCommand implements Command {
 
   private MemberDao memberDao;
 
-  private Input input;
 
-  public MemberListCommand(Input input, MemberDao memberDao) {
-    this.input = input;
+  public MemberListCommand(MemberDao memberDao) {
     this.memberDao = memberDao;
   }
 

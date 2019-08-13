@@ -5,16 +5,13 @@ import java.io.PrintStream;
 import java.util.List;
 import com.eomcs.lms.dao.BoardDao;
 import com.eomcs.lms.domain.Board;
-import com.eomcs.util.Input;
 
 public class BoardListCommand implements Command {
 
   private BoardDao boardDao;
-  private Input input;
 
 
-  public BoardListCommand(Input input, BoardDao boardDao) {
-    this.input = input;
+  public BoardListCommand(BoardDao boardDao) {
     this.boardDao = boardDao;
 
   }

@@ -16,7 +16,6 @@ public class LessonDaoImpl implements LessonDao {
     this.con = con;
   }
 
-
   @Override
   public int insert(Lesson lesson) throws Exception {
     try (Statement stmt = con.createStatement()) {

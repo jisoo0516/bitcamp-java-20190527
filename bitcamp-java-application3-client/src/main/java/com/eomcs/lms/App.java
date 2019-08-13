@@ -39,17 +39,18 @@ import com.eomcs.util.Input;
 public class App {
 
   Scanner keyScan;
+  Connection con = null;
 
   private void service() {
-    // DAO가 사용할 Connection 객체 준비하기
-    Connection con = null;
+
     try {
-      con = DriverManager.getConnection(
-          "jdbc:mariadb://localhost/bitcampdb?user=bitcamp&password=1111");
+      con = DriverManager
+          .getConnection("jdbc:mariadb://localhost/bitcampdb?user=bitcamp&password=1111");
     } catch (Exception e) {
-      System.out.println("DBMS에 연결할 수 없습니다!");
+      System.out.println("DBMS에 연결할 수 없습니다.");
       return;
     }
+    
     // Command 객체가 사용할 데이터 처리 객체를 준비한다.
     BoardDao boardDao = new BoardDaoImpl(con);
     LessonDao lessonDao = new LessonDaoImpl(con);
@@ -111,13 +112,6 @@ public class App {
       }
       System.out.println();
     } // while
-
-    // DBMS와의 연결을 끊는다.
-    try {
-      con.close();
-    } catch (Exception e) {
-      // 연결 끊을 때 발생되는 예외는 무시한다.
-    }
   }
 
 

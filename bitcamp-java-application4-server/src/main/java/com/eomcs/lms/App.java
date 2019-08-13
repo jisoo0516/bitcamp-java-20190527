@@ -1,4 +1,4 @@
-// client- v37_1 : '규칙1' 프로토콜에 따라 클라이언트 요청을 처리한다.
+// v37_1 : '규칙1' 프로토콜에 따라 클라이언트 요청을 처리한다.
 package com.eomcs.lms;
 
 import java.io.BufferedReader;
@@ -8,13 +8,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.util.ArrayDeque;
-import java.util.Deque;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Scanner;
 import com.eomcs.lms.dao.BoardDao;
 import com.eomcs.lms.dao.LessonDao;
 import com.eomcs.lms.dao.MemberDao;
@@ -37,7 +31,6 @@ import com.eomcs.lms.handler.MemberDeleteCommand;
 import com.eomcs.lms.handler.MemberDetailCommand;
 import com.eomcs.lms.handler.MemberListCommand;
 import com.eomcs.lms.handler.MemberUpdateCommand;
-import com.eomcs.util.Input;
 
 
 
@@ -66,19 +59,19 @@ public class App {
       commandMap.put("/lesson/add", new LessonAddCommand(null, lessonDao));
       commandMap.put("/lesson/delete", new LessonDeleteCommand(null, lessonDao));
       commandMap.put("/lesson/detail", new LessonDetailCommand(null, lessonDao));
-      commandMap.put("/lesson/list", new LessonListCommand(null, lessonDao));
+      commandMap.put("/lesson/list", new LessonListCommand(lessonDao));
       commandMap.put("/lesson/update", new LessonUpdateCommand(null, lessonDao));
 
       commandMap.put("/board/add", new BoardAddCommand(null, boardDao));
       commandMap.put("/board/delete", new BoardDeleteCommand(null, boardDao));
       commandMap.put("/board/detail", new BoardDetailCommand(null, boardDao));
-      commandMap.put("/board/list", new BoardListCommand(null, boardDao));
+      commandMap.put("/board/list", new BoardListCommand(boardDao));
       commandMap.put("/board/update", new BoardUpdateCommand(null, boardDao));
 
       commandMap.put("/member/add", new MemberAddCommand(null, memberDao));
       commandMap.put("/member/delete", new MemberDeleteCommand(null, memberDao));
       commandMap.put("/member/detail", new MemberDetailCommand(null, memberDao));
-      commandMap.put("/member/list", new MemberListCommand(null, memberDao));
+      commandMap.put("/member/list", new MemberListCommand(memberDao));
       commandMap.put("/member/update", new MemberUpdateCommand(null, memberDao));
 
     } catch (Exception e) {
