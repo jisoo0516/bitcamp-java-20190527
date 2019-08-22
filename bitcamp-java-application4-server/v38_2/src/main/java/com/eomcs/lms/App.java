@@ -1,4 +1,4 @@
-// v38_3: 사진 게시판 만들기 + 첨부파일 다루기 + 트랜잭션 적용하기
+// v38_2: 사진 게시판 만들기 + 첨부파일 다루기
 package com.eomcs.lms;
 
 import java.io.BufferedReader;
@@ -52,7 +52,7 @@ public class App {
   private static final int STOP = 0;
 
 
-  public static Connection con;
+  Connection con;
   HashMap<String, Command> commandMap = new HashMap<>();
   int state;
 
@@ -75,7 +75,7 @@ public class App {
       MemberDao memberDao = new MemberDaoImpl(con);
       PhotoBoardDao photoBoardDao = new PhotoBoardDaoImpl(con);
       PhotoFileDao photoFileDao = new PhotoFileDaoImpl(con);
-
+      
       // 클라이언트 명령을 처리할 커맨트 객체를 준비한다.
       commandMap.put("/lesson/add", new LessonAddCommand(lessonDao));
       commandMap.put("/lesson/delete", new LessonDeleteCommand(lessonDao));
@@ -95,7 +95,7 @@ public class App {
       commandMap.put("/board/detail", new BoardDetailCommand(boardDao));
       commandMap.put("/board/list", new BoardListCommand(boardDao));
       commandMap.put("/board/update", new BoardUpdateCommand(boardDao));
-
+      
       commandMap.put("/photoboard/list", new PhotoBoardListCommand(photoBoardDao));
       commandMap.put("/photoboard/add", new PhotoBoardAddCommand(photoBoardDao,photoFileDao));
       commandMap.put("/photoboard/delete", new PhotoBoardDeleteCommand(photoBoardDao,photoFileDao));
