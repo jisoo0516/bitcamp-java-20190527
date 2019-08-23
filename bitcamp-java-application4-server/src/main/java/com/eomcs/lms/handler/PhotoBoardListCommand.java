@@ -20,7 +20,6 @@ public class PhotoBoardListCommand implements Command {
   @Override
   public void execute(BufferedReader in, PrintStream out) {
     try {
-
       List<PhotoBoard> photoBoards = photoBoardDao.findAll();
       for (PhotoBoard photoBoard : photoBoards) {
         out.printf("%d, %s, %s, %d, %d\n", photoBoard.getNo(), photoBoard.getTitle(),

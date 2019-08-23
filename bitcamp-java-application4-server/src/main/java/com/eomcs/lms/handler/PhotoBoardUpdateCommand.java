@@ -2,31 +2,41 @@ package com.eomcs.lms.handler;
 
 import java.io.BufferedReader;
 import java.io.PrintStream;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
-import com.eomcs.lms.App;
 import com.eomcs.lms.dao.PhotoBoardDao;
 import com.eomcs.lms.dao.PhotoFileDao;
 import com.eomcs.lms.domain.PhotoBoard;
 import com.eomcs.lms.domain.PhotoFile;
+import com.eomcs.util.ConnectionFactory;
 import com.eomcs.util.Input;
 
 public class PhotoBoardUpdateCommand implements Command {
 
   private PhotoBoardDao photoBoardDao;
   private PhotoFileDao photoFileDao;
+  private  ConnectionFactory conFactory;
 
 
-  public PhotoBoardUpdateCommand(PhotoBoardDao photoBoardDao,PhotoFileDao photoFileDao) {
+
+  public PhotoBoardUpdateCommand(PhotoBoardDao photoBoardDao,PhotoFileDao photoFileDao,ConnectionFactory conFactory) {
     this.photoBoardDao = photoBoardDao;
     this.photoFileDao = photoFileDao;
+    this.conFactory = conFactory;
   }
 
 
   @Override
   public void execute(BufferedReader in, PrintStream out) {
+    Connection con = null;
 
     try {
+      
+      con = conFactory.getConnection();
+      con.setAutoCommit(false);
+      
+      
       int no = Input.getIntValue(in, out, "번호?");
 
       PhotoBoard photoBoard = photoBoardDao.findBy(no);
@@ -86,14 +96,28 @@ public class PhotoBoardUpdateCommand implements Command {
         photoFileDao.insert(photoFile);
         count++;
       }
-
+      
+    
+      con.commit();
       out.println("사진을 변경하였습니다.");
 
     } catch (Exception e) {
       // 예외가 발생하면 DBMS의 임시 데이터베이스에 보관된 데이터 변경 작업들을 모두 취소한다.
-    
+      try {
+        con.rollback();
+      }catch(Exception e2) {
+        
+      }
       out.println("데이터 변경 실패");
       System.out.println(e.getMessage());
+    }finally {
+      // 커넥션 객체를 원래의 자동 커밋 상태로 설정한다.
+      // => 즉 DBMS 쪽 담당자(스레드)에게 이제부터 모든 데이터 변경 작업은 즉시 실행할 것을 명령한다.
+      try {
+        con.setAutoCommit(true);
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
     }
    
   }
