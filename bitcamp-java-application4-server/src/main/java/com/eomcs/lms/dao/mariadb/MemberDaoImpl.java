@@ -1,128 +1,91 @@
 package com.eomcs.lms.dao.mariadb;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import com.eomcs.lms.dao.MemberDao;
 import com.eomcs.lms.domain.Member;
-import com.eomcs.util.DataSource;
 
 public class MemberDaoImpl implements MemberDao {
 
-  DataSource dataSource;
+  SqlSessionFactory sqlSessionFactory;
 
-  public MemberDaoImpl(DataSource conFactory) {
-    this.dataSource = conFactory;
+  public MemberDaoImpl( SqlSessionFactory sqlSessionFactory) {
+    this.sqlSessionFactory = sqlSessionFactory;
   }
 
 
   @Override
   public int insert(Member member) throws Exception {
-    try (Connection con = dataSource.getConnection();
-        Statement stmt = con.createStatement()) {
+    SqlSession sqlSession = sqlSessionFactory.openSession();
 
-      return stmt.executeUpdate("insert into lms_member(name,email,pwd,cdt,tel,photo)" + " values('"
-          + member.getName() + "','" + member.getEmail() + "',password('" + member.getPassword()
-          + "'),now()" + ",'" + member.getPhoneNum() + "','" + member.getPicture() + "')");
+    try  {
+      int count = sqlSession.insert("MemberDao.insert", member);
+      sqlSession.commit();
+      return count;
+
+    
+    }catch (Exception e) {
+      sqlSession.rollback();
+      throw e;
+    }finally {
+      sqlSession.close();
     }
+
   }
 
   @Override
   public List<Member> findAll() throws Exception {
-    try (Connection con = dataSource.getConnection();
-        Statement stmt = con.createStatement();
-        ResultSet rs = stmt.executeQuery(
-            "select member_id,name,email,tel,cdt" + " from lms_member" + " order by name asc")) {
-
-      ArrayList<Member> list = new ArrayList<>();
-
-      while (rs.next()) {
-        Member member = new Member();
-        member.setNo(rs.getInt("member_id"));
-        member.setName(rs.getString("name"));
-        member.setEmail(rs.getString("email"));
-        member.setPhoneNum(rs.getString("tel"));
-        member.setJoinDate(rs.getDate("cdt"));
-
-        list.add(member);
-      }
-      return list;
+    try (SqlSession sqlSession= sqlSessionFactory.openSession()) {
+      return sqlSession.selectList("MemberDao.findAll");
     }
   }
 
   @Override
   public Member findBy(int no) throws Exception {
-    try (Connection con = dataSource.getConnection();
-        Statement stmt = con.createStatement();
-        ResultSet rs =
-            stmt.executeQuery("select *" + " from lms_member" + " where member_id=" + no)) {
+    SqlSession sqlSession = sqlSessionFactory.openSession();
+    
 
-      if (rs.next()) {
-        Member member = new Member();
-        member.setNo(rs.getInt("member_id"));
-        member.setName(rs.getString("name"));
-        member.setEmail(rs.getString("email"));
-        member.setJoinDate(rs.getDate("cdt"));
-        member.setPhoneNum(rs.getString("tel"));
-        member.setPicture(rs.getString("photo"));
+      try {
+        
+        Member member = sqlSession.selectOne("MemberDao.findBy", no);
+      
+         
+          return member;
 
-        return member;
-
-      } else {
-        return null;
+          
+      }catch (Exception e) {
+        sqlSession.rollback();
+        throw e;
+        
+      } finally {
+        sqlSession.close();
       }
+      
     }
-  }
 
   @Override
   public List<Member> findByKeyword(String keyword) throws Exception {
-    try (Connection con = dataSource.getConnection();
-        Statement stmt = con.createStatement();
-        ResultSet rs = stmt.executeQuery(
-            "select member_id,name,email,tel,cdt" 
-                + " from lms_member"
-                + " where name like '%" + keyword
-                + "%' or email like '%" + keyword
-                + "%' or tel like '%"  + keyword
-                + "%'"
-                + " order by name asc")) {
-
-      ArrayList<Member> list = new ArrayList<>();
-
-      while (rs.next()) {
-        Member member = new Member();
-        member.setNo(rs.getInt("member_id"));
-        member.setName(rs.getString("name"));
-        member.setEmail(rs.getString("email"));
-        member.setPhoneNum(rs.getString("tel"));
-        member.setJoinDate(rs.getDate("cdt"));
-
-        list.add(member);
-      }
-      return list;
+   
+    try  ( SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      return sqlSession.selectList("MemberDao.findByKeyword", keyword);
+      
     }
   }
 
   @Override
   public int update(Member member) throws Exception {
-    try (Connection con = dataSource.getConnection();
-        Statement stmt = con.createStatement()) {
+    try (SqlSession sqlSession = sqlSessionFactory.openSession(true)) {
 
-      return stmt.executeUpdate(
-          "update lms_member set" + " name='" + member.getName() + "', email='" + member.getEmail()
-          + "', pwd=password('" + member.getPassword() + "'), tel='" + member.getPhoneNum()
-          + "', photo='" + member.getPicture() + "' where member_id=" + member.getNo());
+      return sqlSession.update("MemberDao.update", member); 
     }
   }
 
   @Override
   public int delete(int no) throws Exception {
-    try (Connection con = dataSource.getConnection();
-        Statement stmt = con.createStatement()) {
+    try (SqlSession sqlSession = sqlSessionFactory.openSession(true)) {
 
-      return stmt.executeUpdate("delete from lms_member where member_id=" + no);
+      return sqlSession.update("MemberDao.delete", no); 
 
 
     }
@@ -130,32 +93,16 @@ public class MemberDaoImpl implements MemberDao {
 
   @Override
   public Member findByEmailPassword(String email, String password) throws Exception {
-    try (Connection con = dataSource.getConnection();
-        Statement stmt = con.createStatement();
-        ResultSet rs =
-            stmt.executeQuery("select *" 
-                + " from lms_member" 
-                + " where email='" + email
-                + "' and pwd=password('" + password
-                + "')")) {
-
-      if (rs.next()) {
-        Member member = new Member();
-        member.setNo(rs.getInt("member_id"));
-        member.setName(rs.getString("name"));
-        member.setEmail(rs.getString("email"));
-        member.setJoinDate(rs.getDate("cdt"));
-        member.setPhoneNum(rs.getString("tel"));
-        member.setPicture(rs.getString("photo"));
-
-        return member;
-
-      } else {
-        return null;
-      }
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      Member member = new Member();
+      member.setEmail(email);
+      member.setPassword(password);
+      return sqlSession.selectOne("MemberDao.findByEmailPassword", member);
+    }
+       
     }
   }
 
 
 
-}
+

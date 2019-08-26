@@ -2,7 +2,6 @@
 package com.eomcs.lms;
 
 import java.io.BufferedReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.ServerSocket;
@@ -10,9 +9,6 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import com.eomcs.lms.dao.BoardDao;
 import com.eomcs.lms.dao.LessonDao;
 import com.eomcs.lms.dao.MemberDao;
@@ -78,21 +74,10 @@ public class App {
       // 트랜잭션 관리자를 준비한다.
       PlatformTransactionManager txManager = new PlatformTransactionManager(dataSource);
       
-      // Mybatis의 SQL 실행 도구 준비
-      // => Mybatis 설정 파일을 읽을 때 사용할 입력스트림 도구를 준비한다.
-      InputStream inputStream = Resources.getResourceAsStream("com/eomcs/lms/conf/mybatis-config.xml");
-
-      // => SQL을 실행할 때 사용할 도구(SqlSession;샌드위치)를 만들어주는  
-      //    생성기(SqlSessionFactory;파리바게트) 공장(SqlSessionFactoryBudilder;파리바게트 건물 인테리어전문가)을 준비한다. 
-      
-      
-      SqlSessionFactory sqlSessionFactory =
-        new SqlSessionFactoryBuilder().build(inputStream);
-      
       // Command 객체가 사용할 데이터 처리 객체를 준비한다.
-      BoardDao boardDao = new BoardDaoImpl(sqlSessionFactory);
-      MemberDao memberDao = new MemberDaoImpl(sqlSessionFactory);
-      LessonDao lessonDao = new LessonDaoImpl(sqlSessionFactory);
+      BoardDao boardDao = new BoardDaoImpl(dataSource);
+      MemberDao memberDao = new MemberDaoImpl(dataSource);
+      LessonDao lessonDao = new LessonDaoImpl(dataSource);
       PhotoBoardDao photoBoardDao = new PhotoBoardDaoImpl(dataSource);
       PhotoFileDao photoFileDao = new PhotoFileDaoImpl(dataSource);
 

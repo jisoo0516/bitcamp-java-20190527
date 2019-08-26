@@ -29,22 +29,8 @@ public class LessonUpdateCommand implements Command {
       String str = Input.getStringValue(in, out, "수업명");
       if (str.length() > 0) {
         lesson.setTitle(str);
-        
-        lesson.setStartDate(
-            Input.getDateValue(in, out, "시작일(" + lesson.getStartDate() + ")? "));
-
-        lesson.setEndDate(
-            Input.getDateValue(in, out, "종료일(" + lesson.getEndDate() + ")? "));
-
-        lesson.setTotalHours(
-            Input.getIntValue(in, out, "총수업시간(" + lesson.getTotalHours() + ")? "));
-
-        lesson.setDayHours(
-            Input.getIntValue(in, out, "일수업시간(" + lesson.getDayHours() + ")? "));
-
         lessonDao.update(lesson);
         out.println("데이터 수정완료");
-    
 
       } else {
         out.println("데이터 변경을 취소합니다.");

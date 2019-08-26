@@ -1,107 +1,78 @@
 package com.eomcs.lms.dao.mariadb;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import com.eomcs.lms.dao.LessonDao;
 import com.eomcs.lms.domain.Lesson;
-import com.eomcs.util.DataSource;
 
 public class LessonDaoImpl implements LessonDao {
 
-  DataSource dataSource;
+  SqlSessionFactory sqlSessionFactory;
 
-  public LessonDaoImpl(DataSource conFactory) {
-    this.dataSource = conFactory;
+  public LessonDaoImpl(SqlSessionFactory sqlSessionFactory) {
+    this.sqlSessionFactory = sqlSessionFactory;
   }
 
 
 
   @Override
   public int insert(Lesson lesson) throws Exception {
-    try (Connection con = dataSource.getConnection();
-        Statement stmt = con.createStatement()) {
+    SqlSession sqlSession = sqlSessionFactory.openSession();
+    try  {
+      int count = sqlSession.insert("LessonDao.insert", lesson);
+      sqlSession.commit();
+      return count;
 
-      return stmt.executeUpdate("insert into lms_lesson(sdt,edt,tot_hr,day_hr,titl,conts)"
-          + " values('" + lesson.getStartDate() + "','" + lesson.getEndDate() + "',"
-          + lesson.getTotalHours() + "," + lesson.getDayHours() + ",'" + lesson.getTitle() + "','"
-          + lesson.getContents() + "')");
+    }catch (Exception e) {
+      sqlSession.rollback();
+      throw e;
+    } finally {
+      sqlSession.close();
     }
   }
 
   @Override
   public List<Lesson> findAll() throws Exception {
-    try (Connection con = dataSource.getConnection();
-
-        Statement stmt = con.createStatement();
-        ResultSet rs = stmt.executeQuery("select lesson_id, titl, sdt,edt,tot_hr "
-            + " from lms_lesson " + " order by sdt desc")) {
-
-      ArrayList<Lesson> list = new ArrayList<>();
-
-      while (rs.next()) {
-        Lesson lesson = new Lesson();
-        lesson.setNo(rs.getInt("lesson_id"));
-        lesson.setTitle(rs.getString("titl"));
-        lesson.setStartDate(rs.getDate("sdt"));
-        lesson.setEndDate(rs.getDate("edt"));
-        lesson.setTotalHours(rs.getInt("tot_hr"));
-
-        list.add(lesson);
-
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+        return sqlSession.selectList("LessonDao.findAll");
       }
-      return list;
-    }
+    
   }
 
 
   @Override
   public Lesson findBy(int no) throws Exception {
-    try (Connection con = dataSource.getConnection();
-
-        Statement stmt = con.createStatement();
-        ResultSet rs =
-            stmt.executeQuery("select * " + " from lms_lesson " + " where lesson_id = " + no)) {
-
-      if (rs.next()) {
-        Lesson lesson = new Lesson();
-        lesson.setNo(rs.getInt("lesson_id"));
-        lesson.setTitle(rs.getString("titl"));
-        lesson.setContents(rs.getString("conts"));
-        lesson.setStartDate(rs.getDate("sdt"));
-        lesson.setEndDate(rs.getDate("edt"));
-        lesson.setTotalHours(rs.getInt("tot_hr"));
-        lesson.setDayHours(rs.getInt("day_hr"));
-
-
-        return lesson;
-
-      } else {
-        return null;
+    SqlSession sqlSession = sqlSessionFactory.openSession();
+      try {
+        Lesson lesson = sqlSession.selectOne("LessonDao.findBy",no);
+            return lesson;
+      }catch (Exception e) {
+        sqlSession.rollback();
+        throw e;
+      } finally {
+        sqlSession.close();
       }
-    }
+       
+          
+
+
+      
   }
 
   @Override
   public int update(Lesson lesson) throws Exception {
-    try (Connection con = dataSource.getConnection();
-        Statement stmt = con.createStatement()) {
+    try (SqlSession sqlSession = sqlSessionFactory.openSession(true)) {
 
-      return stmt.executeUpdate("update lms_lesson set" + " titl='" + lesson.getTitle()
-          + "', conts='" + lesson.getContents() + "', sdt='" + lesson.getStartDate() + "', edt='"
-          + lesson.getEndDate() + "', tot_hr=" + lesson.getTotalHours() + ", day_hr="
-          + lesson.getDayHours() + " where lesson_id=" + lesson.getNo());
+      return sqlSession.update("LessonDao.update", lesson);
     }
   }
 
   @Override
   public int delete(int no) throws Exception {
-    try (Connection con = dataSource.getConnection();
-        Statement stmt = con.createStatement()) {
+    try (SqlSession sqlSession = sqlSessionFactory.openSession(true)) {
 
-      return stmt.executeUpdate("delete from lms_lesson where lesson_id=" + no);
+      return sqlSession.delete("LessonDao.delete", no);
 
 
     }

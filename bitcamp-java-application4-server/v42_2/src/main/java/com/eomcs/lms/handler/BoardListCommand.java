@@ -29,7 +29,7 @@ public class BoardListCommand implements Command {
       }
     } catch (Exception e) {
       out.println("데이터 목록조회 실패");
-      e.printStackTrace();
+      System.out.println(e.getMessage());
     }
   }
 
