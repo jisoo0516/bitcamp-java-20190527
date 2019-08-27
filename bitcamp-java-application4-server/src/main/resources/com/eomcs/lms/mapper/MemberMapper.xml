@@ -3,23 +3,19 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="MemberDao">
-	<!-- Mybatis가 컬럼값을 객체에 담을 때 컬럼 이름으로 셋터를 찾아 호출한다. -->
-	<!-- <select id="findAll" resultType="com.eomcs.lms.domain.Member"> select 
-		board_id, /* Member의 setMember_id(컬럼값)를 호출하여 컬럼값을 Member 객체에 담는다 */ conts, /* 
-		Member의 setConts(컬럼값) 호출*/ cdt, /* Member의 setCdt(컬럼값) 호출*/ vw_cnt /* Member의 
-		set vw_cnt(컬럼값) 호출*/ from lms_board order by board_id desc </select> -->
-	 <!-- 만약 컬럼에 별명이 있다면 셋터를 호출할 때도 그 별명과 일치하는 셋터를 호출한다. 
-    컬럼의 이름과 셋터의 이름이 다르다면 다음과 같이 
-    셋터 이름과 같은 이름으로 컬럼에 별명을 부여하라!
-    그래야만 컬럼의 값을 객체에 제대로 담을 수 있다.
-  -->
-  <select id="findAll" resultType="com.eomcs.lms.domain.Member">
+	<resultMap type="Member" id="MemberMap">
+   <id column="member_id" property="no"/>
+   <result column="tel" property="phoneNum"/>
+    <result column="cdt" property="joinDate"/>
+    
+  </resultMap>
+  <select id="findAll"  resultMap="MemberMap">
  select 
- member_id as no ,
- name as name,
- email as email,
- tel as phoneNum,
- cdt as  joinDate
+ member_id,
+ name,
+ email,
+ tel,
+ cdt
  from lms_member
  order by name asc
   </select>
@@ -27,26 +23,26 @@
 
 	<select id="findBy"
 	 parameterType="int"
-		resultType="com.eomcs.lms.domain.Member">
+	resultMap="MemberMap">
 		select
-		 member_id as no,
-     name as name,
-     email as email,
-     tel as phoneNum,
-     cdt as  joinDate
+		 member_id,
+     name,
+     email,
+     tel ,
+     cdt
 	  from lms_member
 		where member_id=#{ohoh}
 	</select>
 
 	
 
-<insert id="insert" parameterType="com.eomcs.lms.domain.Member">
+<insert id="insert" parameterType="Member">
 insert into lms_member(name,email,pwd,cdt,tel,photo)
  values(#{name},#{email},password(#{password}),now(),#{phoneNum},#{picture})
 
 </insert>
 
-<update id="update" parameterType="com.eomcs.lms.domain.Member">
+<update id="update" parameterType="Member">
 update lms_member 
 set name=#{name}, email=#{email}, pwd=password(#{password}), tel=#{phoneNum}, photo=#{picture}
 where member_id=#{no}
@@ -59,7 +55,7 @@ where member_id=#{no}
 
 </delete>
 
-<select id="findByKeyword" parameterType="String" resultType="com.eomcs.lms.domain.Member">
+<select id="findByKeyword" parameterType="String" resultType="Member">
 select 
  member_id as no ,
  name ,
@@ -75,8 +71,8 @@ order by name asc
 </select>
 
 <select id="findByEmailPassword" 
-parameterType="com.eomcs.lms.domain.Member"  
-resultType="com.eomcs.lms.domain.Member">
+parameterType="Member"  
+resultType="Member">
 select
  member_id as no ,
  name as name,
