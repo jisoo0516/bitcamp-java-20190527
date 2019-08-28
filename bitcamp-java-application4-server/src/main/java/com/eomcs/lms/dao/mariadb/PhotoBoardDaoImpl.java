@@ -25,7 +25,6 @@ public class PhotoBoardDaoImpl implements PhotoBoardDao {
   public List<PhotoBoard> findAll() throws Exception {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
         return sqlSession.selectList("PhotoBoardDao.findAll");
-      
     }
   }
 

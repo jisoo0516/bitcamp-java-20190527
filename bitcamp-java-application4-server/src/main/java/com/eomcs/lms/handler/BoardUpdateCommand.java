@@ -18,6 +18,9 @@ public class BoardUpdateCommand implements Command {
 
   @Override
   public void execute(BufferedReader in, PrintStream out) {
+    
+   
+    
 
     try {
       int no = Input.getIntValue(in, out, "번호?");
@@ -27,17 +30,18 @@ public class BoardUpdateCommand implements Command {
         out.println("해당 수업을 찾을 수 없습니다.");
         return;
       }
+      
+      Board data = new Board();
+      data.setNo(no);
 
       String str = Input.getStringValue(in, out, "내용?");
       if (str.length() > 0) {
-        board.setContents(str);
-        boardDao.update(board);
-        out.println("데이터를 수정하였습니다.");
+        data.setContents(str);
 
-      } else {
-        out.println("데이터 변경을 취소합니다.");
-      }
+      } 
 
+      boardDao.update(data);
+      out.println("데이터를 수정하였습니다.");
 
     } catch (Exception e) {
       out.println("데이터 수정 실패");

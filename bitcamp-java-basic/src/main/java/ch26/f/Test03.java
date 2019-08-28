@@ -35,6 +35,7 @@ public class Test03 {
     System.out.print("제목? ");
     value = keyboard.nextLine();
     if (value.length() > 0) {
+      
       params.put("title", value);
     }
     

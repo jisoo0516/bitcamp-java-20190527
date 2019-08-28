@@ -4,84 +4,88 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="MemberDao">
 	<resultMap type="Member" id="MemberMap">
-   <id column="member_id" property="no"/>
-   <result column="tel" property="phoneNum"/>
-    <result column="cdt" property="joinDate"/>
-    
-  </resultMap>
-  <select id="findAll"  resultMap="MemberMap">
- select 
- member_id,
- name,
- email,
- tel,
- cdt
- from lms_member
- order by name asc
-  </select>
-  
+		<id column="member_id" property="no" />
+		<result column="tel" property="phoneNum" />
+		<result column="cdt" property="joinDate" />
 
-	<select id="findBy"
-	 parameterType="int"
-	resultMap="MemberMap">
+	</resultMap>
+	<select id="findAll" resultMap="MemberMap">
 		select
-		 member_id,
-     name,
-     email,
-     tel ,
-     cdt
-	  from lms_member
+		member_id,
+		name,
+		email,
+		tel,
+		cdt
+		from lms_member
+		order by name asc
+	</select>
+
+
+	<select id="findBy" parameterType="int" resultMap="MemberMap">
+		select
+		member_id,
+		name,
+		email,
+		tel ,
+		cdt
+		from lms_member
 		where member_id=#{ohoh}
 	</select>
 
-	
 
-<insert id="insert" parameterType="Member">
-insert into lms_member(name,email,pwd,cdt,tel,photo)
- values(#{name},#{email},password(#{password}),now(),#{phoneNum},#{picture})
 
-</insert>
+	<insert id="insert" parameterType="Member">
+		insert into lms_member(name,email,pwd,cdt,tel,photo)
+		values(#{name},#{email},password(#{password}),now(),#{phoneNum},#{picture})
 
-<update id="update" parameterType="Member">
-update lms_member 
-set name=#{name}, email=#{email}, pwd=password(#{password}), tel=#{phoneNum}, photo=#{picture}
-where member_id=#{no}
-</update>
+	</insert>
 
-<delete id="delete" parameterType="int" >
-delete 
-from lms_member 
-where member_id=#{no}
+	<update id="update" parameterType="Member">
+		update lms_member 
+		<set>
+			<if test="name != null">name=#{name},</if>
+			<if test="email != null">email=#{email},</if>
+			<if test="password != null">pwd=password(#{password}),</if>
+			<if test="phoneNum != null">tel=#{phoneNum},</if>
+			<if test="picture != null">photo=#{picture}</if>
+		</set>
+		where member_id=#{no}
+	</update>
 
-</delete>
+	<delete id="delete" parameterType="int">
+		delete
+		from lms_member
+		where member_id=#{no}
 
-<select id="findByKeyword" parameterType="String" resultType="Member">
-select 
- member_id as no ,
- name ,
- email ,
- tel as phoneNum,
- cdt as  joinDate
-from lms_member
- where name like concat('%', #{value}, '%')
-      or email like concat('%', #{value}, '%')
-      or tel like concat('%', #{value}, '%')
-order by name asc
+	</delete>
 
-</select>
+	<select id="findByKeyword" parameterType="String"
+		resultType="Member">
+		select
+		member_id as no ,
+		name ,
+		email ,
+		tel as phoneNum,
+		cdt as joinDate
+		from lms_member
+		where name like concat('%', #{value}, '%')
+		or email like concat('%', #{value}, '%')
+		or tel like concat('%', #{value}, '%')
+		order by name asc
 
-<select id="findByEmailPassword" 
-parameterType="Member"  
-resultType="Member">
-select
- member_id as no ,
- name as name,
- email as email,
- tel as phoneNum,
- cdt as  joinDate 
-from lms_member 
-where email=#{email} and pwd=password(#{password})
-</select>
+	</select>
+
+	<select id="findByEmailPassword" parameterType="Member"
+		resultType="Member">
+		select
+		member_id as no ,
+		name as name,
+		email as email,
+		tel as phoneNum,
+		cdt as joinDate
+		from lms_member
+		where email=#{email} and pwd=password(#{password})
+	</select>
 
 
 </mapper>

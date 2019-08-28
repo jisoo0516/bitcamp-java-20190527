@@ -42,15 +42,19 @@ public class PhotoBoardUpdateCommand implements Command {
         return;
       }
       out.println("제목을 입력하지 않으면 이전 제목을 유지합니다.");
+      
+      PhotoBoard data = new PhotoBoard();
+      data.setNo(no);
+     
       String str = Input.getStringValue(in, out, String.format("제목(%s)?", photoBoard.getTitle()));
 
       // 제목을 입력했으면 사진 게시글의 제목을 변경한다.
       if (str.length() > 0) {
-        photoBoard.setTitle(str);
-        photoBoardDao.update(photoBoard);
-        out.println("게시물의 제목을 변경하였습니다");
+        data.setTitle(str);
       }
-
+      photoBoardDao.update(data);
+      out.println("게시물의 제목을 변경하였습니다");
+     
 
       // 이전에 등록한 파일 목록을 출력한다.
       out.println("사진 파일:");
@@ -66,6 +70,7 @@ public class PhotoBoardUpdateCommand implements Command {
 
       if(!response.equalsIgnoreCase("y"))  {
         out.println("파일 변경을 취소합니다.");
+        txManager.commit();
         return;
       }
 

@@ -21,37 +21,43 @@ public class MemberUpdateCommand implements Command {
 
     try {
       int no = Input.getIntValue(in, out, "번호?");
-      Member member = memberDao.findBy(no);
 
+      Member member = memberDao.findBy(no);
       if (member == null) {
         System.out.println("해당 학생을 찾을 수 없습니다.");
         return;
       }
+      // 사용자로부터 변경할 값을 입력 받는다.
+      Member data = new Member();
+      data.setNo(no);
+
       String str = Input.getStringValue(in, out, "이름");
       if (str.length() > 0) {
-        member.setName(str);
-      }
-      str = Input.getStringValue(in, out, "메일?");
-      if (str.length() > 0) {
-        member.setEmail(str);
+        data.setName(str);
       }
 
-      member.setPassword(Input.getStringValue(in, out, "패스워드 "));
+      str = Input.getStringValue(in, out, "메일?");
+      if (str.length() > 0) {
+        data.setEmail(str);
+      }
+
+      str = Input.getStringValue(in, out, "암호? ");
+      if (str.length() > 0) {
+        data.setPassword(str);
+      }
 
       str = Input.getStringValue(in, out, "사진?");
       if (str.length() > 0) {
-        member.setPicture(str);
+        data.setPicture(str);
       }
 
       str = Input.getStringValue(in, out, "폰번호?");
       if (str.length() > 0) {
-        member.setPhoneNum(str);
+        data.setPhoneNum(str);
 
-        memberDao.update(member);
-        out.println("데이터를 수정하였습니다.");
-      } else {
-        out.println("데이터 변경을 취소합니다.");
       }
+      memberDao.update(data);
+      out.println("데이터를 수정하였습니다.");
 
 
     } catch (Exception e) {
