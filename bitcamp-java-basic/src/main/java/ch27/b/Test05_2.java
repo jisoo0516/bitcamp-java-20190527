@@ -8,7 +8,7 @@ import java.lang.reflect.Parameter;
 // 어떤 클래스나 인터페이스의 스태틱 멤버를 import 할 수 있다.
 import static java.lang.reflect.Modifier.*;
 
-public class Test05 {
+public class Test05_2 {
 
   public static void main(String[] args) throws Exception {
     
@@ -30,10 +30,10 @@ public class Test05 {
             p.getType().getName() // 파라미터 타입명
         );
       }
-      /*
+      
       System.out.println("리턴 타입:");
       System.out.printf("    %s\n", m.getReturnType().getName());
-      
+    
       System.out.println("modifier:");
       int modifiers = m.getModifiers();
       if (Modifier.isPublic(modifiers))//(modifiers & Modifier.PUBLIC) == Modifier.PUBLIC)
@@ -43,12 +43,14 @@ public class Test05 {
       else if ((modifiers & PRIVATE) != 0)
         System.out.println("    private");
       
-      if ((modifiers & STATIC) != 0)
+    
+      //if ((modifiers & STATIC) != 0)
+      if(Modifier.isStatic(modifiers))
         System.out.println("    static");
-      
+     
       if ((modifiers & FINAL) != 0)
         System.out.println("    final");
-        */
+        
       System.out.println("-------------------------------------");
     }
     
