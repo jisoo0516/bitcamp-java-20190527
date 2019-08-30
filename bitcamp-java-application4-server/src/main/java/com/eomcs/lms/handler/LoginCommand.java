@@ -4,8 +4,9 @@ import java.io.BufferedReader;
 import java.io.PrintStream;
 import java.util.HashMap;
 import com.eomcs.lms.dao.MemberDao;
+import com.eomcs.util.Component;
 import com.eomcs.util.Input;
-
+@Component("/auth/login")
 public class LoginCommand implements Command {
 
   private MemberDao memberDao;
@@ -16,6 +17,7 @@ public class LoginCommand implements Command {
 
 
   }
+ 
 
   @Override
   public void execute(BufferedReader in, PrintStream out) {

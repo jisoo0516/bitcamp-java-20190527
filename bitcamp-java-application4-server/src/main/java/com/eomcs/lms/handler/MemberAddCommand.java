@@ -4,8 +4,9 @@ import java.io.BufferedReader;
 import java.io.PrintStream;
 import com.eomcs.lms.dao.MemberDao;
 import com.eomcs.lms.domain.Member;
+import com.eomcs.util.Component;
 import com.eomcs.util.Input;
-
+@Component("/member/add")
 public class MemberAddCommand implements Command {
 
 

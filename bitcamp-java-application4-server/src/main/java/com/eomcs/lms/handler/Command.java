@@ -5,6 +5,7 @@ import java.io.PrintStream;
 
 public interface Command {
 
+  
   // 기존 규칙은 그대로 둔다.
   default void execute() {}
 
