@@ -4,35 +4,41 @@
 package ch28.c;
 
 import java.lang.annotation.Annotation;
+import ch28.c.MyAnnotation5;
 
 @MyAnnotation // 클래스
 //@MyAnnotation2 // 필드 
 //@MyAnnotation3 // 메서드 
 //@MyAnnotation4 // 로컬 변수 
+//@MyAnnotation5 // 로컬변수 + 메서드
 public class Test01 {
   
   //@MyAnnotation // 클래스
   @MyAnnotation2 // 필드 
   //@MyAnnotation3 // 메서드 
   //@MyAnnotation4 // 로컬 변수 
+  //@MyAnnotation5 // 로컬변수 + 메서드
   int i;
   
   //@MyAnnotation // 클래스
   @MyAnnotation2 // 필드 
   //@MyAnnotation3 // 메서드 
   //@MyAnnotation4 // 로컬 변수 
+  //@MyAnnotation5 // 로컬변수 + 메서드
   static int j;
   
   //@MyAnnotation // 클래스
   //@MyAnnotation2 // 필드 
   @MyAnnotation3 // 메서드 
   //@MyAnnotation4 // 로컬 변수 
+  @MyAnnotation5 // 로컬변수 + 메서드
   public static void main(String[] args) {
     
     //@MyAnnotation // 클래스
     //@MyAnnotation2 // 필드 
     //@MyAnnotation3 // 메서드 
     @MyAnnotation4 // 로컬 변수
+    @MyAnnotation5 // 로컬변수 + 메서드
     int local;
   }
 }

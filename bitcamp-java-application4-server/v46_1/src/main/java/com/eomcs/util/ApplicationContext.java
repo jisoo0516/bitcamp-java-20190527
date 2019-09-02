@@ -122,7 +122,7 @@ public class ApplicationContext {
     }
   }
   
-  private Object[] prepareParameterValues(Parameter[] params) {
+  private Object[] prepareParameterValues(Parameter[] params) {--
     Object[] values = new Object[params.length];
     
     // 파라미터의 타입에 해당하는 값을 objPool에서 찾는다.
