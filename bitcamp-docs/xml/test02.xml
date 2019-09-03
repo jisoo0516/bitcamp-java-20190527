@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE students PUBLIC "-//bitcamp//student dtd 1.0//EN" "test01.dtd">
+<!-- 
+<t0>
+<t1></t1>
+<t2></t2>
+<expr>
+  <![CDATA[white space(space, tab, new line)
+  if(a < 20) 
+    str = "작다";
+  else if (a >= 20 && a < 30)
+    str = "그렇다";
+   ]]>
+</expr>
+</t0>
+ -->
+<x:students 
+  xmlns="http://bitcamp.co.kr/java300/students"
+  xmlns:x="http://bitcamp.co.kr/java300/school">
+<x:student>
+  <type>일반</type>
+  <name>홍길동</name>
+  <age>20</age>
+  <tel>111-111</tel>
+  <tel>111-111</tel>
+  <x:school>
+    <x:name>한국대학교</x:name>
+    <x:grade>대학교</x:grade>
+  </x:school>
+  <x:school>
+    <x:name>한국고등학교</x:name>
+    <x:grade>고등학교</x:grade>
+  </x:school>
+</x:student>
+</x:students>
+
+
