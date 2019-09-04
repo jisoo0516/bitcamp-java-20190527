@@ -18,7 +18,7 @@ public class BlackBox {
   
   public BlackBox() {
     System.out.println("BlackBox()");
-  }
+  } 
   
   @Override
   public String toString() {
