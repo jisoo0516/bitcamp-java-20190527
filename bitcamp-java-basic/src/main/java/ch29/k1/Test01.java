@@ -6,8 +6,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import ch29.k1.dao.BoardDao;
 import ch29.k1.vo.Board;
-
-public class Test01 {
+  
+public class Test01 { 
   public static void main(String[] args) {
     
     // java config를 다룰 때는 AnnotationConfigApplicationContext 클래스를 사용한다.
