@@ -28,7 +28,7 @@ public class BoardCommand  {
     out.println("<form action='/board/add'>");
     out.println(" 내용 : <textarea name='contents' rows='5' cols='50'></textarea><br>");
     out.println("<button>등록</button>");
-    out.println(" </form>>");
+    out.println(" </form>");
     out.println("<body><html>");
   }
 

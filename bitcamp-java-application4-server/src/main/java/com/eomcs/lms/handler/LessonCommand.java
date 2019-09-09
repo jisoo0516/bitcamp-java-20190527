@@ -32,7 +32,7 @@ public class LessonCommand  {
     out.println(" 총수업시간 : <textarea name='totalHours' rows='5' cols='50'></textarea><br>");
     out.println(" 일수업시간 : <textarea name='dayHours' rows='5' cols='50'></textarea><br>");
     out.println("<button>등록</button>");
-    out.println(" </form>>");
+    out.println(" </form>");
     out.println("<body><html>");
   }
 
@@ -179,6 +179,7 @@ public class LessonCommand  {
       lesson.setEndDate(Date.valueOf(request.getParameter("endDate")));
       lesson.setTotalHours(Integer.parseInt(request.getParameter("totalHours")));
       lesson.setDayHours(Integer.parseInt(request.getParameter("dayHours")));
+      System.out.println(lesson);
       
       lessonDao.update(lesson);
       out.println("<p>변경 했습니다</p>");
