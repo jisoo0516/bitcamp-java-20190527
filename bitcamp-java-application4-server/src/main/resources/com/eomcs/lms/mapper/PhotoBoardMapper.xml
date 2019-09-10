@@ -12,7 +12,6 @@
 		<result column="lesson_id" property="lessonNo" />
 	</resultMap>
 
-
 	<resultMap type="PhotoBoard" id="PhotoBoardWithFilesMap">
 		<id column="photo_id" property="no" />
 		<result column="titl" property="title" />
@@ -25,18 +24,14 @@
 			<id column="photo_file_id" property="no" />
 			<result column="file_path" property="filePath" />
 			<result column="photo_id" property="boardNo" />
-
 		</collection>
 	</resultMap>
-
-
-
 
 	<sql id="select1">
 		select
 		photo_id,
-		titl ,
-		cdt ,
+		titl,
+		cdt,
 		vw_cnt,
 		lesson_id
 		from lms_photo

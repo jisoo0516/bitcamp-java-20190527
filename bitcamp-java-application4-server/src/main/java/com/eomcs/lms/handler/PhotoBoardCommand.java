@@ -34,12 +34,12 @@ public class PhotoBoardCommand  {
     out.println("<html><head><title>사진 등록폼</title></head>");
     out.println("<body><h1>사진 등록폼</h1>");
     out.println("<form action='/photoboard/add'>");
-    out.println(" 제목 : <input type='text' name = 'title'> <br>");
-    out.println(" 수업번호 : <input type='text' name = 'lessonNo'> <br>");
-    out.println(" 사진1 : <input type='text' name = 'filePath1'> <br>");
-    out.println(" 사진2 : <input type='text' name = 'filePath2'> <br>");
+    out.println("제목 : <input type='text' name = 'title'><br>");
+    out.println("수업번호 : <input type='text' name = 'lessonNo'><br>");
+    out.println("사진1 : <input type='text' name = 'filePath1'><br>");
+    out.println("사진2 : <input type='text' name = 'filePath2'><br>");
     out.println("<button>등록</button>");
-    out.println(" </form>>");
+    out.println("</form>>");
     out.println("<body><html>");
   }
 
@@ -60,8 +60,8 @@ public class PhotoBoardCommand  {
       photoBoardDao.insert(photoBoard);
 
       int count = 0;
-      for (int i = 1; i <= 6; i++) {
-        String filepath = request.getParameter("filePath");
+      for (int i = 1; i <= 2; i++) {
+        String filepath = request.getParameter("filePath" + i);
         if (filepath.length() == 0) {
            continue;
         }
@@ -145,11 +145,11 @@ public class PhotoBoardCommand  {
             photoBoard.getHits());
         out.printf("번호: <input type='text' name='lessonNo' value='%d'><br>\n", 
             photoBoard.getLessonNo());
-        out.println("사진 파일:");
+        out.println("<p>사진 파일:</p>");
         photoBoardDao.increaseViewCount(no);
 
         List<PhotoFile> files = photoBoard.getFiles();
-        for (int i = 1; i <= 6; i++) {
+        for (int i = 1; i <= 2; i++) {
           if (i <= files.size()) {
             out.printf("사진%d: <input type='text' name='filePath%d' value='%s'><br>\n",
                 i, i, files.get(i-1).getFilePath());
