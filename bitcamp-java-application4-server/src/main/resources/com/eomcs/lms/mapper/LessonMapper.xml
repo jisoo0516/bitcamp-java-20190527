@@ -20,8 +20,10 @@
 		select
 		lesson_id,
 		titl,
+		conts,
 		sdt,
-		edt ,
+		edt,
+		day_hr,
 		tot_hr
 
 
@@ -35,10 +37,8 @@
 
 	<select id="findBy" parameterType="int" resultMap="LessonMap">
 		<include refid="basicColumn" />
-		conts,
-		day_hr
 		from lms_lesson
-		where lesson_id = #{oh}
+		where lesson_id = #{no}
 	</select>
 
 
@@ -55,8 +55,8 @@
 		<set>
 			<if test="title != null">titl=#{title},</if>
 			<if test="contents != null">conts=#{contents},</if>
-			<if test="startDate != null">sdt=#{startDate}, </if>
-			<if test="endDate != null">edt=#{endDate}, </if>
+			<if test="startDate != null">sdt=#{startDate},</if>
+			<if test="endDate != null">edt=#{endDate},</if>
 			<if test="totalHours > 0">tot_hr=#{totalHours}, </if>
 			<if test="dayHours > 0">day_hr=#{dayHours} </if>
 		</set>

@@ -94,8 +94,8 @@ public class LessonCommand  {
     
     try {
       int no = Integer.parseInt(request.getParameter("no"));
-     
       Lesson lesson = lessonDao.findBy(no);
+      
       if (lesson == null) {
         out.println("<p>해당 번호의 데이터가 없습니다!</p>");
 
@@ -119,6 +119,7 @@ public class LessonCommand  {
         out.printf("<a href='/lesson/delete?no=%d'>삭제</a>\n", lesson.getNo());
         out.println("</form>");
       } 
+      System.out.println(lesson);
     } catch (Exception e) {
       out.println("<p>데이터 조회에 실패했습니다!</p>");
       throw new RuntimeException(e);
@@ -153,6 +154,7 @@ public class LessonCommand  {
             lesson.getEndDate(),
             lesson.getTotalHours(),
             lesson.getDayHours());
+        System.out.println(lesson);
       }
       out.println("</table>");
 

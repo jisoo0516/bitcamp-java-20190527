@@ -7,6 +7,7 @@
 		<id column="member_id" property="no" />
 		<result column="tel" property="phoneNum" />
 		<result column="cdt" property="joinDate" />
+		<result column='photo' property='picture'/>
 
 	</resultMap>
 
@@ -18,9 +19,6 @@
 		tel,
 		cdt,
 		photo
-		
-		
-
 	</sql>
 
 	<sql id="where1">
