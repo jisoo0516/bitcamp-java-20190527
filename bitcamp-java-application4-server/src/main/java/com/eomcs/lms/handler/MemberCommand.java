@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -164,6 +165,11 @@ public class MemberCommand {
             member.getJoinDate());
       }
       out.println("</table>");
+      out.println("<form action='/auth/login'>");
+      out.println(" 메일 : <input type='text' name = 'email'>");
+      out.println(" 비밀번호 : <input type='text' name = 'password'>");
+      out.println("<button>로그인</button>");
+      out.println(" </form>");
 
     } catch (Exception e) {
       out.println("<p>데이터 목록조회 실패</p>");

@@ -23,14 +23,12 @@ public class LoginCommand {
   @RequestMapping("/login/form")
   public void form(ServletRequest request, ServletResponse response)throws IOException {
     PrintWriter out = response.getWriter();
-    out.println("<html><head><title>로그인 폼</title></head>");
-    out.println("<body><h1>로그인 폼</h1>");
-    out.println("<form action='/auth/login'>");
-    out.println(" 메일 : <input type='text' name = 'name'> <br>");
-    out.println(" 비밀번호 : <input type='text' name = 'name'> <br>");
+    out.println("<form action='/member/list'>");
+    out.println(" 메일 : <input type='text' name = 'name'>");
+    out.println(" 비밀번호 : <input type='text' name = 'name'>");
     out.println("<button>로그인</button>");
     out.println(" </form>>");
-    out.println("<body><html>");
+   
   }
   
   @RequestMapping("/auth/login") // 클라이언트 요청이 들어왔을 때 이 메서드를 호출하라고 표시한다.

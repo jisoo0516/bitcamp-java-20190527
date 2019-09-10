@@ -22,7 +22,7 @@
 		titl,
 		sdt,
 		edt ,
-		tot_hr,
+		tot_hr
 
 
 	</sql>
