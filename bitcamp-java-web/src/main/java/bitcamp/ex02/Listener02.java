@@ -2,6 +2,7 @@ package bitcamp.ex02;
 
 import javax.servlet.ServletRequestEvent;
 import javax.servlet.ServletRequestListener;
+import javax.servlet.http.HttpServletRequest;
 // 리스너 만들기
 // => 서블릿 컨테이너 또는 서블릿, 세션 등의 객체 상태가 변경되었을 때 보고 받는 옵저버
 // => "Observer" 디자인 패턴이 적용된 것이다.
@@ -27,12 +28,16 @@ import javax.servlet.ServletRequestListener;
 //    - 요청이 들어 올 때 로그 남기기
 //    
 //
+
 public class Listener02 implements ServletRequestListener {
   
   @Override
   public void requestInitialized(ServletRequestEvent sre) {
     // 요청이 들어 왔을 때 호출된다.
     System.out.println("Listener02.requestInitialized()");
+    HttpServletRequest request = (HttpServletRequest)sre.getServletRequest();
+    System.out.println("클라이언트 IP:"+request.getRemoteAddr());
+    System.out.println("요청 URI:" + request.getServletPath());
   }
   
   @Override
