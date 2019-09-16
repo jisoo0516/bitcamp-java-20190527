@@ -72,9 +72,15 @@ public class Servlet08 extends GenericServlet {
       .size(80, 80)
       .outputFormat("jpg")
       .toFiles(Rename.PREFIX_DOT_THUMBNAIL);
+    
+    Thumbnails.of(this.uploadDir + "/" + filename)
+    .size(30, 30)
+    .outputFormat("jpg")
+    .toFiles(Rename.PREFIX_DOT_THUMBNAIL);
 
     
     out.printf("사진=%s<br>\n", filename);
+    out.printf("<img src='../upload/thumbnail.%s.jpg'><br>\n", filename);
     out.printf("<img src='../upload/thumbnail.%s.jpg'><br>\n", filename);
     out.printf("<img src='../upload/%s'><br>\n", filename);
     out.println("</body></html>");
