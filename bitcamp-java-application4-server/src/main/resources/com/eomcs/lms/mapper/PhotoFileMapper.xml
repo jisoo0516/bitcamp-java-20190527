@@ -22,14 +22,10 @@
   </select>
   
 
-	
-	
-
 <insert id="insert" 
     parameterType="PhotoFile">
 insert into lms_photo_file(photo_id, file_path) values(#{boardNo},#{filePath})
 </insert>
-
 
 
 <delete id="deleteAll" parameterType="int" >

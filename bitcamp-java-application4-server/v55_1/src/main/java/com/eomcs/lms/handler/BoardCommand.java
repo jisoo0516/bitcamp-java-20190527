@@ -28,7 +28,7 @@ public class BoardCommand  {
     out.println("<form action='/board/add'>");
     out.println(" 내용 : <textarea name='contents' rows='5' cols='50'></textarea><br>");
     out.println("<button>등록</button>");
-    out.println(" </form>>");
+    out.println(" </form>");
     out.println("<body><html>");
   }
 
@@ -79,7 +79,7 @@ public class BoardCommand  {
   }
 
   @RequestMapping("/board/detail") // 클라이언트 요청이 들어왔을 때 이 메서드를 호출하라고 표시한다.
-  public void detail(ServletRequest request, ServletResponse response)throws IOException {
+  public void detail(ServletRequest request, ServletResponse response) throws IOException {
     PrintWriter out = response.getWriter();
     out.println("<html><head><title>게시물 상세</title></head>");
     out.println("<body><h1>게시물 상세</h1>");
