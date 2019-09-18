@@ -2,33 +2,27 @@ package com.eomcs.lms.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.UUID;
+import java.sql.Date;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 import org.springframework.context.ApplicationContext;
-import com.eomcs.lms.dao.MemberDao;
-import com.eomcs.lms.domain.Member;
+import com.eomcs.lms.dao.LessonDao;
+import com.eomcs.lms.domain.Lesson;
 
-@MultipartConfig(maxFileSize = 1024 * 1024 * 10)
-@WebServlet("/member/add")
-public class MemberAddServlet extends HttpServlet {
+@WebServlet("/lesson/add")
+public class LessonAddServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
   
-  String uploadDir;
-  private MemberDao memberDao;
+  private LessonDao lessonDao;
 
   @Override
   public void init() throws ServletException {
     ApplicationContext appCtx = 
         (ApplicationContext) getServletContext().getAttribute("iocContainer");
-    memberDao = appCtx.getBean(MemberDao.class);
-    
-    uploadDir =  getServletContext().getRealPath("/upload/member");
+    lessonDao = appCtx.getBean(LessonDao.class);
   }
 
   @Override
@@ -37,7 +31,7 @@ public class MemberAddServlet extends HttpServlet {
     
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
-    out.println("<html><head><title>회원 등록폼</title>"
+    out.println("<html><head><title>수업 등록폼</title>"
         + "<link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous'>"
         + "<link rel='stylesheet' href='/css/common.css'>"
         + "</head>");
@@ -46,13 +40,14 @@ public class MemberAddServlet extends HttpServlet {
     request.getRequestDispatcher("/header").include(request, response);
     
     out.println("<div id='content'>");
-    out.println("<h1>회원 등록폼</h1>");
-    out.println("<form action='/member/add' method='post' enctype='multipart/form-data'>");
-    out.println("이름: <input type='text' name='name'><br>");
-    out.println("이메일: <input type='text' name='email'><br>");
-    out.println("암호: <input type='text' name='password'><br>");
-    out.println("사진: <input type='file' name='photo'><br>");
-    out.println("전화: <input type='text' name='tel'><br>");
+    out.println("<h1>수업 등록폼</h1>");
+    out.println("<form action='/lesson/add' method='post'>");
+    out.println("수업명: <input type='text' name='title'><br>");
+    out.println("설명 : <textarea name='contents' rows='5' cols='50'></textarea><br>");
+    out.println("시작일: <input type='text' name='startDate'><br>");
+    out.println("종료일: <input type='text' name='endDate'><br>");
+    out.println("총 수업시간: <input type='text' name='totalHours'><br>");
+    out.println("일 수업시간: <input type='text' name='dayHours'><br>");
     out.println("<button>등록</button>");
     out.println("</form>");
     out.println("</div>");
@@ -63,31 +58,35 @@ public class MemberAddServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) 
       throws IOException, ServletException {
-    
     try {
-      Member member = new Member();
+      Lesson lesson = new Lesson();
+      lesson.setTitle(request.getParameter("title"));
+      lesson.setContents(request.getParameter("contents"));
+      lesson.setStartDate(Date.valueOf(request.getParameter("startDate")));
+      lesson.setEndDate(Date.valueOf(request.getParameter("endDate")));
+      lesson.setTotalHours(Integer.parseInt(request.getParameter("totalHours")));
+      lesson.setDayHours(Integer.parseInt(request.getParameter("dayHours")));
       
-      member.setName(request.getParameter("name"));
-      member.setEmail(request.getParameter("email"));
-      member.setPassword(request.getParameter("password"));
-      member.setTel(request.getParameter("tel"));
-
-      // 업로드 된 사진 파일 처리
-      Part photoPart = request.getPart("photo");
-      if (photoPart != null && photoPart.getSize() > 0) {
-        String filename = UUID.randomUUID().toString();
-        member.setPhoto(filename);
-        photoPart.write(uploadDir + "/" + filename);
-      }
-      
-      memberDao.insert(member);
-      response.sendRedirect("/member/list");
+      lessonDao.insert(lesson);
+      response.sendRedirect("/lesson/list");
       
     } catch (Exception e) {
       request.setAttribute("message", "데이터 저장에 실패했습니다!");
-      request.setAttribute("refresh", "/member/list");
+      request.setAttribute("refresh", "/lesson/list");
       request.setAttribute("error", e);
       request.getRequestDispatcher("/error").forward(request, response);
     }
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
