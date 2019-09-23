@@ -37,13 +37,11 @@ public class MemberDetailServlet extends HttpServlet {
       } 
         
       request.setAttribute("member", member);
-      request.getRequestDispatcher("/jsp/member/detail.jsp").include(request, response);
+      request.setAttribute("viewUrl","/jsp/member/detail.jsp");
       
     } catch (Exception e) {
-      request.setAttribute("message", e.getMessage());
-      request.setAttribute("refresh", "/member/list");
       request.setAttribute("error", e);
-      request.getRequestDispatcher("/jsp/error.jsp").forward(request, response);
+      request.setAttribute("refresh", "list");
     }
   }
 }

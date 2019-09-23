@@ -19,8 +19,8 @@
      id로 지정한 객체를 찾지 못했을 때 해당 객체를 만들고,
      그 id로 보관소에 저장한다. 
      단 class 속성에는 generic 문법을 사용할 수 없다.
-      또한 보관소에 객체가 없을 때 생성해야 하기 때문에
-   class 속성에는 인터페이스를 설정할 수 없다.  --%>
+     또한 보관소에 객체가 없을 때 생성해야 하기 때문에 
+     class 속성에는 인터페이스를 설정할 수 없다. --%>
 <jsp:useBean id="list" class="java.util.ArrayList" scope="page"/>
 <%-- 자바코드로 표현해보면,
   java.util.ArrayList list = 

@@ -29,7 +29,7 @@ for (Member member : members) {
 %>
   <tr>
     <td><%=member.getNo()%></td>
-    <td><a href='/member/detail?no=<%=member.getNo()%>'><%=member.getName()%></a></td>
+    <td><a href='detail?no=<%=member.getNo()%>'><%=member.getName()%></a></td>
     <td><%=member.getEmail()%></td>
     <td><%=member.getTel()%></td>
     <td><%=member.getRegisteredDate()%></td>

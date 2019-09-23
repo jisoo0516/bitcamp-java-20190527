@@ -35,7 +35,7 @@ public class Servlet06 extends GenericServlet {
     PrintWriter out = res.getWriter();
     
     out.println(req.getParameter("name"));
-    out.println("----------------------------");
+    out.println("---------------------------------");
     for (String name : names) {
       out.printf("이름=%s\n", name);
     }

@@ -34,9 +34,9 @@ public class Servlet01 extends HttpServlet {
     // => HttpSession 객체는 웹 브라우저에서 
     //    '세션 아이디(예:고객번호, 스탬프 카드)'를 제공하지 않으면,
     //    getSession()을 호출할 때 생성된다.
-    //     즉, 이 요청을 한 클라이언트의 HttpSession 객체가 없다면 만들어준다.
-    // => 웹 브라우저에서 '세션 아이디'를 제공하면,
-    //    getSession()을 호출할 때 기존에 생성했던 세션 객체를 리턴한다.
+    //    즉 이 요청을 한 클라이언트의 HttpSession 객체가 없다면 만들어준다.
+    // => 웹 브라우저에서 '세션 아이디'를 제공하면, 
+    //    getSession()을 호출할 때 기존에 생성했던 세션 객체를 리턴한다. 
     //    즉 이미 이 클라이언트를 위해 만든 객체가 있다면 그 객체를 리턴한다.
     HttpSession session = request.getSession();
     session.setAttribute("v2", "bbb");

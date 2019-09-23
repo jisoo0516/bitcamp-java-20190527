@@ -28,16 +28,15 @@ import javax.servlet.http.HttpServletRequest;
 //    - 요청이 들어 올 때 로그 남기기
 //    
 //
-
 public class Listener02 implements ServletRequestListener {
   
   @Override
   public void requestInitialized(ServletRequestEvent sre) {
     // 요청이 들어 왔을 때 호출된다.
     System.out.println("Listener02.requestInitialized()");
-    HttpServletRequest request = (HttpServletRequest)sre.getServletRequest();
-    System.out.println("클라이언트 IP:"+request.getRemoteAddr());
-    System.out.println("요청 URI:" + request.getServletPath());
+    HttpServletRequest request = (HttpServletRequest) sre.getServletRequest();
+    System.out.println("클라이언트 IP: " + request.getRemoteAddr());
+    System.out.println("요청 URL: " + request.getServletPath());
   }
   
   @Override

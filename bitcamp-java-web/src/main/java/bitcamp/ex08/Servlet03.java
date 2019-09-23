@@ -34,8 +34,8 @@ public class Servlet03 extends HttpServlet {
     //    결제완료 후 결과를 출력하지 않고 즉시 결제 상태 페이지로 보내고 싶을 때
     // => 리다이렉트 HTTP 응답 프로토콜
     /*
-HTTP/1.1 302    <--------- 리다이렉트 응답 상태 코드
-Location: s100  <--------- 리다이렉트 URL
+HTTP/1.1 302     <----- 리다이렉트 응답 상태 코드 
+Location: s100   <----- 리다이렉트 URL
 Content-Type: text/html;charset=UTF-8
 Content-Length: 0
 Date: Tue, 02 Apr 2019 03:38:45 GMT
@@ -68,4 +68,5 @@ Date: Tue, 02 Apr 2019 03:38:45 GMT
     // => 이미 응답했기 때문에 리다이렉트는 동작되지 않는다.
   }
 }
+
 

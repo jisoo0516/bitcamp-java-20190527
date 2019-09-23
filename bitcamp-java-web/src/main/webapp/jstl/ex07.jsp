@@ -22,7 +22,15 @@
 <h2>배열</h2>
 <%
 pageContext.setAttribute("names", new String[]{"홍길동", "임꺽정", "유관순"});
+
+/*
+String [] names =(String[])pageContext.getAttribute("names");
+for(String n : names) {
+  out.println("<li>" + n + "<li>");
+}
+*/
 %>
+
 
 <ul>
 <c:forEach items="${pageScope.names}" var="n">

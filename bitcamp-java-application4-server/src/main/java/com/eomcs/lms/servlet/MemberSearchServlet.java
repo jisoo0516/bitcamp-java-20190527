@@ -34,12 +34,10 @@ public class MemberSearchServlet extends HttpServlet {
           request.getParameter("keyword"));
       
       request.setAttribute("members", members);
-      request.getRequestDispatcher("/jsp/member/search.jsp").include(request, response);
+      request.setAttribute("viewUrl", "/jsp/member/list.jsp");
       
     } catch (Exception e) {
-      request.setAttribute("message", "데이터 검색에 실패했습니다!");
       request.setAttribute("error", e);
-      request.getRequestDispatcher("/jsp/error.jsp").forward(request, response);
     }
   }
 }

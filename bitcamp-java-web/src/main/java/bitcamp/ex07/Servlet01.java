@@ -1,4 +1,4 @@
-// 포워딩(forwarding) - 서블릿 실행을 위임하기 / Chain Of Responsibility
+// 포워딩(forwarding) - 서블릿 실행을 위임하기
 package bitcamp.ex07;
 
 import java.io.IOException;
