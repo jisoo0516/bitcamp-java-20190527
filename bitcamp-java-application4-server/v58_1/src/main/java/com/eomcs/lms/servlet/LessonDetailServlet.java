@@ -7,38 +7,37 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.ApplicationContext;
-import com.eomcs.lms.dao.PhotoBoardDao;
-import com.eomcs.lms.domain.PhotoBoard;
+import com.eomcs.lms.dao.LessonDao;
+import com.eomcs.lms.domain.Lesson;
 
-@WebServlet("/photoboard/detail")
-public class PhotoBoardDetailServlet extends HttpServlet {
+@WebServlet("/lesson/detail")
+public class LessonDetailServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
   
-  private PhotoBoardDao photoBoardDao;
-  
+  private LessonDao lessonDao;
+
   @Override
   public void init() throws ServletException {
     ApplicationContext appCtx = 
         (ApplicationContext) getServletContext().getAttribute("iocContainer");
-    photoBoardDao = appCtx.getBean(PhotoBoardDao.class);
+    lessonDao = appCtx.getBean(LessonDao.class);
   }
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) 
       throws IOException, ServletException {
     
-   
+    response.setContentType("text/html;charset=UTF-8");
     try {
       int no = Integer.parseInt(request.getParameter("no"));
-      
-      PhotoBoard photoBoard = photoBoardDao.findWithFilesBy(no);
-      if (photoBoard == null) {
+     
+      Lesson lesson = lessonDao.findBy(no);
+      if (lesson == null) {
         throw new Exception("해당 번호의 데이터가 없습니다!");
       }
-      photoBoardDao.increaseViewCount(no);
       
-      request.setAttribute("photoBoard", photoBoard);
-      request.setAttribute("viewUrl","/jsp/photoboard/detail.jsp");
+      request.setAttribute("lesson", lesson);
+      request.setAttribute("viewUrl","/jsp/lesson/detail.jsp");
       
     } catch (Exception e) {
       request.setAttribute("error", e);
@@ -46,3 +45,15 @@ public class PhotoBoardDetailServlet extends HttpServlet {
     }
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
