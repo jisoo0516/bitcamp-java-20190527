@@ -6,12 +6,12 @@ import javax.servlet.ServletRegistration.Dynamic;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 
-public class App1WebApplicationInitializerImpl
+public class App1WebApplicationInitializer
   extends AbstractAnnotationConfigDispatcherServletInitializer {
 
   String uploadTmpDir;
   
-  public  App1WebApplicationInitializerImpl() {
+  public  App1WebApplicationInitializer() {
     uploadTmpDir = new File(System.getProperty("java.io.tmpdir")).getAbsolutePath();
     System.out.println("업로드 임시 폴더 : " + uploadTmpDir);
   }
