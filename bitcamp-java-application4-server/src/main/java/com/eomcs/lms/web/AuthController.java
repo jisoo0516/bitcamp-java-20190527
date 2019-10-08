@@ -1,4 +1,4 @@
-package com.eomcs.lms.controller;
+package com.eomcs.lms.web;
 
 import java.util.HashMap;
 import javax.annotation.Resource;
@@ -11,17 +11,17 @@ import com.eomcs.lms.dao.MemberDao;
 import com.eomcs.lms.domain.Member;
 
 @Controller
+@RequestMapping("/auth")
 public class AuthController  {
 
   @Resource
   private MemberDao memberDao;
   
-  @RequestMapping("/auth/form")
-  public String form() {
-    return "/jsp/auth/form.jsp";
+  @RequestMapping("form")
+  public void form() {
   }
 
-  @RequestMapping("/auth/login")
+  @RequestMapping("login")
   public String login(
       HttpServletResponse response,
       HttpSession session,
@@ -47,7 +47,7 @@ public class AuthController  {
     return "redirect:../board/list";
   }
   
-  @RequestMapping("/auth/logout")
+  @RequestMapping("logout")
   public String logout(HttpSession session) 
       throws Exception {
     session.invalidate();

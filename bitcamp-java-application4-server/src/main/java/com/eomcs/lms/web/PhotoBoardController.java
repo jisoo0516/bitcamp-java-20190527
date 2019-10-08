@@ -1,38 +1,39 @@
-package com.eomcs.lms.controller;
+package com.eomcs.lms.web;
 
+import java.io.File;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.Part;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 import com.eomcs.lms.dao.PhotoBoardDao;
 import com.eomcs.lms.dao.PhotoFileDao;
 import com.eomcs.lms.domain.PhotoBoard;
 import com.eomcs.lms.domain.PhotoFile;
 
 @Controller
+@RequestMapping("/photoboard")
 public class PhotoBoardController {
 
   @Resource private PlatformTransactionManager txManager;
   @Resource private PhotoBoardDao photoBoardDao;
   @Resource private PhotoFileDao photoFileDao;
 
-  @RequestMapping("/photoboard/form")
-  public String form() {
-    return "/jsp/photoboard/form.jsp";
+  @RequestMapping("form")
+  public void form() {
   }
 
-  @RequestMapping("/photoboard/add")
+  @RequestMapping("add")
   public String add(HttpServletRequest request,
       PhotoBoard photoBoard,
-      Part[] filePath) 
+      MultipartFile[] filePath) 
           throws Exception {
 
     String uploadDir = request.getServletContext().getRealPath("/upload/photoboard");
@@ -48,13 +49,13 @@ public class PhotoBoardController {
       photoBoardDao.insert(photoBoard);
 
       int count = 0;
-      for (Part part : filePath) {
-        if(part.getSize() == 0 ) 
+      for (MultipartFile file : filePath) {
+        if(file.isEmpty())
           continue;
 
         // 클라이언트가 보낸 파일을 디스크에 저장한다.
         String filename = UUID.randomUUID().toString();
-        part.write(uploadDir + "/" + filename);
+        file.transferTo(new File(uploadDir + "/" + filename));
 
         // 저장한 파일명을 DB에 입력한다.
         PhotoFile photoFile = new PhotoFile();
@@ -77,7 +78,7 @@ public class PhotoBoardController {
     }
   }
 
-  @RequestMapping("/photoboard/delete")
+  @RequestMapping("delete")
   public String delete(int no) 
       throws Exception {
 
@@ -105,8 +106,8 @@ public class PhotoBoardController {
       throw e;
     }
   }
-  @RequestMapping("/photoboard/detail")
-  public String detail(Map<String, Object> model, int no) 
+  @RequestMapping("detail")
+  public void detail(Model model, int no) 
       throws Exception {
 
 
@@ -116,23 +117,21 @@ public class PhotoBoardController {
     }
     photoBoardDao.increaseViewCount(no);
 
-    model.put("photoBoard", photoBoard);
-    return "/jsp/photoboard/detail.jsp";
+    model.addAttribute("photoBoard", photoBoard);
   }
 
-  @RequestMapping("/photoboard/list")
-  public String list(Map<String, Object> model) 
+  @RequestMapping("list")
+  public void list(Model model) 
       throws Exception {
 
     List<PhotoBoard> photoBoards = photoBoardDao.findAll();
-    model.put("photoBoards", photoBoards);
-    return "/jsp/photoboard/list.jsp";
+    model.addAttribute("photoBoards", photoBoards);
   }
 
-  @RequestMapping("/photoboard/update")
+  @RequestMapping("update")
   public String update(HttpServletRequest request,
       PhotoBoard photoBoard,
-      Part[] filePath) 
+      MultipartFile[] filePath) 
           throws Exception {
 
     String uploadDir = request.getServletContext().getRealPath("/upload/photoboard");
@@ -153,14 +152,14 @@ public class PhotoBoardController {
       photoFileDao.deleteAll(photoBoard.getNo());
 
       int count = 0;
-      for (Part part : filePath) {
-        if(part.getSize() == 0 ) 
+      for (MultipartFile file : filePath) {
+        if (file.isEmpty())
           continue;
 
 
         // 클라이언트가 보낸 파일을 디스크에 저장한다.
         String filename = UUID.randomUUID().toString();
-        part.write(uploadDir + "/" + filename);
+        file.transferTo(new File(uploadDir + "/" + filename));
 
         // 저장한 파일명을 DB에 입력한다.
         PhotoFile photoFile = new PhotoFile();
