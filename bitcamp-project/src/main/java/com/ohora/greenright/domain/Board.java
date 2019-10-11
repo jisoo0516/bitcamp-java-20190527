@@ -2,14 +2,16 @@ package com.ohora.greenright.domain;
 
 import java.io.Serializable;
 import java.sql.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class Board implements Serializable {
   private static final long serialVersionUID = 1L;
   
   private int no;
   private String contents;
-  @JsonFormat
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
   private Date createdDate;
+  
   private int viewCount;
   public int getNo() {
     return no;

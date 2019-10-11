@@ -1,6 +1,15 @@
 plugins {
     id 'java'
-    id 'application'
+    
+    // 웹 애플리케이션 프로젝트를 다룰 때 사용할 명령어 포함시키기
+    id 'war'
+    id 'eclipse-wtp'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
 }
 
 repositories {
@@ -56,6 +65,3 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 }
 
-application {
-    mainClassName = 'com.ohora.greenright.App'
-}
