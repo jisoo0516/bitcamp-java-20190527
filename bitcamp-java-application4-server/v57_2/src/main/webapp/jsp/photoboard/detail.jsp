@@ -16,7 +16,6 @@
     
 <div id='content'>
 <h1>사진게시물</h1>
-
 <form action='/photoboard/update'
       method='post' enctype='multipart/form-data'>
 번호: <input type='text' name='no' value='${photoBoard.no}' readonly><br>
@@ -28,9 +27,8 @@
 PhotoBoard photoBoard = (PhotoBoard) request.getAttribute("photoBoard");
 List<PhotoFile> files = photoBoard.getFiles();
 for (PhotoFile file : files) {
-  if (file.getFilePath() == null) 
+  if (file.getFilePath() == null)
     continue;
-  
   pageContext.setAttribute("file", file);
 %>
   <img src='/upload/photoboard/${file.filePath}' class='photo2'> 

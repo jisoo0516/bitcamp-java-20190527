@@ -32,7 +32,7 @@ for (PhotoBoard photoBoard : photoBoards) {
   <tr>
     <td>${photoBoard.no}</td>
     <td><a href='/photoboard/detail?no=${photoBoard.no}'>${photoBoard.title}</a></td>
-    <td><${photoBoard.createdDate}</td>
+    <td>${photoBoard.createdDate}</td>
     <td>${photoBoard.viewCount}</td>
     <td>${photoBoard.lessonNo}</td>
   </tr>

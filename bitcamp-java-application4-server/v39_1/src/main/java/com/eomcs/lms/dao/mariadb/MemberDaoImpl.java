@@ -12,20 +12,25 @@ import com.eomcs.util.ConnectionFactory;
 public class MemberDaoImpl implements MemberDao {
 
   ConnectionFactory conFactory;
-
+  
   public MemberDaoImpl(ConnectionFactory conFactory) {
     this.conFactory = conFactory;
   }
-
-
+  
   @Override
   public int insert(Member member) throws Exception {
     try (Connection con = conFactory.getConnection();
         Statement stmt = con.createStatement()) {
 
-      return stmt.executeUpdate("insert into lms_member(name,email,pwd,cdt,tel,photo)" + " values('"
-          + member.getName() + "','" + member.getEmail() + "',password('" + member.getPassword()
-          + "'),now()" + ",'" + member.getPhoneNum() + "','" + member.getPicture() + "')");
+      return stmt.executeUpdate(
+          "insert into lms_member(name,email,pwd,cdt,tel,photo)"
+          + " values('" + member.getName()
+          + "','" + member.getEmail()
+          + "',password('" + member.getPassword()
+          + "'),now()"
+          + ",'" + member.getTel()
+          + "','" + member.getPhoto()
+          + "')");
     }
   }
 
@@ -34,18 +39,20 @@ public class MemberDaoImpl implements MemberDao {
     try (Connection con = conFactory.getConnection();
         Statement stmt = con.createStatement();
         ResultSet rs = stmt.executeQuery(
-            "select member_id,name,email,tel,cdt" + " from lms_member" + " order by name asc")) {
+            "select member_id,name,email,tel,cdt"
+            + " from lms_member"
+            + " order by name asc")) {
 
       ArrayList<Member> list = new ArrayList<>();
-
+      
       while (rs.next()) {
         Member member = new Member();
         member.setNo(rs.getInt("member_id"));
         member.setName(rs.getString("name"));
         member.setEmail(rs.getString("email"));
-        member.setPhoneNum(rs.getString("tel"));
-        member.setJoinDate(rs.getDate("cdt"));
-
+        member.setTel(rs.getString("tel"));
+        member.setRegisteredDate(rs.getDate("cdt"));
+        
         list.add(member);
       }
       return list;
@@ -56,49 +63,51 @@ public class MemberDaoImpl implements MemberDao {
   public Member findBy(int no) throws Exception {
     try (Connection con = conFactory.getConnection();
         Statement stmt = con.createStatement();
-        ResultSet rs =
-            stmt.executeQuery("select *" + " from lms_member" + " where member_id=" + no)) {
+        ResultSet rs = stmt.executeQuery(
+            "select *"
+            + " from lms_member"
+            + " where member_id=" + no)) {
 
       if (rs.next()) {
         Member member = new Member();
         member.setNo(rs.getInt("member_id"));
         member.setName(rs.getString("name"));
         member.setEmail(rs.getString("email"));
-        member.setJoinDate(rs.getDate("cdt"));
-        member.setPhoneNum(rs.getString("tel"));
-        member.setPicture(rs.getString("photo"));
-
+        member.setRegisteredDate(rs.getDate("cdt"));
+        member.setTel(rs.getString("tel"));
+        member.setPhoto(rs.getString("photo"));
+        
         return member;
-
+        
       } else {
         return null;
       }
     }
   }
-
+  
   @Override
   public List<Member> findByKeyword(String keyword) throws Exception {
     try (Connection con = conFactory.getConnection();
         Statement stmt = con.createStatement();
         ResultSet rs = stmt.executeQuery(
-            "select member_id,name,email,tel,cdt" 
+            "select member_id,name,email,tel,cdt"
             + " from lms_member"
             + " where name like '%" + keyword
             + "%' or email like '%" + keyword
-            + "%' or tel like '%"  + keyword
+            + "%' or tel like '%" + keyword
             + "%'"
             + " order by name asc")) {
 
       ArrayList<Member> list = new ArrayList<>();
-
+      
       while (rs.next()) {
         Member member = new Member();
         member.setNo(rs.getInt("member_id"));
         member.setName(rs.getString("name"));
         member.setEmail(rs.getString("email"));
-        member.setPhoneNum(rs.getString("tel"));
-        member.setJoinDate(rs.getDate("cdt"));
-
+        member.setTel(rs.getString("tel"));
+        member.setRegisteredDate(rs.getDate("cdt"));
+        
         list.add(member);
       }
       return list;
@@ -110,10 +119,13 @@ public class MemberDaoImpl implements MemberDao {
     try (Connection con = conFactory.getConnection();
         Statement stmt = con.createStatement()) {
 
-      return stmt.executeUpdate(
-          "update lms_member set" + " name='" + member.getName() + "', email='" + member.getEmail()
-              + "', pwd=password('" + member.getPassword() + "'), tel='" + member.getPhoneNum()
-              + "', photo='" + member.getPicture() + "' where member_id=" + member.getNo());
+      return stmt.executeUpdate("update lms_member set"
+          + " name='" + member.getName()
+          + "', email='" + member.getEmail()
+          + "', pwd=password('" + member.getPassword()
+          + "'), tel='" + member.getTel()
+          + "', photo='" + member.getPhoto()
+          + "' where member_id=" + member.getNo());
     }
   }
 
@@ -123,8 +135,6 @@ public class MemberDaoImpl implements MemberDao {
         Statement stmt = con.createStatement()) {
 
       return stmt.executeUpdate("delete from lms_member where member_id=" + no);
-
-
     }
   }
 

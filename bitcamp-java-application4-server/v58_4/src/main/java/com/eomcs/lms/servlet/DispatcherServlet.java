@@ -1,4 +1,5 @@
 package com.eomcs.lms.servlet;
+
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -12,7 +13,6 @@ import org.springframework.context.ApplicationContext;
 import com.eomcs.util.RequestMappingHandlerMapping;
 import com.eomcs.util.RequestMappingHandlerMapping.RequestHandler;
 
-
 @MultipartConfig(maxFileSize = 1024 * 1024 * 10)
 @WebServlet("/app/*")
 public class DispatcherServlet extends HttpServlet {
@@ -22,6 +22,7 @@ public class DispatcherServlet extends HttpServlet {
   
   private ApplicationContext iocContainer;
   private RequestMappingHandlerMapping handlerMapping;
+  
   @Override
   public void init() throws ServletException {
     iocContainer = 
@@ -40,8 +41,8 @@ public class DispatcherServlet extends HttpServlet {
     
     try {
       // 클라이언트 요청을 처리할 request handler를 찾는다.
-      RequestHandler  requestHandler = handlerMapping.getRequestHandler(pathInfo);
-      if(requestHandler == null) {
+      RequestHandler requestHandler = handlerMapping.getRequestHandler(pathInfo);
+      if (requestHandler == null) {
         throw new Exception(pathInfo + " 요청을 처리할 수 없습니다.");
       }
       

@@ -15,7 +15,6 @@ public class MemberListController {
   @Resource 
   private MemberDao memberDao;
 
-
   @RequestMapping
   public String execute(HttpServletRequest request, HttpServletResponse response) 
       throws Exception {

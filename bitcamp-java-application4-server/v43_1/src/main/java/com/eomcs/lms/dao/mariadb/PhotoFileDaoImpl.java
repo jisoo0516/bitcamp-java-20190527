@@ -8,10 +8,8 @@ import com.eomcs.lms.domain.PhotoFile;
 
 public class PhotoFileDaoImpl implements PhotoFileDao {
 
-
   SqlSessionFactory sqlSessionFactory;
-
-
+  
   public PhotoFileDaoImpl(SqlSessionFactory sqlSessionFactory) {
     this.sqlSessionFactory = sqlSessionFactory;
   }
@@ -30,46 +28,21 @@ public class PhotoFileDaoImpl implements PhotoFileDao {
     }
   }
 
-
-
-
   @Override
   public int deleteAll(int boardNo) throws Exception {
     try (SqlSession sqlSession = sqlSessionFactory.openSession(true)) {
       return sqlSession.delete("PhotoFileDao.deleteAll", boardNo);
     }
-    }
   }
 
-//  public static void main(String[] args) throws Exception {
-//    try 
-//    (Connection con = DriverManager.getConnection("jdbc:mariadb://localhost/bitcampdb?user=bitcamp&password=1111");) {
-//      PhotoFileDao dao = new PhotoFileDaoImpl(con);
-//     
-//      // 1) insert() 테스트
-//     /*
-//      PhotoFile b = new PhotoFile();
-//      b.setBoardNo(6);
-//      b.setFilePath("ok5.gif");
-//
-//      dao.insert(b);
-//      
-//      */
-//      // 2) findAll() 테스트
-//      /*
-//      List<PhotoFile> list = dao.findAll(6);
-//      for(PhotoFile b : list) {
-//        System.out.println(b);
-//      }
-//       
-//      */
-//   
-//      // 3) delete() 테스트
-//      /*
-//      dao.deleteAll(6);
-//       */
-//      System.out.println("실행 완료!");
-//    }
-//
-//  }
+}
+
+
+
+
+
+
+
+
+
 

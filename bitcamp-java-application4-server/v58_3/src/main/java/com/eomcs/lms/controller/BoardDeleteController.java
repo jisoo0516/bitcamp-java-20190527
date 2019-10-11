@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.eomcs.lms.dao.BoardDao;
 
 @Component("/board/delete")
-public class BoardDeleteController  {
+public class BoardDeleteController {
 
   @Resource
   private BoardDao boardDao;

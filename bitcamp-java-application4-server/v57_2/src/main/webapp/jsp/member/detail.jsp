@@ -13,7 +13,6 @@
     
 <div id='content'>
 <h1>회원</h1>
-
 <form action='/member/update' method='post' enctype='multipart/form-data'>
 <img src='/upload/member/${member.photo}' class='photo1'><br> 
 <input type='file' name='photo'><br>

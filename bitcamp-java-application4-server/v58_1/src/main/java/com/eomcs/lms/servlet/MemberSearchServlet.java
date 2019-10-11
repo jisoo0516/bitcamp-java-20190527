@@ -28,13 +28,12 @@ public class MemberSearchServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) 
       throws IOException, ServletException {
     
-    response.setContentType("text/html;charset=UTF-8");
     try {
       List<Member> members = memberDao.findByKeyword(
           request.getParameter("keyword"));
       
       request.setAttribute("members", members);
-      request.setAttribute("viewUrl", "/jsp/member/list.jsp");
+      request.setAttribute("viewUrl", "/jsp/member/search.jsp");
       
     } catch (Exception e) {
       request.setAttribute("error", e);

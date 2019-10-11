@@ -13,7 +13,6 @@
     
 <div id='content'>
 <h1>수업</h1>
-
 <form action='/lesson/update' method='post'>
 번호: <input type='text' name='no' value='${lesson.no}' readonly><br>
 수업명: <input type='text' name='title' value='${lesson.title}'><br>

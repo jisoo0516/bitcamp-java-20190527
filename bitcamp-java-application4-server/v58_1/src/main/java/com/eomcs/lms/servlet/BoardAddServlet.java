@@ -26,7 +26,7 @@ public class BoardAddServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) 
       throws IOException, ServletException {
-    request.setAttribute("viewUrl","/jsp/board/form.jsp");
+    request.setAttribute("viewUrl", "/jsp/board/form.jsp");
   }
   
   @Override
@@ -38,7 +38,7 @@ public class BoardAddServlet extends HttpServlet {
       board.setContents(request.getParameter("contents"));
       boardDao.insert(board);
       
-      request.setAttribute("viewUrl","redirect:list");
+      request.setAttribute("viewUrl", "redirect:list");
       
     } catch (Exception e) {
       request.setAttribute("error", e);

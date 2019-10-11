@@ -11,59 +11,66 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.ApplicationContext;
 import com.eomcs.lms.dao.PhotoBoardDao;
 import com.eomcs.lms.domain.PhotoBoard;
+
 @WebServlet("/photoboard/list")
 public class PhotoBoardListServlet extends HttpServlet {
-
   private static final long serialVersionUID = 1L;
- 
+  
   private PhotoBoardDao photoBoardDao;
- 
-
-
+  
   @Override
   public void init() throws ServletException {
-    ApplicationContext appCtx = (ApplicationContext) getServletContext().getAttribute("iocContainer");
+    ApplicationContext appCtx = 
+        (ApplicationContext) getServletContext().getAttribute("iocContainer");
     photoBoardDao = appCtx.getBean(PhotoBoardDao.class);
   }
- 
+
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException {
+  public void doGet(HttpServletRequest request, HttpServletResponse response) 
+      throws IOException, ServletException {
+    
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
-    out.println("<html><head><title>사진 목록</title>"
-        + "<link rel=\'stylesheet\' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css\' integrity=\'sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T\' crossorigin=\'anonymous\'>"
-        + "<link rel=\'stylesheet\' href='/css/common.css'>"
-        +"</head>");
+    out.println("<html><head><title>사진게시물 목록</title>"
+        + "<link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous'>"
+        + "<link rel='stylesheet' href='/css/common.css'>"
+        + "</head>");
     out.println("<body>");
+
     request.getRequestDispatcher("/header").include(request, response);
     
     out.println("<div id='content'>");
-    out.println("<h1>사진 목록</h1>");
+    out.println("<h1>사진게시물 목록</h1>");
+    out.println("<a href='/photoboard/add'>새 사진게시물</a><br>");
     
-    out.println("<a href='/photoboard/add'>새 글</a><br>");
     try {
       out.println("<table class='table table-hover'>");
       out.println("<tr><th>번호</th><th>제목</th><th>등록일</th><th>조회수</th><th>수업</th></tr>");
-      List<PhotoBoard> photoboards = photoBoardDao.findAll();
-      for (PhotoBoard photoboard : photoboards) {
-        out.printf("<tr><td>%d</td>"
+      List<PhotoBoard> photoBoards = photoBoardDao.findAll();
+      for (PhotoBoard photoBoard : photoBoards) {
+        out.printf("<tr>"
+            + "<td>%d</td>"
             + "<td><a href='/photoboard/detail?no=%d'>%s</a></td>"
-            + "<td>%s</td><td>%d</td><td>%d</td></tr>\n",
-            photoboard.getNo(), 
-            photoboard.getNo(),
-            photoboard.getTitle(),
-            photoboard.getReportingDate(),
-            photoboard.getHits(),
-            photoboard.getLessonNo());
+            + "<td>%s</td>"
+            + "<td>%d</td>"
+            + "<td>%d</td></tr>\n", 
+            photoBoard.getNo(),
+            photoBoard.getNo(),
+            photoBoard.getTitle(), 
+            photoBoard.getCreatedDate(), 
+            photoBoard.getViewCount(),
+            photoBoard.getLessonNo());
       }
       out.println("</table>");
-
+      
     } catch (Exception e) {
-      out.println("<p>데이터 목록조회 실패</p>");
+      out.println("<p>데이터 목록 조회에 실패했습니다!</p>");
       throw new RuntimeException(e);
+    
+    } finally {
+      out.println("</div>");
+      request.getRequestDispatcher("/footer").include(request, response);
+      out.println("</body></html>");
     }
-    out.println("</div>");
-    request.getRequestDispatcher("/footer").include(request, response);
-    out.println("</body></html>");
   }
 }

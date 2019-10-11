@@ -24,8 +24,9 @@ public class DispatcherServlet extends HttpServlet {
     
     String servletPath = request.getServletPath();
     String pathInfo = request.getPathInfo();
-    log.debug(String.format("요청 => servletPath: %s, pathInfo:%s", servletPath, pathInfo));
-   
+    log.debug(String.format("요청 => servletPath: %s, pathInfo: %s", 
+        servletPath, pathInfo));
+    
     // 클라이언트가 요청한 서블릿(page controller)에게 실행을 위임한다.
     RequestDispatcher rd = request.getRequestDispatcher(pathInfo);
     rd.include(request, response);
@@ -36,7 +37,6 @@ public class DispatcherServlet extends HttpServlet {
       return;
     }
     
-    
     // 페이지 컨트롤러 작업을 수행한 후 JSP를 실행한다.
     String contentType = (String) request.getAttribute("contentType");
     if (contentType != null) {
@@ -45,11 +45,11 @@ public class DispatcherServlet extends HttpServlet {
       response.setContentType("text/html;charset=UTF-8");
     }
     
-    String viewUrl = (String)request.getAttribute("viewUrl");
+    String viewUrl = (String) request.getAttribute("viewUrl");
     if (viewUrl != null) {
       if (viewUrl.startsWith("redirect:")) {
-        response.sendRedirect(viewUrl.substring(9)); //"redirect:list"
-      }else {
+        response.sendRedirect(viewUrl.substring(9)); // "redirect:list"
+      } else {
         rd = request.getRequestDispatcher(viewUrl);
         rd.include(request, response);
       }
@@ -57,3 +57,10 @@ public class DispatcherServlet extends HttpServlet {
     
   }
 }
+
+
+
+
+
+
+

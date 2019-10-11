@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -14,7 +13,6 @@
     
 <div id='content'>
 <h1>게시물</h1>
-
 <form action='/board/update' method='post'>
 번호 : <input type='text' name='no' value='${board.no}' readonly><br>
 내용 : <textarea name='contents' rows='5'

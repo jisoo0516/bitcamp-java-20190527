@@ -11,9 +11,8 @@ import com.eomcs.util.DataSource;
 
 public class BoardDaoImpl implements BoardDao {
 
-
   DataSource dataSource;
-
+  
   public BoardDaoImpl(DataSource conFactory) {
     this.dataSource = conFactory;
   }
@@ -23,8 +22,9 @@ public class BoardDaoImpl implements BoardDao {
     try (Connection con = dataSource.getConnection();
         Statement stmt = con.createStatement()) {
 
-      return stmt
-          .executeUpdate("insert into lms_board(conts)" + " values('" + board.getContents() + "')");
+      return stmt.executeUpdate(
+          "insert into lms_board(conts)"
+              + " values('" + board.getContents() + "')");
     }
   }
 
@@ -32,43 +32,44 @@ public class BoardDaoImpl implements BoardDao {
   public List<Board> findAll() throws Exception {
     try (Connection con = dataSource.getConnection();
         Statement stmt = con.createStatement();
-        ResultSet rs = stmt.executeQuery("select * from lms_board order by board_id desc")) {
+        ResultSet rs = stmt.executeQuery(
+            "select * from lms_board order by board_id desc")) {
 
       ArrayList<Board> list = new ArrayList<>();
-
+      
       while (rs.next()) {
         Board board = new Board();
         board.setNo(rs.getInt("board_id"));
         board.setContents(rs.getString("conts"));
-        board.setReportingDate(rs.getDate("cdt"));
-        board.setHits(rs.getInt("vw_cnt"));
-
+        board.setCreatedDate(rs.getDate("cdt"));
+        board.setViewCount(rs.getInt("vw_cnt"));
+        
         list.add(board);
-
       }
       return list;
     }
   }
 
-
   @Override
   public Board findBy(int no) throws Exception {
     try (Connection con = dataSource.getConnection();
         Statement stmt = con.createStatement();
-        ResultSet rs = stmt.executeQuery("select * from lms_board where board_id = " + no)) {
+        ResultSet rs = stmt.executeQuery(
+            "select * from lms_board where board_id=" + no)) {
 
       if (rs.next()) {
         Board board = new Board();
         board.setNo(rs.getInt("board_id"));
         board.setContents(rs.getString("conts"));
-        board.setReportingDate(rs.getDate("cdt"));
-        board.setHits(rs.getInt("vw_cnt"));
-
-        // 게시글 찾았으면 조회수를 증가시킨다.
-        stmt.executeUpdate("update lms_board set" + " vw_cnt = vw_cnt + 1 where board_id=" + no);
-
+        board.setCreatedDate(rs.getDate("cdt"));
+        board.setViewCount(rs.getInt("vw_cnt"));
+        
+        // 게시글을 찾았으면 조회수를 증가시킨다.
+        stmt.executeUpdate("update lms_board set"
+            + " vw_cnt=vw_cnt + 1 where board_id=" + no);
+        
         return board;
-
+        
       } else {
         return null;
       }
@@ -80,7 +81,8 @@ public class BoardDaoImpl implements BoardDao {
     try (Connection con = dataSource.getConnection();
         Statement stmt = con.createStatement()) {
 
-      return stmt.executeUpdate("update lms_board set" + " conts='" + board.getContents()
+      return stmt.executeUpdate("update lms_board set"
+          + " conts='" + board.getContents()
           + "' where board_id=" + board.getNo());
     }
   }
@@ -91,8 +93,6 @@ public class BoardDaoImpl implements BoardDao {
         Statement stmt = con.createStatement()) {
 
       return stmt.executeUpdate("delete from lms_board where board_id=" + no);
-
-
     }
   }
 

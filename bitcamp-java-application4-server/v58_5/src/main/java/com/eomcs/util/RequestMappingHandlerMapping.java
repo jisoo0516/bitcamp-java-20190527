@@ -79,17 +79,17 @@ public class RequestMappingHandlerMapping {
             throws Exception {
 
       // 페이지 컨트롤러가 작업한 결과를 받을 바구니를 준비한다.
-      HashMap<String, Object> model = new HashMap<>();
-
+      HashMap<String,Object> model = new HashMap<>();
+      
       // 메서드의 파라미터 목록을 꺼낸다.
       Parameter[] params = method.getParameters();
-      String viewUrl = (String)method.invoke(bean, getArguments(params, request, response, model));
-
+      String viewUrl = (String) method.invoke(bean, getArguments(params, request, response, model));
+      
       // request handler를 호출하면,
       // model 객체에는 request handler가 담은 값이 보관되어 있다.
       // 여기에 request handler의 리턴 값(JSP URL)도 함께 보관한다.
       model.put("viewUrl", viewUrl);
-
+      
       // request handler의 작업 결과물과 JSP URL을 담은 맵 객체를 프론트 컨트롤러에게 리턴한다.
       return model;
     }
@@ -148,31 +148,32 @@ public class RequestMappingHandlerMapping {
       if (paramType == ServletRequest.class ||
           paramType == HttpServletRequest.class) {
         return request;
-
+        
       } else if (paramType == ServletResponse.class ||
           paramType == HttpServletResponse.class) {
         return response;
-
+        
       } else if (paramType == HttpSession.class) {
         return request.getSession();
-
-      } else if(paramType == Map.class) {
+        
+      } else if (paramType == Map.class) {
         return model;
+      
       } else if (paramType == Part.class) {
         return request.getPart(paramName);
-        
-      } else if (isPrimitiveType(paramType)) {
-        return getPrimitiveValue(paramName, paramType, request);
       
       } else if (paramType == Part[].class) {
         ArrayList<Part> values = new ArrayList<>();
         Collection<Part> parts = request.getParts();
         for (Part part : parts) {
-          if (!part.getName().equals(paramName)) {
+          if (part.getName().equals(paramName)) {
             values.add(part);
           }
         }
-        return values.toArray(new Part[values.size()] );
+        return values.toArray(new Part[values.size()]);
+        
+      } else if (isPrimitiveType(paramType)) {
+        return getPrimitiveValue(paramName, paramType, request);
         
       } else {
         return getPojoValue(paramName, paramType, request);
@@ -184,45 +185,43 @@ public class RequestMappingHandlerMapping {
         String paramName, 
         Class<?> paramType, 
         HttpServletRequest request) throws Exception {
-
+      
       // 클라이언트가 보낸 데이터를 담을 POJO 객체를 생성한다.
       // => 기본 생성자를 호출하여 인스턴스를 초기화시킨다.
       Object pojo = paramType.getConstructor().newInstance();
-
+      
       // 세터 메서드를 추출한다.
       Set<Method> methods = getMethods(paramType, withPrefix("set"));
       log.debug(String.format("%s 의 세터 메서드:", paramType.getName()));
-
-
-
-      // 클라이언트가 보낸 데이터 중에서 세터 메서드에 넘겨줄  데이터가 있다면 호출한다. 
+      
+      // 클라이언트가 보낸 데이터 중에서 세터 메서드에 넘겨줄 데이터가 있다면 호출한다. 
       for (Method m : methods) {
+        
         // 메서드 이름에서 프로퍼티 명을 추출한다.
-        // => 예: // setCreatedDate() => "c" + "reatedDate" = createdDate
-        String propName = m.getName().substring(3,4).toLowerCase() +
-            m.getName().substring(4);  
-
-        log.debug("   "+ propName);
+        // => 예: setCreatedDate() => "c" + "reatedDate" = createdDate
+        String propName = m.getName().substring(3,4).toLowerCase() + 
+            m.getName().substring(4); 
+        log.debug("    " + propName);
         
         // 세터를 호출할 때 넘겨 줄 값을 담을 변수를 준비.
         Object value = null;
         
         if (isPrimitiveType(m.getParameters()[0].getType())) {
-          // 클라이언트가 보낸 데이터 중에서 프로퍼티 이름과 일치하는 데이터가 있다면 꺼낸다
+          // 클라이언트가 보낸 데이터 중에서 프로퍼티 이름과 일치하는 데이터가 있다면 꺼낸다.
           value = getPrimitiveValue(
-              propName,
-              m.getParameters()[0].getType(),
+              propName, 
+              m.getParameters()[0].getType(), 
               request);
-        }
-        // 세터에 넘겨 줄 값을 준비하지 못했으면 다음 메서드로 넘어간다.
-        if (value == null) // 프로퍼티와 일치하는 값을 찾지 못했으면 다음 세터 메서드를 조사한다.
+        } 
+        
+        // 세터에 넘겨 줄 값을 준비하지 못했드면 다음 메서드로 넘어간다.
+        if (value == null) 
           continue;
-
-        log.debug(String.format("   %s()", m.getName()));
+        
+        log.debug(String.format("    %s()", m.getName()));
         m.invoke(pojo, value);
       }
-      log.debug("     " + pojo.toString());
-
+      
       return pojo;
     }
 
@@ -252,8 +251,8 @@ public class RequestMappingHandlerMapping {
       else if (paramType == boolean .class || paramType == Boolean.class) 
         return Boolean.parseBoolean(value);
       else if (paramType == java.util.Date.class ||
-          paramType == java.sql.Date.class)
-        return java.sql.Date.valueOf(value); // 문자열 형식 : "yyy-MM-dd"이어야 한다.
+          paramType == java.sql.Date.class) 
+        return java.sql.Date.valueOf(value); // 문자열 형식: "yyyy-MM-dd" 이어야 한다.
       return value;
     }
 
@@ -283,3 +282,8 @@ public class RequestMappingHandlerMapping {
     }
   }
 }
+
+
+
+
+

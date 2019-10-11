@@ -29,8 +29,7 @@
     <td>${board.createdDate}</td>
     <td>${board.viewCount}</td>
   </tr>
-</c:forEach>
-
+</c:forEach>  
 </table>
 </div>
 

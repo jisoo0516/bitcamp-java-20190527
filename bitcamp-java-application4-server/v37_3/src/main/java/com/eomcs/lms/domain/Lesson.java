@@ -3,10 +3,10 @@ package com.eomcs.lms.domain;
 import java.io.Serializable;
 import java.sql.Date;
 
-//수업 데이터를 저장할 설계도를 작성한다.
-public class Lesson implements Serializable{
+// 수업 데이터를 저장할 설계도를 작성한다.
+public class Lesson implements Serializable {
   private static final long serialVersionUID = 1L;
-
+  
   private int no;
   private String title;
   private String contents;
@@ -15,13 +15,6 @@ public class Lesson implements Serializable{
   private int totalHours;
   private int dayHours;
   
-  
-  @Override
-  public String toString() {
-    return "Lesson [no=" + no + ", title=" + title + ", contents=" + contents + ", startDate="
-        + startDate + ", endDate=" + endDate + ", totalHours=" + totalHours + ", dayHours="
-        + dayHours + "]";
-  }
   public int getNo() {
     return no;
   }
@@ -64,6 +57,13 @@ public class Lesson implements Serializable{
   public void setDayHours(int dayHours) {
     this.dayHours = dayHours;
   }
- 
+  
   
 }
+
+
+
+
+
+
+

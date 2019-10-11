@@ -17,7 +17,7 @@
     
 <div id='content'>
   <h1>실행 오류!</h1>
-  <p><%=request.getAttribute("message")%></p>
+  <p>${message}</p>
 </div>
 
 <jsp:include page="footer.jsp"/>

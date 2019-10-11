@@ -27,7 +27,6 @@ public class BoardDetailServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) 
       throws IOException, ServletException {
     
-    response.setContentType("text/html;charset=UTF-8");
     try {
       int no = Integer.parseInt(request.getParameter("no"));
       
@@ -39,7 +38,7 @@ public class BoardDetailServlet extends HttpServlet {
       boardDao.increaseViewCount(no);
       
       request.setAttribute("board", board);
-      request.setAttribute("viewUrl","/jsp/board/detail.jsp");
+      request.setAttribute("viewUrl", "/jsp/board/detail.jsp");
       
     } catch (Exception e) {
       request.setAttribute("error", e);

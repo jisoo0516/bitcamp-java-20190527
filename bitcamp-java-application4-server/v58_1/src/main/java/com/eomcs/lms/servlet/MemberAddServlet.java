@@ -32,8 +32,7 @@ public class MemberAddServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) 
       throws IOException, ServletException {
-    
-    request.setAttribute("viewUrl","/jsp/member/form.jsp");
+    request.setAttribute("viewUrl", "/jsp/member/form.jsp");
   }
   
   @Override
@@ -57,7 +56,7 @@ public class MemberAddServlet extends HttpServlet {
       }
       
       memberDao.insert(member);
-      request.setAttribute("viewUrl","redirect:list");
+      request.setAttribute("viewUrl", "redirect:list");
       
     } catch (Exception e) {
       request.setAttribute("error", e);

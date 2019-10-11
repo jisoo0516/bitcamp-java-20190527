@@ -27,7 +27,7 @@ public class PhotoBoardAddServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
   
   String uploadDir;
-  private  PlatformTransactionManager txManager;
+  private PlatformTransactionManager txManager;
   private PhotoBoardDao photoBoardDao;
   private PhotoFileDao photoFileDao;
   
@@ -82,7 +82,7 @@ public class PhotoBoardAddServlet extends HttpServlet {
     DefaultTransactionDefinition def = new DefaultTransactionDefinition();
     def.setName("tx1");
     def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
-
+    
     // 정의된 트랜잭션 동작에 따라 작업을 수행할 트랜잭션 객체를 준비한다. 
     TransactionStatus status = txManager.getTransaction(def);
     
@@ -114,11 +114,15 @@ public class PhotoBoardAddServlet extends HttpServlet {
       if (count == 0) {
         throw new Exception("사진 파일 없음!");
       }
+      
       txManager.commit(status);
+      
       response.sendRedirect("/photoboard/list");
       
     } catch (Exception e) {
+      
       txManager.rollback(status);
+      
       request.setAttribute("message", "데이터 저장에 실패했습니다!");
       request.setAttribute("refresh", "/photoboard/list");
       request.setAttribute("error", e);

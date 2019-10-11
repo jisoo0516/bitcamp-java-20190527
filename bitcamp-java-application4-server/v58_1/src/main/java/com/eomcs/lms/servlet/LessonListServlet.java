@@ -28,10 +28,8 @@ public class LessonListServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) 
       throws IOException, ServletException {
     
-    response.setContentType("text/html;charset=UTF-8");
     try {
       List<Lesson> lessons = lessonDao.findAll();
-      
       request.setAttribute("lessons", lessons);
       request.setAttribute("viewUrl", "/jsp/lesson/list.jsp");
       

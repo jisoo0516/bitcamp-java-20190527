@@ -46,6 +46,7 @@ public class LessonController {
     }
     return "redirect:list";
   }
+  
   @RequestMapping("/lesson/detail")
   public String detail(HttpServletRequest request, HttpServletResponse response) 
       throws Exception {

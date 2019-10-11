@@ -109,6 +109,7 @@ public class PhotoBoardController {
       throw e;
     }
   }
+  
   @RequestMapping("/photoboard/detail")
   public String detail(HttpServletRequest request, HttpServletResponse response) 
       throws Exception {

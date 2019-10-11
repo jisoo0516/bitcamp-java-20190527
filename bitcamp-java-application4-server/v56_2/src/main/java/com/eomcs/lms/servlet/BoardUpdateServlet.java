@@ -14,17 +14,18 @@ import com.eomcs.lms.domain.Board;
 @WebServlet("/board/update")
 public class BoardUpdateServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
-
-  private BoardDao boardDao;  
-
+  
+  private BoardDao boardDao;
+  
   @Override
   public void init() throws ServletException {
-   ApplicationContext appCtx = (ApplicationContext) getServletContext().getAttribute("iocContainer");
-   boardDao = appCtx.getBean(BoardDao.class);
+    ApplicationContext appCtx = 
+        (ApplicationContext) getServletContext().getAttribute("iocContainer");
+    boardDao = appCtx.getBean(BoardDao.class);
   }
 
   @Override
-  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException{
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
     out.println("<html><head><title>게시물 변경</title>"
@@ -35,14 +36,16 @@ public class BoardUpdateServlet extends HttpServlet {
       Board board = new Board();
       board.setNo(Integer.parseInt(request.getParameter("no")));
       board.setContents(request.getParameter("contents"));
-
+      
       boardDao.update(board);
-      out.println("<p>변경했습니다</p>");
-
+      out.println("<p>변경 했습니다</p>");
+      
     } catch (Exception e) {
-      out.println("<p>데이터 변경 실패!</p>");
-      System.out.println(e.getMessage());
+      out.println("<p>데이터 변경에 실패했습니다!</p>");
+      throw new RuntimeException(e);
+      
+    } finally {
+      out.println("</body></html>");
     }
-    out.println("</body></html>");
   }
 }

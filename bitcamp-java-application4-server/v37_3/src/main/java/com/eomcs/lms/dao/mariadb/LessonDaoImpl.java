@@ -11,33 +11,37 @@ import com.eomcs.lms.domain.Lesson;
 public class LessonDaoImpl implements LessonDao {
 
   Connection con;
-
+  
   public LessonDaoImpl(Connection con) {
     this.con = con;
   }
-
-
+  
   @Override
   public int insert(Lesson lesson) throws Exception {
     try (Statement stmt = con.createStatement()) {
 
-      return stmt.executeUpdate("insert into lms_lesson(sdt,edt,tot_hr,day_hr,titl,conts)"
-          + " values('" + lesson.getStartDate() + "','" + lesson.getEndDate() + "',"
-          + lesson.getTotalHours() + "," + lesson.getDayHours() + ",'" + lesson.getTitle() + "','"
-          + lesson.getContents() + "')");
+      return stmt.executeUpdate(
+          "insert into lms_lesson(sdt,edt,tot_hr,day_hr,titl,conts)"
+          + " values('" + lesson.getStartDate()
+          + "','" + lesson.getEndDate()
+          + "'," + lesson.getTotalHours()
+          + "," + lesson.getDayHours()
+          + ",'" + lesson.getTitle()
+          + "','" + lesson.getContents()
+          + "')");
     }
   }
 
   @Override
   public List<Lesson> findAll() throws Exception {
-    try (
-
-        Statement stmt = con.createStatement();
-        ResultSet rs = stmt.executeQuery("select lesson_id, titl, sdt,edt,tot_hr "
-            + " from lms_lesson " + " order by sdt desc")) {
+    try (Statement stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery(
+            "select lesson_id,titl,sdt,edt,tot_hr"
+            + " from lms_lesson"
+            + " order by sdt desc")) {
 
       ArrayList<Lesson> list = new ArrayList<>();
-
+      
       while (rs.next()) {
         Lesson lesson = new Lesson();
         lesson.setNo(rs.getInt("lesson_id"));
@@ -45,22 +49,20 @@ public class LessonDaoImpl implements LessonDao {
         lesson.setStartDate(rs.getDate("sdt"));
         lesson.setEndDate(rs.getDate("edt"));
         lesson.setTotalHours(rs.getInt("tot_hr"));
-
+        
         list.add(lesson);
-
       }
       return list;
     }
   }
 
-
   @Override
   public Lesson findBy(int no) throws Exception {
-    try (
-
-        Statement stmt = con.createStatement();
-        ResultSet rs =
-            stmt.executeQuery("select * " + " from lms_lesson " + " where lesson_id = " + no)) {
+    try (Statement stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery(
+            "select *"
+            + " from lms_lesson"
+            + " where lesson_id=" + no)) {
 
       if (rs.next()) {
         Lesson lesson = new Lesson();
@@ -71,10 +73,9 @@ public class LessonDaoImpl implements LessonDao {
         lesson.setEndDate(rs.getDate("edt"));
         lesson.setTotalHours(rs.getInt("tot_hr"));
         lesson.setDayHours(rs.getInt("day_hr"));
-
-
+        
         return lesson;
-
+        
       } else {
         return null;
       }
@@ -85,10 +86,14 @@ public class LessonDaoImpl implements LessonDao {
   public int update(Lesson lesson) throws Exception {
     try (Statement stmt = con.createStatement()) {
 
-      return stmt.executeUpdate("update lms_lesson set" + " titl='" + lesson.getTitle()
-          + "', conts='" + lesson.getContents() + "', sdt='" + lesson.getStartDate() + "', edt='"
-          + lesson.getEndDate() + "', tot_hr=" + lesson.getTotalHours() + ", day_hr="
-          + lesson.getDayHours() + " where lesson_id=" + lesson.getNo());
+      return stmt.executeUpdate("update lms_lesson set"
+          + " titl='" + lesson.getTitle()
+          + "', conts='" + lesson.getContents()
+          + "', sdt='" + lesson.getStartDate()
+          + "', edt='" + lesson.getEndDate()
+          + "', tot_hr=" + lesson.getTotalHours()
+          + ", day_hr=" + lesson.getDayHours()
+          + " where lesson_id=" + lesson.getNo());
     }
   }
 
@@ -97,8 +102,6 @@ public class LessonDaoImpl implements LessonDao {
     try (Statement stmt = con.createStatement()) {
 
       return stmt.executeUpdate("delete from lms_lesson where lesson_id=" + no);
-
-
     }
   }
 

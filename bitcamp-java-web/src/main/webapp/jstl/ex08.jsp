@@ -21,9 +21,9 @@ pageContext.setAttribute("names1", "홍길동,임꺽정,유관순,김구");
 
 /*
 String str = (String) pageContext.getAttribute("names1");
-String [] values = str.split(",");
-for(String n : values) {
-  out.prinln("<li>" + n + "<li>" );
+String[] values = str.split(",");
+for (String n : values) {
+  out.println("<li>" + n + "</li>");
 }
 */
 %>

@@ -56,7 +56,7 @@ public class LoginServlet extends HttpServlet {
     out.println("<div id='content'>");
     out.println("<h1>로그인 폼</h1>");
     out.println("<form action='/auth/login' method='post'>");
-    out.printf("메일: <input type='text' name='email' value='%s'><br>\n", email);
+    out.printf("이메일: <input type='text' name='email' value='%s'><br>\n", email);
     out.println("암호: <input type='text' name='password'><br>");
     out.println("<button>로그인</button>");
     out.println("</form>");
@@ -86,9 +86,8 @@ public class LoginServlet extends HttpServlet {
       params.put("email", request.getParameter("email"));
       params.put("password", request.getParameter("password"));
       
-      
       // 응답할 때 클라이언트가 입력한 이메일을 쿠키로 보낸다.
-      Cookie cookie  = new Cookie("email", request.getParameter("eamil"));
+      Cookie cookie = new Cookie("email", request.getParameter("email"));
       cookie.setMaxAge(60 * 60 * 24 * 15);
       response.addCookie(cookie);
       

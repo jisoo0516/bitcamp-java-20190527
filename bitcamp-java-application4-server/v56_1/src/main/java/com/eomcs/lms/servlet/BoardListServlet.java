@@ -15,22 +15,22 @@ import com.eomcs.lms.domain.Board;
 @WebServlet("/board/list")
 public class BoardListServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
-
-  private BoardDao boardDao;  
-
+  
+  private BoardDao boardDao;
+  
   @Override
   public void init() throws ServletException {
-   ApplicationContext appCtx = (ApplicationContext) getServletContext().getAttribute("iocContainer");
-   boardDao = appCtx.getBean(BoardDao.class);
+    ApplicationContext appCtx = 
+        (ApplicationContext) getServletContext().getAttribute("iocContainer");
+    boardDao = appCtx.getBean(BoardDao.class);
   }
-
   
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
     out.println("<html><head><title>게시물 목록</title>"
-        + "<link rel=\'stylesheet\' href=\'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css\' integrity=\'sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T\' crossorigin=\'anonymous\'>"
+        + "<link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous'>"
         + "</head>");
     out.println("<body><h1>게시물 목록</h1>");
     out.println("<a href='/board/add'>새 글</a><br>");
@@ -41,20 +41,21 @@ public class BoardListServlet extends HttpServlet {
       for (Board board : boards) {
         out.printf("<tr><td>%d</td>"
             + "<td><a href='/board/detail?no=%d'>%s</a></td>"
-            + "<td>%s</td><td>%d</td></tr>\n",
-            board.getNo(), 
+            + "<td>%s</td><td>%d</td></tr>\n", 
+            board.getNo(),
             board.getNo(),
             board.getContents(), 
-            board.getReportingDate(),
-            board.getHits());
+            board.getCreatedDate(), 
+            board.getViewCount());
       }
       out.println("</table>");
-
+      
     } catch (Exception e) {
-      out.println("<p>데이터 목록조회 실패</p>");
+      out.println("<p>데이터 목록 조회에 실패했습니다!</p>");
       throw new RuntimeException(e);
+      
+    } finally {
+      out.println("</body></html>");
     }
-    out.println("</body></html>");
   }
-
 }

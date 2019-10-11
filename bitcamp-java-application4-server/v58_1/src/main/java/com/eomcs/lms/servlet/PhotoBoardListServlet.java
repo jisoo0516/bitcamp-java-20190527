@@ -28,7 +28,6 @@ public class PhotoBoardListServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) 
       throws IOException, ServletException {
     
-    response.setContentType("text/html;charset=UTF-8");
     try {
       List<PhotoBoard> photoBoards = photoBoardDao.findAll();
       request.setAttribute("photoBoards", photoBoards);

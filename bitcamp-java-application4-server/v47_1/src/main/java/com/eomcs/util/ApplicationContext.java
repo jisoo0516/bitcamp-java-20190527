@@ -17,7 +17,6 @@ import com.eomcs.lms.dao.LessonDao;
 import com.eomcs.lms.dao.MemberDao;
 import com.eomcs.lms.dao.PhotoBoardDao;
 import com.eomcs.lms.dao.PhotoFileDao;
-import com.eomcs.lms.handler.Command;
 
 // 자바 객체를 자동 생성하여 관리하는 역할
 // 1단계: App 클래스에서 객체 생성 코드를 분리하기
@@ -42,7 +41,6 @@ public class ApplicationContext {
     
     // => 찾은 클래스의 인스턴스를 생성한다.
     findCommandClass(fullPath, packageName);
-    
     createCommand();
     
     System.out.println("생성된 객체들: ");
@@ -86,9 +84,9 @@ public class ApplicationContext {
   
   private boolean isComponent(Class<?> clazz) {
     // 클래스 정보(타입)에서 애노테이션 데이터를 추출한다.
-    // => 애노테이션에 정보를 파라미터로 넘기면 그 애노테이션의 값을 리턴한다.
+    // => 애노테이션 정보를 파라미터로 넘기면 그 애노테이션의 값을 리턴한다.
     Component comp = clazz.getAnnotation(Component.class);
-    if (comp == null) 
+    if (comp == null)
       return false;
     
     return true;
@@ -102,14 +100,14 @@ public class ApplicationContext {
       
       // 객체를 저장할 때 사용할 이름을 꺼낸다.
       String beanName = compAnno.value();
-      if(beanName.length() == 0) {// 애노테이션에서 빈 이름을 지정하지 않았다면
+      if (beanName.length() == 0) { // 애노테이션에서 빈 이름을 지정하지 않았다면 
         beanName = clazz.getName(); // 클래스 이름을 빈 이름으로 사용할 것이다.
       }
       
       // 기본 생성자가 있으면 그 생성자를 호출하여 인스턴스를 만든다.
       try {
         Constructor<?> defaultConstructor = clazz.getConstructor();
-        objPool.put(beanName, (Command) defaultConstructor.newInstance());
+        objPool.put(beanName, defaultConstructor.newInstance());
         continue;
       } catch (Exception e) {
       }
@@ -121,7 +119,7 @@ public class ApplicationContext {
         // 생성자의 파라미터 정보로 값을 준비한다.
         Parameter[] params = constructor.getParameters();
         Object[] values = prepareParameterValues(params);
-        
+
         // 준비된 값을 가지고 생성자를 통해 인스턴스를 생성한다.
         objPool.put(beanName, constructor.newInstance(values));
         
@@ -202,3 +200,10 @@ public class ApplicationContext {
     objPool.put("photoFileDao", daoFactory.createDao(PhotoFileDao.class));
   }
 }
+
+
+
+
+
+
+

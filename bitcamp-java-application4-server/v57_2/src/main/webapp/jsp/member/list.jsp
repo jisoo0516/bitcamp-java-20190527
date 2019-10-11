@@ -27,7 +27,7 @@
 <%
 List<Member> members = (List<Member>)request.getAttribute("members");
 for (Member member : members) {
-  pageContext.setAttribute("member",member);
+  pageContext.setAttribute("member", member);
 %>
   <tr>
     <td>${member.no}</td>

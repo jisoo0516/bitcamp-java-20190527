@@ -27,7 +27,6 @@ public class MemberDetailServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) 
       throws IOException, ServletException {
     
-
     try {
       int no = Integer.parseInt(request.getParameter("no"));
      
@@ -37,7 +36,7 @@ public class MemberDetailServlet extends HttpServlet {
       } 
         
       request.setAttribute("member", member);
-      request.setAttribute("viewUrl","/jsp/member/detail.jsp");
+      request.setAttribute("viewUrl", "/jsp/member/detail.jsp");
       
     } catch (Exception e) {
       request.setAttribute("error", e);

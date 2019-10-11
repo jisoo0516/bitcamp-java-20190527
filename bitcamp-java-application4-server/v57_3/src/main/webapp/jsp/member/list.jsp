@@ -1,5 +1,3 @@
-<%@page import="com.eomcs.lms.domain.Member"%>
-<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -33,8 +31,7 @@
     <td>${member.tel}</td>
     <td>${member.registeredDate}</td>
   </tr>
-</c:forEach>
-
+</c:forEach> 
 </table>
 <form action='/member/search'>
   검색어: <input type='text' name='keyword'>

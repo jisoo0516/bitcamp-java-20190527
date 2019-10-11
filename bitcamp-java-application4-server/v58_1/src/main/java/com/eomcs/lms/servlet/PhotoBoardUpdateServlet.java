@@ -58,7 +58,6 @@ public class PhotoBoardUpdateServlet extends HttpServlet {
       photoBoard.setTitle(request.getParameter("title"));
 
       photoBoardDao.update(photoBoard);
-     
       photoFileDao.deleteAll(photoBoard.getNo());
 
       int count = 0;
@@ -82,10 +81,10 @@ public class PhotoBoardUpdateServlet extends HttpServlet {
       if (count == 0) {
         throw new Exception("사진 파일 없음!");
       }
+      
       txManager.commit(status);
       
-      request.setAttribute("viewUrl","redirect:list");
-     
+      request.setAttribute("viewUrl", "redirect:list");
       
     } catch (Exception e) {
       

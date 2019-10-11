@@ -7,7 +7,7 @@
   metadata-complete="false">
 
   <description>
-        자바 웹 애플리케이션4 프로젝트
+    자바 웹 애플리케이션4 프로젝트
   </description>
 
   <display-name>bitcamp-java-application4</display-name>
@@ -16,16 +16,15 @@
     <param-name>contextClass</param-name>
     <param-value>org.springframework.context.annotation.AnnotationConfigApplicationContext</param-value>
   </context-param>
-   <context-param>
+  <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>com.eomcs.lms.config</param-value>
   </context-param>
-  
-  
+
   <listener>
     <listener-class>com.eomcs.lms.listener.ContextLoaderListener</listener-class>
   </listener>
-  
+
   <filter>
     <filter-name>CharacterEncodingFilter</filter-name>
     <filter-class>com.eomcs.lms.filter.CharacterEncodingFilter</filter-class>

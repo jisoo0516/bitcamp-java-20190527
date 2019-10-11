@@ -12,31 +12,36 @@ import com.eomcs.lms.dao.PhotoBoardDao;
 import com.eomcs.lms.dao.PhotoFileDao;
 import com.eomcs.lms.domain.PhotoBoard;
 import com.eomcs.lms.domain.PhotoFile;
+
 @WebServlet("/photoboard/update")
 public class PhotoBoardUpdateServlet extends HttpServlet {
-
   private static final long serialVersionUID = 1L;
- 
+  
+  // 이 클래스에서 로그를 출력할 일이 있다면 다음과 같이 로거를 만들어 사용하라!
+  /*
+  private static final Logger logger = 
+      LogManager.getLogger(PhotoBoardAddServlet.class);
+  */
+  
   private PhotoBoardDao photoBoardDao;
   private PhotoFileDao photoFileDao;
-
-
+  
   @Override
   public void init() throws ServletException {
-    ApplicationContext appCtx = (ApplicationContext) getServletContext().getAttribute("iocContainer");
+    ApplicationContext appCtx = 
+        (ApplicationContext) getServletContext().getAttribute("iocContainer");
     photoBoardDao = appCtx.getBean(PhotoBoardDao.class);
     photoFileDao = appCtx.getBean(PhotoFileDao.class);
   }
-  
-  
+
   @Override
-  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException{
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
-    out.println("<html><head><title>사진 변경</title>"
+    out.println("<html><head><title>사진게시물 변경</title>"
         + "<meta http-equiv='Refresh' content='1;url=/photoboard/list'>"
         + "</head>");
-    out.println("<body><h1>사진 변경</h1>");
+    out.println("<body><h1>사진게시물 변경</h1>");
     try {
       PhotoBoard photoBoard = new PhotoBoard();
       photoBoard.setNo(Integer.parseInt(request.getParameter("no")));
@@ -46,7 +51,7 @@ public class PhotoBoardUpdateServlet extends HttpServlet {
       photoFileDao.deleteAll(photoBoard.getNo());
 
       int count = 0;
-      for (int i = 1; i <= 2; i++) {
+      for (int i = 1; i <= 6; i++) {
         String filepath = request.getParameter("filePath" + i);
         if (filepath.length() == 0) {
           continue;

@@ -1,4 +1,4 @@
-// v45_2 : Java Proxy를 이용하여 DAO 구현체 자동 생성하기
+// v45_1 : Java Proxy를 이용하여 DAO 구현체 자동 생성하기
 package com.eomcs.lms;
 
 import java.io.BufferedReader;
@@ -52,30 +52,29 @@ public class App {
 
   HashMap<String,Command> commandMap = new HashMap<>();
   int state;
-
+  
   // 스레드풀
   ExecutorService executorService = Executors.newCachedThreadPool();
   
   SqlSessionFactory sqlSessionFactory;
- 
   
-
   public App() throws Exception {
 
     // 처음에는 클라이언트 요청을 처리해야 하는 상태로 설정한다.
     state = CONTINUE;
-
+    
     try {
-      InputStream inputStream = Resources.getResourceAsStream("com/eomcs/lms/conf/mybatis-config.xml");
-      
-       sqlSessionFactory = new SqlSessionFactoryProxy( 
-           new SqlSessionFactoryBuilder().build(inputStream));
+      InputStream inputStream = 
+          Resources.getResourceAsStream("com/eomcs/lms/conf/mybatis-config.xml");
+      sqlSessionFactory =new SqlSessionFactoryProxy(
+          new SqlSessionFactoryBuilder().build(inputStream));
       
       // 트랜잭션 관리자를 준비한다.
-      PlatformTransactionManager txManager = new PlatformTransactionManager(sqlSessionFactory);
+      PlatformTransactionManager txManager = 
+          new PlatformTransactionManager(sqlSessionFactory);
       
       // DAO 구현체 생성기를 준비한다.
-      MybatisDaoFactory daoFactory = new MybatisDaoFactory(sqlSessionFactory);  
+      MybatisDaoFactory daoFactory = new MybatisDaoFactory(sqlSessionFactory);
       
       // Command 객체가 사용할 데이터 처리 객체를 준비한다.
       BoardDao boardDao = daoFactory.createDao(BoardDao.class);
@@ -105,17 +104,17 @@ public class App {
       commandMap.put("/board/update", new BoardUpdateCommand(boardDao));
 
       commandMap.put("/photoboard/add", 
-          new PhotoBoardAddCommand(photoBoardDao, photoFileDao, txManager));
+          new PhotoBoardAddCommand(txManager, photoBoardDao, photoFileDao));
       commandMap.put("/photoboard/delete", 
-          new PhotoBoardDeleteCommand(photoBoardDao, photoFileDao, txManager));
+          new PhotoBoardDeleteCommand(txManager, photoBoardDao, photoFileDao));
       commandMap.put("/photoboard/detail", 
           new PhotoBoardDetailCommand(photoBoardDao));
       commandMap.put("/photoboard/list", new PhotoBoardListCommand(photoBoardDao));
       commandMap.put("/photoboard/update", 
-          new PhotoBoardUpdateCommand(photoBoardDao, photoFileDao, txManager));
+          new PhotoBoardUpdateCommand(txManager, photoBoardDao, photoFileDao));
       
       commandMap.put("/auth/login", new LoginCommand(memberDao));
-
+      
     } catch (Exception e) {
       System.out.println("DBMS에 연결할 수 없습니다!");
       throw e;
@@ -132,7 +131,7 @@ public class App {
       while (true) {
         // 클라이언트가 접속하면 작업을 수행할 Runnable 객체를 만들어 스레드풀에 맡긴다.
         executorService.submit(new CommandProcessor(serverSocket.accept()));
-
+        
         // 한 클라이언트가 serverstop 명령을 보내면 종료 상태로 설정되고 
         // 다음 요청을 처리할 때 즉시 실행을 멈춘다.
         if (state == STOP)
@@ -142,13 +141,13 @@ public class App {
       // 스레드풀에게 실행 종료를 요청한다.
       // => 스레드풀은 자신이 관리하는 스레드들이 실행이 종료되었는지 감시한다.
       executorService.shutdown();
-
+      
       // 스레드풀이 관리하는 모든 스레드가 종료되었는지 매 0.5초마다 검사한다.
       // => 스레드풀의 모든 스레드가 실행을 종료했으면 즉시 main 스레드를 종료한다.
       while (!executorService.isTerminated()) {
         Thread.currentThread().sleep(500);
       }
-
+      
       System.out.println("애플리케이션 서버를 종료함!");
 
     } catch (Exception e) {
@@ -158,13 +157,13 @@ public class App {
   }
 
   class CommandProcessor implements Runnable {
-
+    
     Socket socket;
-
+    
     public CommandProcessor(Socket socket) {
       this.socket = socket;
     }
-
+    
     @Override
     public void run() {
       try (Socket socket = this.socket;
@@ -178,11 +177,11 @@ public class App {
         String request = in.readLine();
         if (request.equals("quit")) {
           out.println("Good bye!");
-
+          
         } else if (request.equals("serverstop")) {
           state = STOP;
           out.println("Good bye!");
-
+          
         } else {
           // non-static 중첩 클래스는 바깥 클래스의 인스턴스 멤버를 사용할 수 있다.
           Command command = commandMap.get(request);
@@ -199,17 +198,17 @@ public class App {
 
       } catch (Exception e) {
         System.out.println("클라이언트와 통신 오류!");
-
+        
       } finally {
         // 현재 스레드가 클라이언트 요청에 대해 응답을 완료했다면,
         // 현재 스레드에 보관된 Mybatis의 SqlSession 객체를 제거해야 한다.
-        // 그래야만 다음 클라이언트 요청이 들어왔을 때
+        // 그래야만 다음 클라이언트 요청이 들어 왔을 때 
         // 새 SqlSession 객체를 사용할 것이다.
         ((SqlSessionFactoryProxy)sqlSessionFactory).clearSession();
-      } 
+      }
     }
   }
-
+  
   public static void main(String[] args) {
     try {
       App app = new App();
@@ -221,3 +220,13 @@ public class App {
     }
   }
 }
+
+
+
+
+
+
+
+
+
+

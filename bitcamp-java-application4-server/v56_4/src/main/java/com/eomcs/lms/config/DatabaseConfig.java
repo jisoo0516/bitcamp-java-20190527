@@ -1,5 +1,5 @@
 package com.eomcs.lms.config;
- 
+
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -12,9 +12,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 
-// <tx:annotaion-driven/>의 Java Config 설정
-// @Transactional 애노테이션을 처리할 객체를 등록한다.
+// <tx:annotation-driven/> 의 Java Config 설정 
+// => @Transactional 애노테이션을 처리할 객체를 등록한다.
 @EnableTransactionManagement 
+
 @PropertySource("classpath:com/eomcs/lms/conf/jdbc.properties")
 public class DatabaseConfig {
   
@@ -36,8 +37,6 @@ public class DatabaseConfig {
     return ds;
   }
   
-  // 트랜잭션 관리자 준비
-
   @Bean
   public PlatformTransactionManager transactionManager(DataSource dataSource) {
     return new DataSourceTransactionManager(dataSource);

@@ -27,8 +27,7 @@ public class LessonAddServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) 
       throws IOException, ServletException {
- 
-    request.setAttribute("viewUrl","/jsp/lesson/form.jsp");
+    request.setAttribute("viewUrl", "/jsp/lesson/form.jsp");
   }
   
   @Override
@@ -45,7 +44,7 @@ public class LessonAddServlet extends HttpServlet {
       
       lessonDao.insert(lesson);
       
-      request.setAttribute("viewUrl","redirect:list");
+      request.setAttribute("viewUrl", "redirect:list");
       
     } catch (Exception e) {
       request.setAttribute("error", e);

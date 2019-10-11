@@ -29,7 +29,6 @@ public class LoginServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) 
       throws IOException, ServletException {
-  
     request.setAttribute("viewUrl", "/jsp/auth/form.jsp");
   }
   
@@ -37,7 +36,6 @@ public class LoginServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) 
       throws IOException, ServletException {
     
-    response.setContentType("text/html;charset=UTF-8");
     try {
       HashMap<String,Object> params = new HashMap<>();
       params.put("email", request.getParameter("email"));

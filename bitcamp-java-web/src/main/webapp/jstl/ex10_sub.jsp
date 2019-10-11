@@ -10,9 +10,9 @@
 </head>
 <body>
 <h1>JSTL - c:import 테스트</h1>
-name = ${param.name} <br>
-age = ${param.age} <br>
-gender = ${param.gender} <br>
+name = ${param.name}<br>
+age = ${param.age}<br>
+gender = ${param.gender}<br>
 </body>
 </html>
 

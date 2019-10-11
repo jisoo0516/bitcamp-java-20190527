@@ -42,7 +42,6 @@ public class ApplicationContext {
     
     // => 찾은 클래스의 인스턴스를 생성한다.
     findCommandClass(fullPath, packageName);
-    
     createCommand();
     
     System.out.println("생성된 객체들: ");
@@ -122,7 +121,7 @@ public class ApplicationContext {
     }
   }
   
-  private Object[] prepareParameterValues(Parameter[] params) {--
+  private Object[] prepareParameterValues(Parameter[] params) {
     Object[] values = new Object[params.length];
     
     // 파라미터의 타입에 해당하는 값을 objPool에서 찾는다.
@@ -194,3 +193,10 @@ public class ApplicationContext {
     objPool.put("photoFileDao", daoFactory.createDao(PhotoFileDao.class));
   }
 }
+
+
+
+
+
+
+

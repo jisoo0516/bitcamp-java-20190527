@@ -21,8 +21,6 @@ public class BoardUpdateServlet extends HttpServlet {
     ApplicationContext appCtx = 
         (ApplicationContext) getServletContext().getAttribute("iocContainer");
     boardDao = appCtx.getBean(BoardDao.class);
-    
-   
   }
 
   @Override
@@ -34,7 +32,7 @@ public class BoardUpdateServlet extends HttpServlet {
       board.setContents(request.getParameter("contents"));
       boardDao.update(board);
       
-      request.setAttribute("viewUrl","redirect:list");
+      request.setAttribute("viewUrl", "redirect:list");
       
     } catch (Exception e) {
       request.setAttribute("error", e);

@@ -12,7 +12,7 @@ import com.eomcs.lms.dao.MemberDao;
 import com.eomcs.lms.domain.Member;
 
 @Controller
-public class AuthController  {
+public class AuthController {
 
   @Resource
   private MemberDao memberDao;

@@ -12,31 +12,28 @@ import com.eomcs.lms.dao.BoardDao;
 @WebServlet("/board/delete")
 public class BoardDeleteServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
-
-  private BoardDao boardDao;  
   
-
+  private BoardDao boardDao;
+  
   @Override
   public void init() throws ServletException {
-   ApplicationContext appCtx = (ApplicationContext) getServletContext().getAttribute("iocContainer");
-   boardDao = appCtx.getBean(BoardDao.class);
+    ApplicationContext appCtx = 
+        (ApplicationContext) getServletContext().getAttribute("iocContainer");
+    boardDao = appCtx.getBean(BoardDao.class);
   }
-
   
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
-    
-
+  public void doGet(HttpServletRequest request, HttpServletResponse response) 
+      throws IOException, ServletException {
     try {
       int no = Integer.parseInt(request.getParameter("no"));
-
       if (boardDao.delete(no) == 0) {
         throw new Exception("해당 데이터가 없습니다.");
       }
       response.sendRedirect("/board/list");
-
+      
     } catch (Exception e) {
-      request.setAttribute("message", "데이터 삭제에 실패");
+      request.setAttribute("message", "데이터 삭제에 실패했습니다!");
       request.setAttribute("refresh", "/board/list");
       request.setAttribute("error", e);
       request.getRequestDispatcher("/error").forward(request, response);

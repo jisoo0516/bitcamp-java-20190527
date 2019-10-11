@@ -9,19 +9,17 @@ import com.eomcs.lms.domain.Board;
 public class BoardDaoImpl implements BoardDao {
 
   SqlSessionFactory sqlSessionFactory;
-
+  
   public BoardDaoImpl(SqlSessionFactory sqlSessionFactory) {
     this.sqlSessionFactory = sqlSessionFactory;
   }
 
   @Override
   public int insert(Board board) throws Exception {
-    try( SqlSession sqlSession = sqlSessionFactory.openSession()) {
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       int count = sqlSession.insert("BoardDao.insert", board);
       return count;
-      
-    
-    } 
+    }
   }
 
   @Override
@@ -31,20 +29,16 @@ public class BoardDaoImpl implements BoardDao {
     }
   }
 
-
-
   @Override
   public Board findBy(int no) throws Exception {
-    try(SqlSession sqlSession = sqlSessionFactory.openSession()) {
-      Board board = sqlSession.selectOne("BoardDao.findBy", no); //no -> autoboxing 자동으로 이뤄짐
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      Board board = sqlSession.selectOne("BoardDao.findBy", no);
       if (board != null) {
-        sqlSession.update("BoardDao.increaseViewCount", no);
-      } 
+          sqlSession.update("BoardDao.increaseViewCount", no);
+      }
       return board;
     }
   }
-
-
 
   @Override
   public int update(Board board) throws Exception {
@@ -57,7 +51,6 @@ public class BoardDaoImpl implements BoardDao {
   public int delete(int no) throws Exception {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       return sqlSession.delete("BoardDao.delete", no);
-
     }
   }
 

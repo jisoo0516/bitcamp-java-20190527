@@ -33,6 +33,7 @@ public class DispatcherServlet extends HttpServlet {
     handlerMapping = new RequestMappingHandlerMapping(iocContainer);
   }
   
+  @SuppressWarnings("unchecked")
   @Override
   public void service(HttpServletRequest request, HttpServletResponse response) 
       throws IOException, ServletException {
@@ -50,9 +51,9 @@ public class DispatcherServlet extends HttpServlet {
       }
       
       // request handler를 실행한다.
-      Map<String, Object> model = (Map<String, Object>) requestHandler.invoke(request, response);
+      Map<String,Object> model = (Map<String,Object>) requestHandler.invoke(request, response);
       
-      // 리턴받은 맵에 보관된 값을 JSP가 사용할 수 있도록 ServletRequest로 옮긴다.
+      // 리턴 받은 맵에 보관된 값을 JSP가 사용할 수 있도록 ServletRequest로 옮기다.
       Set<Entry<String,Object>> entries = model.entrySet();
       for (Entry<String,Object> entry : entries) {
         request.setAttribute(entry.getKey(), entry.getValue());
@@ -66,9 +67,8 @@ public class DispatcherServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
       }
       
-      
       // 페이지 컨트롤러 작업을 수행한 후 리턴 URL에 따라 JSP를 실행한다.
-      String viewUrl = (String)model.get("viewUrl");
+      String viewUrl = (String) model.get("viewUrl");
       if (viewUrl != null) {
         if (viewUrl.startsWith("redirect:")) {
           response.sendRedirect(viewUrl.substring(9)); // "redirect:list"
@@ -83,3 +83,10 @@ public class DispatcherServlet extends HttpServlet {
     }
   }
 }
+
+
+
+
+
+
+

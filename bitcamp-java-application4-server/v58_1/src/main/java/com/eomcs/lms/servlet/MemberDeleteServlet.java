@@ -31,7 +31,7 @@ public class MemberDeleteServlet extends HttpServlet {
       if (memberDao.delete(no) == 0) {
         throw new Exception("해당 데이터가 없습니다.");
       }
-      request.setAttribute("viewUrl","redirect:list");
+      request.setAttribute("viewUrl", "redirect:list");
       
     } catch (Exception e) {
       request.setAttribute("error", e);

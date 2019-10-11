@@ -27,7 +27,6 @@ public class PhotoBoardDetailServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) 
       throws IOException, ServletException {
     
-   
     try {
       int no = Integer.parseInt(request.getParameter("no"));
       
@@ -38,7 +37,7 @@ public class PhotoBoardDetailServlet extends HttpServlet {
       photoBoardDao.increaseViewCount(no);
       
       request.setAttribute("photoBoard", photoBoard);
-      request.setAttribute("viewUrl","/jsp/photoboard/detail.jsp");
+      request.setAttribute("viewUrl", "/jsp/photoboard/detail.jsp");
       
     } catch (Exception e) {
       request.setAttribute("error", e);

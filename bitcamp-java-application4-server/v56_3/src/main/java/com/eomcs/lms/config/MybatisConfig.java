@@ -13,12 +13,11 @@ import org.springframework.context.annotation.Configuration;
 @MapperScan("com.eomcs.lms.dao")
 public class MybatisConfig {
   
-  
   @Bean
   public SqlSessionFactory sqlSessionFactory(
       DataSource dataSource, ApplicationContext appCtx) throws Exception {
-    
-    // Mybatis의 Log4j2를 활성화시키기
+
+    // Mybatis의 Log4j2를 활성화시키기 
     LogFactory.useLog4J2Logging();
     
     SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
@@ -27,11 +26,10 @@ public class MybatisConfig {
     sqlSessionFactoryBean.setMapperLocations(
         appCtx.getResources("classpath:com/eomcs/lms/mapper/*Mapper.xml"));
     
-    
     return sqlSessionFactoryBean.getObject();
   }
 }
- 
+
 
 
 

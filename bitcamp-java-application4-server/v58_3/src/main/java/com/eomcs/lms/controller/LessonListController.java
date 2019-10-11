@@ -10,7 +10,7 @@ import com.eomcs.lms.dao.LessonDao;
 import com.eomcs.lms.domain.Lesson;
 
 @Component("/lesson/list")
-public class LessonListController  {
+public class LessonListController {
 
   @Resource
   private LessonDao lessonDao;

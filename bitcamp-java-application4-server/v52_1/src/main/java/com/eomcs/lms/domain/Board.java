@@ -3,21 +3,14 @@ package com.eomcs.lms.domain;
 import java.io.Serializable;
 import java.sql.Date;
 
-public class Board implements Serializable{
- 
+public class Board implements Serializable {
   private static final long serialVersionUID = 1L;
+  
   private int no;
   private String contents;
-  private Date reportingDate;
-  private int hits;
+  private Date createdDate;
+  private int viewCount;
   
-  
-  
-  @Override
-  public String toString() {
-    return "Board [no=" + no + ", contents=" + contents + ", reportingDate=" + reportingDate
-        + ", hits=" + hits + "]";
-  }
   public int getNo() {
     return no;
   }
@@ -30,19 +23,17 @@ public class Board implements Serializable{
   public void setContents(String contents) {
     this.contents = contents;
   }
-  public Date getReportingDate() {
-    return reportingDate;
+  public Date getCreatedDate() {
+    return createdDate;
   }
-  public void setReportingDate(Date reportingDate) {
-    this.reportingDate = reportingDate;
+  public void setCreatedDate(Date createdDate) {
+    this.createdDate = createdDate;
   }
-  public int getHits() {
-    return hits;
+  public int getViewCount() {
+    return viewCount;
   }
-  public void setHits(int hits) {
-    this.hits = hits;
+  public void setViewCount(int viewCount) {
+    this.viewCount = viewCount;
   }
   
-  
-
 }

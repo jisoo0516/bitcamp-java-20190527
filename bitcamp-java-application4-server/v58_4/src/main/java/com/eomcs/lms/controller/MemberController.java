@@ -17,7 +17,6 @@ public class MemberController {
   @Resource 
   private MemberDao memberDao;
 
-
   @RequestMapping("/member/add")
   public String add(HttpServletRequest request, HttpServletResponse response) 
       throws Exception {
@@ -44,6 +43,7 @@ public class MemberController {
     memberDao.insert(member);
     return "redirect:list";
   }
+  
   @RequestMapping("/member/delete")
   public String delete(HttpServletRequest request, HttpServletResponse response) 
       throws Exception {
@@ -54,6 +54,7 @@ public class MemberController {
     }
     return "redirect:list";
   }
+  
   @RequestMapping("/member/detail")
   public String detail(HttpServletRequest request, HttpServletResponse response) 
       throws Exception {
@@ -78,6 +79,7 @@ public class MemberController {
     request.setAttribute("members", members);
     return "/jsp/member/list.jsp";
   }
+  
   @RequestMapping("/member/search")
   public String search(HttpServletRequest request, HttpServletResponse response) 
       throws Exception {
@@ -88,6 +90,7 @@ public class MemberController {
     request.setAttribute("members", members);
     return "/jsp/member/search.jsp";
   }
+  
   @RequestMapping("/member/update")
   public String update(HttpServletRequest request, HttpServletResponse response) 
       throws Exception {

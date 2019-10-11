@@ -22,10 +22,7 @@ public class BoardController {
   @RequestMapping("/board/add")
   public String add(Board board) 
       throws Exception {
-
-    
     boardDao.insert(board);
-
     return "redirect:list";
   }
   
@@ -51,6 +48,7 @@ public class BoardController {
     model.put("board", board);
     return "/jsp/board/detail.jsp";
   }
+  
   @RequestMapping("/board/list")
   public String list(Map<String,Object> model) 
       throws Exception {
@@ -63,9 +61,7 @@ public class BoardController {
   @RequestMapping("/board/update")
   public String update(Board board) 
       throws Exception {
-    
     boardDao.update(board);
-
     return "redirect:list";
   }
 

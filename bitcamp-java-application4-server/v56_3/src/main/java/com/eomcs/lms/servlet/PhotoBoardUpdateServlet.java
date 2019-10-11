@@ -15,27 +15,27 @@ import com.eomcs.lms.dao.PhotoBoardDao;
 import com.eomcs.lms.dao.PhotoFileDao;
 import com.eomcs.lms.domain.PhotoBoard;
 import com.eomcs.lms.domain.PhotoFile;
+
 @WebServlet("/photoboard/update")
 public class PhotoBoardUpdateServlet extends HttpServlet {
-
   private static final long serialVersionUID = 1L;
-  private static final Logger logger = LogManager.getLogger(PhotoBoardUpdateServlet.class);
-
+  
+  private static final Logger logger = 
+      LogManager.getLogger(PhotoBoardUpdateServlet.class);
+  
   private PhotoBoardDao photoBoardDao;
   private PhotoFileDao photoFileDao;
-
-
+  
   @Override
   public void init() throws ServletException {
-    ApplicationContext appCtx = (ApplicationContext) getServletContext().getAttribute("iocContainer");
+    ApplicationContext appCtx = 
+        (ApplicationContext) getServletContext().getAttribute("iocContainer");
     photoBoardDao = appCtx.getBean(PhotoBoardDao.class);
     photoFileDao = appCtx.getBean(PhotoFileDao.class);
   }
-  
-  
+
   @Override
-  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException{
-    
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     try {
       PhotoBoard photoBoard = new PhotoBoard();
       photoBoard.setNo(Integer.parseInt(request.getParameter("no")));
@@ -45,7 +45,7 @@ public class PhotoBoardUpdateServlet extends HttpServlet {
       photoFileDao.deleteAll(photoBoard.getNo());
 
       int count = 0;
-      for (int i = 1; i <= 2; i++) {
+      for (int i = 1; i <= 6; i++) {
         String filepath = request.getParameter("filePath" + i);
         if (filepath.length() == 0) {
           continue;
@@ -58,27 +58,25 @@ public class PhotoBoardUpdateServlet extends HttpServlet {
       }
       
       if (count == 0) {
-        throw new Exception("사진 파일 없음!");
+        throw new Exception("최소 한 개의 사진 파일을 등록해야 합니다.");
       }
-      response.sendRedirect("/photoboard/list"); 
+      
+      response.sendRedirect("/photoboard/list");
       
     } catch (Exception e) {
       response.setContentType("text/html;charset=UTF-8");
       PrintWriter out = response.getWriter();
-      out.println("<html><head><title>사진 변경</title>"
-          + "<meta http-equiv='Refresh' content='1;url=/photoboard/list'>"
-          + "</head>");
-      out.println("<body><h1>사진 변경</h1>");
+      out.println("<html><head><title>사진게시물 변경</title></head>");
+      out.println("<body><h1>사진게시물 변경</h1>");
       out.println("<p>데이터 변경에 실패했습니다!</p>");
       out.println("</body></html>");
       response.setHeader("Refresh", "1;url=/photoboard/list");
-      
-      // 왜 오류가 발생했는지 자세한 사항은 로그로 남긴다.(서버관리자 위해)
+
+      // 왜 오류가 발생했는지 자세한 사항은 로그로 남긴다.
       StringWriter strOut = new StringWriter();
       e.printStackTrace(new PrintWriter(strOut));
       logger.error(strOut.toString());
-    
-    } 
+    }
   }
 
 }

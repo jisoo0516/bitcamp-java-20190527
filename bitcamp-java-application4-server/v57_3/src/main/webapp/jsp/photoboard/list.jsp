@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +13,7 @@
 <jsp:include page="../header.jsp"/>
 
 <div id='content'>
-<h1>사진게시물 목록</h1>
+<h1>사진게시물 목록</h1> 
 <a href='/photoboard/add'>새 사진게시물</a><br>
 <table class='table table-hover'>
 <tr>
@@ -24,15 +24,14 @@
   <th>수업</th>
 </tr>
 <c:forEach items="${photoBoards}" var="photoBoard">
-
   <tr>
     <td>${photoBoard.no}</td>
     <td><a href='/photoboard/detail?no=${photoBoard.no}'>${photoBoard.title}</a></td>
-    <td><${photoBoard.createdDate}</td>
+    <td>${photoBoard.createdDate}</td>
     <td>${photoBoard.viewCount}</td>
     <td>${photoBoard.lessonNo}</td>
   </tr>
-</c:forEach>
+</c:forEach> 
 </table>
 </div>
 

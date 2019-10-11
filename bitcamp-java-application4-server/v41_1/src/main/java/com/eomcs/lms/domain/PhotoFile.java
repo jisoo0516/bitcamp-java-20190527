@@ -2,9 +2,9 @@ package com.eomcs.lms.domain;
 
 import java.io.Serializable;
 
-public class PhotoFile implements Serializable{
+public class PhotoFile implements Serializable {
   private static final long serialVersionUID = 1L;
-  
+
   private int no;
   private String filePath;
   private int boardNo;
@@ -13,7 +13,6 @@ public class PhotoFile implements Serializable{
   public String toString() {
     return "PhotoFile [no=" + no + ", filePath=" + filePath + ", boardNo=" + boardNo + "]";
   }
-  
   public int getNo() {
     return no;
   }
@@ -33,6 +32,5 @@ public class PhotoFile implements Serializable{
     this.boardNo = boardNo;
   }
   
-
-
+  
 }

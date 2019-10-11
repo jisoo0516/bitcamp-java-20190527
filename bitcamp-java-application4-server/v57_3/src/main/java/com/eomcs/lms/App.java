@@ -2,7 +2,7 @@
 package com.eomcs.lms;
 
 // 작업:
-// => /webapp/jsp/*/*.jsp 변경
+// => /webapp/jsp/**/*.jsp 변경
 //
 //
 // dummy 클래스!

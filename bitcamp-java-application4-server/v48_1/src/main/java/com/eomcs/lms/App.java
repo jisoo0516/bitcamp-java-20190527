@@ -9,7 +9,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import org.apache.ibatis.session.SqlSessionFactory;
 import com.eomcs.util.ApplicationContext;
 import com.eomcs.util.RequestMapping;
 import com.eomcs.util.SqlSessionFactoryProxy;
@@ -21,12 +20,10 @@ public class App {
 
   ApplicationContext appCtx;
   int state;
-
+  
   // 스레드풀
   ExecutorService executorService = Executors.newCachedThreadPool();
-
-  SqlSessionFactory sqlSessionFactory;
-
+  
   public App() throws Exception {
     // 처음에는 클라이언트 요청을 처리해야 하는 상태로 설정한다.
     state = CONTINUE;
@@ -42,7 +39,7 @@ public class App {
       while (true) {
         // 클라이언트가 접속하면 작업을 수행할 Runnable 객체를 만들어 스레드풀에 맡긴다.
         executorService.submit(new CommandProcessor(serverSocket.accept()));
-
+        
         // 한 클라이언트가 serverstop 명령을 보내면 종료 상태로 설정되고 
         // 다음 요청을 처리할 때 즉시 실행을 멈춘다.
         if (state == STOP)
@@ -52,13 +49,13 @@ public class App {
       // 스레드풀에게 실행 종료를 요청한다.
       // => 스레드풀은 자신이 관리하는 스레드들이 실행이 종료되었는지 감시한다.
       executorService.shutdown();
-
+      
       // 스레드풀이 관리하는 모든 스레드가 종료되었는지 매 0.5초마다 검사한다.
       // => 스레드풀의 모든 스레드가 실행을 종료했으면 즉시 main 스레드를 종료한다.
       while (!executorService.isTerminated()) {
         Thread.currentThread().sleep(500);
       }
-
+      
       System.out.println("애플리케이션 서버를 종료함!");
 
     } catch (Exception e) {
@@ -68,13 +65,13 @@ public class App {
   }
 
   class CommandProcessor implements Runnable {
-
+    
     Socket socket;
-
+    
     public CommandProcessor(Socket socket) {
       this.socket = socket;
     }
-
+    
     @Override
     public void run() {
       try (Socket socket = this.socket;
@@ -88,20 +85,21 @@ public class App {
         String request = in.readLine();
         if (request.equals("quit")) {
           out.println("Good bye!");
-
+          
         } else if (request.equals("serverstop")) {
           state = STOP;
           out.println("Good bye!");
-
+          
         } else {
           try {
-            Object command =  appCtx.getBean(request);
+            Object command = appCtx.getBean(request);
             Method requestHandler = getRequestHandler(command);
-            if(requestHandler != null) {
+            if (requestHandler != null) {
               requestHandler.invoke(command, in, out);
             } else {
               throw new Exception("요청을 처리할 메서드가 없습니다.");
             }
+            
           } catch (Exception e) {
             out.println("해당 명령을 처리할 수 없습니다.");
             e.printStackTrace();
@@ -114,32 +112,33 @@ public class App {
 
       } catch (Exception e) {
         System.out.println("클라이언트와 통신 오류!");
-
+        
       } finally {
         // 현재 스레드가 클라이언트 요청에 대해 응답을 완료했다면,
         // 현재 스레드에 보관된 Mybatis의 SqlSession 객체를 제거해야 한다.
         // 그래야만 다음 클라이언트 요청이 들어 왔을 때 
         // 새 SqlSession 객체를 사용할 것이다.
-        SqlSessionFactoryProxy proxy =
+        SqlSessionFactoryProxy proxy = 
             (SqlSessionFactoryProxy) appCtx.getBean("sqlSessionFactory");
         proxy.clearSession();
       }
     }
+
     // 클래스의 메서드 중에서 @RequestMapping이 붙은 메서드를 찾아낸다.
     private Method getRequestHandler(Object command) {
       // 요청을 처리하기 위해 호출할 메서드를 찾아낸다.
       // => 클래스의 public 메서드 목록을 꺼낸다.
       Method[] methods = command.getClass().getMethods();
-      for(Method m : methods) {
+      for (Method m : methods) {
         RequestMapping anno = m.getAnnotation(RequestMapping.class);
-        if(anno != null) {
-         return m;
+        if (anno != null) {
+          return m;
         }
       }
       return null;
     }
   }
-
+  
   public static void main(String[] args) {
     try {
       App app = new App();
@@ -151,3 +150,13 @@ public class App {
     }
   }
 }
+
+
+
+
+
+
+
+
+
+

@@ -28,7 +28,6 @@ public class BoardListServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) 
       throws IOException, ServletException {
     
-    // 다른 서블릿/JSP 으로 인클루딩 할 때는 이쪽에서 콘텐츠 타입을 설정해야 한다.
     try {
       List<Board> boards = boardDao.findAll();
       

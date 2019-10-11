@@ -26,13 +26,14 @@
 <%
 List<Member> members = (List<Member>)request.getAttribute("members");
 for (Member member : members) {
+  pageContext.setAttribute("member", member);
 %>
   <tr>
-    <td><%=member.getNo()%></td>
-    <td><a href='/member/detail?no=<%=member.getNo()%>'><%=member.getName()%></a></td>
-    <td><%=member.getEmail()%></td>
-    <td><%=member.getTel()%></td>
-    <td><%=member.getRegisteredDate()%></td>
+    <td>${member.no}</td>
+    <td><a href='/member/detail?no=${member.no}'>${member.name}</a></td>
+    <td>${member.email}</td>
+    <td>${member.tel}</td>
+    <td>${member.registeredDate}</td>
   </tr>
 <%}%>
 </table>

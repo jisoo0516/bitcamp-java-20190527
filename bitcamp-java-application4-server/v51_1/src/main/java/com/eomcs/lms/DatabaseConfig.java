@@ -1,5 +1,5 @@
 package com.eomcs.lms;
- 
+
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -31,8 +31,6 @@ public class DatabaseConfig {
     return ds;
   }
   
-  // 트랜잭션 관리자 준비
-
   @Bean
   public PlatformTransactionManager transactionManager(DataSource dataSource) {
     return new DataSourceTransactionManager(dataSource);

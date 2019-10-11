@@ -55,7 +55,7 @@ public class PhotoBoardDeleteServlet extends HttpServlet {
       
       txManager.commit(status);
       
-      request.setAttribute("viewUrl","redirect:list");
+      request.setAttribute("viewUrl", "redirect:list");
       
     } catch (Exception e) {
       

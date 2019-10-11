@@ -10,7 +10,7 @@ import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
-public class SqlSessionProxy implements SqlSession{
+public class SqlSessionProxy implements SqlSession {
   
   SqlSession realSession;
   
@@ -21,13 +21,12 @@ public class SqlSessionProxy implements SqlSession{
   public void close() {
     // close() 메서드를 무력화시킨다.
     // => 대신 모든 작업이 완료된 후에는 realClose()를 호출하게 한다.
-   
   }
   
   public void realClose() {
     realSession.close();
   }
-
+  
   public <T> T selectOne(String statement) {
     return realSession.selectOne(statement);
   }
@@ -73,14 +72,17 @@ public class SqlSessionProxy implements SqlSession{
     return realSession.selectCursor(statement, parameter, rowBounds);
   }
 
+  @SuppressWarnings("rawtypes")
   public void select(String statement, Object parameter, ResultHandler handler) {
     realSession.select(statement, parameter, handler);
   }
 
+  @SuppressWarnings("rawtypes")
   public void select(String statement, ResultHandler handler) {
     realSession.select(statement, handler);
   }
 
+  @SuppressWarnings("rawtypes")
   public void select(String statement, Object parameter, RowBounds rowBounds,
       ResultHandler handler) {
     realSession.select(statement, parameter, rowBounds, handler);
@@ -130,7 +132,6 @@ public class SqlSessionProxy implements SqlSession{
     return realSession.flushStatements();
   }
 
-
   public void clearCache() {
     realSession.clearCache();
   }
@@ -146,5 +147,6 @@ public class SqlSessionProxy implements SqlSession{
   public Connection getConnection() {
     return realSession.getConnection();
   }
-
+  
+  
 }

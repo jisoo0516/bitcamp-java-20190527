@@ -6,20 +6,17 @@ import java.sql.Date;
 public class PhotoBoard implements Serializable {
   private static final long serialVersionUID = 1L;
 
-  
   private int no;
   private String title;
-  private Date reportingDate;
-  private int hits;
+  private Date createdDate;
+  private int viewCount;
   private int lessonNo;
-  
   
   @Override
   public String toString() {
-    return "PhotoBoard [no=" + no + ", title=" + title + ", reportingDate=" + reportingDate
-        + ", hits=" + hits + ", lessonNo=" + lessonNo + "]";
+    return "PhotoBoard [no=" + no + ", title=" + title + ", createdDate=" + createdDate
+        + ", viewCount=" + viewCount + ", lessonNo=" + lessonNo + "]";
   }
-  
   public int getNo() {
     return no;
   }
@@ -32,17 +29,17 @@ public class PhotoBoard implements Serializable {
   public void setTitle(String title) {
     this.title = title;
   }
-  public Date getReportingDate() {
-    return reportingDate;
+  public Date getCreatedDate() {
+    return createdDate;
   }
-  public void setReportingDate(Date reportingDate) {
-    this.reportingDate = reportingDate;
+  public void setCreatedDate(Date createdDate) {
+    this.createdDate = createdDate;
   }
-  public int getHits() {
-    return hits;
+  public int getViewCount() {
+    return viewCount;
   }
-  public void setHits(int hits) {
-    this.hits = hits;
+  public void setViewCount(int viewCount) {
+    this.viewCount = viewCount;
   }
   public int getLessonNo() {
     return lessonNo;

@@ -29,9 +29,8 @@ public class HeaderServlet extends HttpServlet {
     
     PrintWriter out = response.getWriter();
     out.println("<div id='header'>");
-    out.println("  <img src='/images/yoyo.gif'>");
+    out.println("  <img src='/images/logo.png'>");
     out.println("  <span>수업관리시스템</span>");
-    out.println("  <img src='/images/yoyo.gif'>");
     
     HttpSession session = request.getSession();
     Member loginUser = (Member) session.getAttribute("loginUser");

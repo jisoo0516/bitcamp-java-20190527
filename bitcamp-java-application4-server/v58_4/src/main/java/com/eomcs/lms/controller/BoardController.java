@@ -56,6 +56,7 @@ public class BoardController {
     request.setAttribute("board", board);
     return "/jsp/board/detail.jsp";
   }
+  
   @RequestMapping("/board/list")
   public String list(HttpServletRequest request, HttpServletResponse response) 
       throws Exception {

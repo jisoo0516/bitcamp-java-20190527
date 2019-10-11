@@ -49,7 +49,7 @@ public class MemberUpdateServlet extends HttpServlet {
       }
       
       memberDao.update(member);
-      request.setAttribute("viewUrl","redirect:list");
+      request.setAttribute("viewUrl", "redirect:list");
       
     } catch (Exception e) {
       request.setAttribute("error", e);

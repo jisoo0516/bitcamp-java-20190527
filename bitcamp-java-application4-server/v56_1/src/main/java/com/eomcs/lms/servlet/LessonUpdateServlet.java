@@ -13,19 +13,20 @@ import com.eomcs.lms.dao.LessonDao;
 import com.eomcs.lms.domain.Lesson;
 
 @WebServlet("/lesson/update")
-public class LessonUpdateServlet extends HttpServlet  {
+public class LessonUpdateServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
   
   private LessonDao lessonDao;
 
   @Override
   public void init() throws ServletException {
-    ApplicationContext appCtx = (ApplicationContext) getServletContext().getAttribute("iocContainer");
+    ApplicationContext appCtx = 
+        (ApplicationContext) getServletContext().getAttribute("iocContainer");
     lessonDao = appCtx.getBean(LessonDao.class);
   }
- 
+
   @Override
-  public void doPost(HttpServletRequest request, HttpServletResponse response)throws IOException {
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
     out.println("<html><head><title>수업 변경</title>"
@@ -41,7 +42,6 @@ public class LessonUpdateServlet extends HttpServlet  {
       lesson.setEndDate(Date.valueOf(request.getParameter("endDate")));
       lesson.setTotalHours(Integer.parseInt(request.getParameter("totalHours")));
       lesson.setDayHours(Integer.parseInt(request.getParameter("dayHours")));
-      System.out.println(lesson);
       
       lessonDao.update(lesson);
       out.println("<p>변경 했습니다</p>");
@@ -55,5 +55,15 @@ public class LessonUpdateServlet extends HttpServlet  {
     }
   }
 }
+
+
+
+
+
+
+
+
+
+
 
 
